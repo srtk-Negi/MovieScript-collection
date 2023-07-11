@@ -6,10 +6,14 @@ BASE_URL = "https://www.scriptslug.com/request/?pg="
 MOVIE_NAMES = []
 
 
-def get_movie_names_from_script_slug(doc: BeautifulSoup) -> list[str]:
-    """Return a list of movie names from the scriptslug.com page."""   
+def get_movie_names_script_slug(doc: BeautifulSoup) -> list[str]:
+    """Return a list of movie names from the scriptslug.com page."""
     movie_names = []
-    name_type_list = doc.find("div", class_="js-scripts-list").find("div", class_="grid").find_all("div", class_="h-5/6")
+    name_type_list = (
+        doc.find("div", class_="js-scripts-list")
+        .find("div", class_="grid")
+        .find_all("div", class_="h-5/6")
+    )
 
     for item in name_type_list:
         show_type = item.find("p").string
@@ -29,8 +33,8 @@ def main():
         url = BASE_URL + str(i)
         page_html = requests.get(url, headers=headers)
         doc = BeautifulSoup(page_html.text, "html.parser")
-        MOVIE_NAMES.extend(get_movie_names_from_script_slug(doc))
-    
+        MOVIE_NAMES.extend(get_movie_names_script_slug(doc))
+
     print(MOVIE_NAMES)
 
 

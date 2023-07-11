@@ -7,7 +7,7 @@ URL = "https://www.screenplays-online.de/"
 MOVIE_NAMES = []
 
 
-def get_movie_names(doc: BeautifulSoup) -> List[str]:
+def get_movie_names_screenplays_online(doc: BeautifulSoup) -> List[str]:
     movie_names_list = []
     table_rows = doc.find("table", class_="screenplay-listing").find_all("tr")
     del table_rows[0]
@@ -30,7 +30,7 @@ def main():
     page_html = requests.get(URL, headers=headers)
     doc = BeautifulSoup(page_html.text, "html.parser")
 
-    MOVIE_NAMES = get_movie_names(doc)
+    MOVIE_NAMES = get_movie_names_screenplays_online(doc)
     print(MOVIE_NAMES)
 
 
