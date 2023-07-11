@@ -1,14 +1,7 @@
-import time  # noqa: D100
 import uuid
 
-import pyodbc
 import requests
 from bs4 import BeautifulSoup
-
-from config import Config
-from dac_odbc import create_connection
-
-config = Config()
 
 
 def retrieve_imsdb_script_titles(url: str) -> list:
@@ -123,24 +116,8 @@ def extract_script_info(verified_script_url: str) -> str:
     return script_content
 
 
-def insert_values(
-    script_title: str, script_id: str, script_url: str, script_content: str
-) -> None:
-    """Insert values for script's title, id, url, and content within movie data table."""
-    try:
-        with create_connection(
-            config.sand_db
-        ) as connection, connection.cursor() as cursor:
-            movie_table = config.movie_table
-            sql = f"INSERT into {movie_table} values (?, ?, ?, ?)"
-            cursor.execute(sql, script_title, script_id, script_url, script_content)
-    except pyodbc.Error as error:
-        print(error)
-    time.sleep(0.001)
-
-
 def imsdb() -> list:
-    """Perform necessary to extract scripts from imsdb and returna  list of the valid script titles."""
+    """Extract scripts from imsdb and return a list of the valid script titles."""
     verified_imsdb_script_titles = []
     script_titles = retrieve_imsdb_script_titles("https://imsdb.com/all-scripts.html")
     script_ids = generate_imsdb_script_ids(script_titles)
@@ -152,7 +129,6 @@ def imsdb() -> list:
     ):
         script_content = extract_script_info(script_url)
         if script_content != "Not Found" and script_content != "":
-            insert_values(script_title, script_id, script_url, script_content)
             verified_imsdb_script_titles.append(script_title)
     return verified_imsdb_script_titles
 

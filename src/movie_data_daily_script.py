@@ -1,15 +1,7 @@
-import time  # noqa: D100
 import uuid
 
-import pyodbc
 import requests
 from bs4 import BeautifulSoup
-
-from config import Config
-from dac_odbc import create_connection
-
-config = Config()
-
 
 # Important Lists
 movie_titles = []
@@ -26,7 +18,7 @@ def generate_unique_id(title: str):
 
 
 def get_movie_info(url: str) -> list:
-    """Fetch movie titles, script links, and curate unique ID from a URL and return list containg movie info."""
+    """Fetch movie titles and script links, curate unique IDs, and return movie info."""
     url_text = requests.get(url).text
     soup = BeautifulSoup(url_text, "html.parser")
 
@@ -99,24 +91,9 @@ def get_movie_scripts(movie_link: str) -> str:
     return script
 
 
-def insert_values(
-    movie_title: str, movie_id: str, movie_link: str, script: str
-) -> None:
-    """Insert values into the movie table using the provided name, id, and script."""
-    try:
-        with create_connection(
-            config.sand_db
-        ) as connection, connection.cursor() as cursor:
-            movie_table = config.movie_table
-            sql = f"INSERT into {movie_table} values (?, ?, ?, ?)"
-            cursor.execute(sql, movie_title, movie_id, movie_link, script)
-    except pyodbc.Error as error:
-        print(error)
-    time.sleep(0.001)
-
-
 def main() -> None:
     """Fetch movie information from the specified URLs and writes it to a file."""
+    title_list = []
     movie_info_list = get_movie_info("https://www.dailyscript.com/movie.html")
     movie_info_list = get_movie_info("https://www.dailyscript.com/movie_n-z.html")
 
@@ -125,8 +102,8 @@ def main() -> None:
     ):
         script = get_movie_scripts(movie_link)
         if script != "The work has been removed." and script != "ÿþ ":
-            print(movie_title)
-            insert_values(movie_title, movie_id, movie_link, script)
+            title_list.append(movie_title)
+    print(title_list)
 
 
 if __name__ == "__main__":
