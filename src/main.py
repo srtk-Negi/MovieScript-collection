@@ -55,10 +55,8 @@ def main():
     # print(f"\n\nDAILY SCRIPT\n{movie_names_daily_script}")
 
     # print(FINAL_MOVIE_NAMES_LIST)
-    print(len(FINAL_MOVIE_NAMES_LIST))
     new_list = set(FINAL_MOVIE_NAMES_LIST)
-    print(len(new_list))
-    print(new_list)
+    print(list(new_list))
 
 
 if __name__ == "__main__":
