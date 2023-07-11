@@ -93,7 +93,7 @@ def get_movie_scripts(movie_link: str) -> str:
 
 def main() -> None:
     """Fetch movie information from the specified URLs and writes it to a file."""
-    title_list = []
+    script_titles = []
     movie_info_list = get_movie_info("https://www.dailyscript.com/movie.html")
     movie_info_list = get_movie_info("https://www.dailyscript.com/movie_n-z.html")
 
@@ -102,8 +102,8 @@ def main() -> None:
     ):
         script = get_movie_scripts(movie_link)
         if script != "The work has been removed." and script != "ÿþ ":
-            title_list.append(movie_title)
-    print(title_list)
+            script_titles.append(movie_title)
+    print(script_titles)
 
 
 if __name__ == "__main__":
