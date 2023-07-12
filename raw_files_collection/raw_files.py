@@ -1,9 +1,10 @@
-from screenplays_for_you import get_movie_names_screenplays_for_you
-from screenplays_online import get_movie_names_screenplays_online
-from script_slug import get_movie_names_script_slug
-from awesome_film import get_movie_names_awesome_film
-from imsdb import get_movie_names_imsdb
-from daily_script import get_movie_names_daily_script
+from screenplays_for_you import get_raw_screenplays_for_you
+
+# from screenplays_online import get_movie_names_screenplays_online
+# from script_slug import get_movie_names_script_slug
+# from awesome_film import get_movie_names_awesome_film
+# from imsdb import get_movie_names_imsdb
+# from daily_script import get_movie_names_daily_script
 
 URL_SCREENPLAYS_FOR_YOU = "https://sfy.ru/scripts"
 URL_SCREENPLAYS_ONLINE = "https://www.screenplays-online.de/"
@@ -18,10 +19,11 @@ FINAL_MOVIE_NAMES_LIST = []
 
 def main():
     # SCREENPLAYS FOR YOU
-    movie_names_screenplays_for_you = get_movie_names_screenplays_for_you(
-        URL_SCREENPLAYS_FOR_YOU
-    )
-    FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_for_you)
+    get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
+    # movie_names_screenplays_for_you = get_movie_names_screenplays_for_you(
+    #     URL_SCREENPLAYS_FOR_YOU
+    # )
+    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_for_you)
 
     # SCREENPLAYS ONLINE
     # movie_names_screenplays_online = get_movie_names_screenplays_online(
@@ -53,10 +55,6 @@ def main():
     # print(f"\n\nAWESOME FILM\n{movie_names_awesome_film}")
     # print(f"\n\nIMSDB\n{movie_names_imsdb}")
     # print(f"\n\nDAILY SCRIPT\n{movie_names_daily_script}")
-
-    # print(FINAL_MOVIE_NAMES_LIST)
-    new_list = set(FINAL_MOVIE_NAMES_LIST)
-    print(list(new_list))
 
 
 if __name__ == "__main__":
