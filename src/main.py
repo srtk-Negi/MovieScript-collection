@@ -24,28 +24,28 @@ def main():
     FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_for_you)
 
     # SCREENPLAYS ONLINE
-    movie_names_screenplays_online = get_movie_names_screenplays_online(
-        URL_SCREENPLAYS_ONLINE
-    )
-    FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_online)
+    # movie_names_screenplays_online = get_movie_names_screenplays_online(
+    #     URL_SCREENPLAYS_ONLINE
+    # )
+    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_online)
 
-    # SCRIPT SLUG
-    movie_names_script_slug = get_movie_names_script_slug(URL_SCRIPT_SLUG)
-    FINAL_MOVIE_NAMES_LIST.extend(movie_names_script_slug)
+    # # SCRIPT SLUG
+    # movie_names_script_slug = get_movie_names_script_slug(URL_SCRIPT_SLUG)
+    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_script_slug)
 
-    # AWESOME FILMS
-    movie_names_awesome_film = get_movie_names_awesome_film(URL_AWESOME_FILM)
-    FINAL_MOVIE_NAMES_LIST.extend(movie_names_awesome_film)
+    # # AWESOME FILMS
+    # movie_names_awesome_film = get_movie_names_awesome_film(URL_AWESOME_FILM)
+    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_awesome_film)
 
-    # IMSDB
-    movie_names_imsdb = get_movie_names_imsdb(URL_IMSDB)
-    FINAL_MOVIE_NAMES_LIST.extend(movie_names_imsdb)
+    # # IMSDB
+    # movie_names_imsdb = get_movie_names_imsdb(URL_IMSDB)
+    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_imsdb)
 
-    # DAILY SCRIPT
-    movie_names_daily_script_am = get_movie_names_daily_script(URL_DAILYSCRIPT_AM)
-    movie_names_daily_script_mz = get_movie_names_daily_script(URL_DAILYSCRIPT_NZ)
-    movie_names_daily_script = movie_names_daily_script_am + movie_names_daily_script_mz
-    FINAL_MOVIE_NAMES_LIST.extend(movie_names_daily_script)
+    # # DAILY SCRIPT
+    # movie_names_daily_script_am = get_movie_names_daily_script(URL_DAILYSCRIPT_AM)
+    # movie_names_daily_script_mz = get_movie_names_daily_script(URL_DAILYSCRIPT_NZ)
+    # movie_names_daily_script = movie_names_daily_script_am + movie_names_daily_script_mz
+    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_daily_script)
 
     # print(f"\n\nSCREENPLAYS FOR YOU\n{movie_names_screenplays_for_you}")
     # print(f"\n\nSCREENPLAYS ONLINE\n{movie_names_screenplays_online}")
