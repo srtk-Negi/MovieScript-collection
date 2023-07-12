@@ -18,7 +18,6 @@ def get_raw_screenplays_for_you(URL: str):
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
 
-    i = 0
     for element in movie_elements_p:
         a_tag = element.find("a")
         movie_title, date = get_movie_title_and_date(a_tag)
@@ -35,9 +34,6 @@ def get_raw_screenplays_for_you(URL: str):
 
         with open(f"../rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
-        if i == 10:
-            break
-        i += 1
 
 
 def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
