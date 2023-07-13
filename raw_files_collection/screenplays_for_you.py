@@ -10,13 +10,14 @@ def get_raw_screenplays_for_you(URL: str):
 
     Args:
         URL (str): URL of the scripts page (ALL) of 'Scripts For You' website
-    """
+    """ 
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     page_data = requests.get(URL, headers=headers)
     home_page_html = BeautifulSoup(page_data.text, "html.parser")
 
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
+
 
     for element in movie_elements_p:
         a_tag = element.find("a")
@@ -45,7 +46,7 @@ def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
 
     Returns:
         str: link to the movie page
-    """
+    """  
     base_link = URL[:-8]
     link_to_movie_page = a_tag.get("href")
     if link_to_movie_page.startswith("http"):
