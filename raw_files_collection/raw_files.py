@@ -1,10 +1,5 @@
-from screenplays_for_you import get_raw_screenplays_for_you
-
-# from screenplays_online import get_movie_names_screenplays_online
-# from script_slug import get_movie_names_script_slug
-# from awesome_film import get_movie_names_awesome_film
-# from imsdb import get_movie_names_imsdb
-# from daily_script import get_movie_names_daily_script
+# from screenplays_for_you import get_raw_screenplays_for_you
+from screenplays_online import get_raw_screenplays_online
 
 URL_SCREENPLAYS_FOR_YOU = "https://sfy.ru/scripts"
 URL_SCREENPLAYS_ONLINE = "https://www.screenplays-online.de/"
@@ -19,17 +14,10 @@ FINAL_MOVIE_NAMES_LIST = []
 
 def main():
     # SCREENPLAYS FOR YOU
-    get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
-    # movie_names_screenplays_for_you = get_movie_names_screenplays_for_you(
-    #     URL_SCREENPLAYS_FOR_YOU
-    # )
-    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_for_you)
+    # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
 
     # SCREENPLAYS ONLINE
-    # movie_names_screenplays_online = get_movie_names_screenplays_online(
-    #     URL_SCREENPLAYS_ONLINE
-    # )
-    # FINAL_MOVIE_NAMES_LIST.extend(movie_names_screenplays_online)
+    get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
 
     # # SCRIPT SLUG
     # movie_names_script_slug = get_movie_names_script_slug(URL_SCRIPT_SLUG)
@@ -48,13 +36,6 @@ def main():
     # movie_names_daily_script_mz = get_movie_names_daily_script(URL_DAILYSCRIPT_NZ)
     # movie_names_daily_script = movie_names_daily_script_am + movie_names_daily_script_mz
     # FINAL_MOVIE_NAMES_LIST.extend(movie_names_daily_script)
-
-    # print(f"\n\nSCREENPLAYS FOR YOU\n{movie_names_screenplays_for_you}")
-    # print(f"\n\nSCREENPLAYS ONLINE\n{movie_names_screenplays_online}")
-    # print(f"\n\nSCRIPT SLUG\n{movie_names_script_slug}")
-    # print(f"\n\nAWESOME FILM\n{movie_names_awesome_film}")
-    # print(f"\n\nIMSDB\n{movie_names_imsdb}")
-    # print(f"\n\nDAILY SCRIPT\n{movie_names_daily_script}")
 
 
 if __name__ == "__main__":

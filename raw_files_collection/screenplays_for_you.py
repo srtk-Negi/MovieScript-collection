@@ -18,8 +18,11 @@ def get_raw_screenplays_for_you(URL: str):
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
 
-
+    i = 0
     for element in movie_elements_p:
+        if i == 10:
+            break
+        i += 1
         a_tag = element.find("a")
         movie_title, date = get_movie_title_and_date(a_tag)
         link_to_movie_page = get_link_to_movie_page(a_tag, URL)
@@ -57,14 +60,14 @@ def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
     return link_to_movie_page
 
 
-def get_movie_title_and_date(a_tag: BeautifulSoup):
+def get_movie_title_and_date(a_tag: BeautifulSoup) -> tuple:
     """Gets the movie title and the year of release of the movie
 
     Args:
         a_tag (BeautifulSoup): A beautifulsoup object that is an anchor tag containg the movie name and the link
 
     Returns:
-        Movie title and year
+        tuple: Movie title and year
     """
     re_year = re.compile("\(\d{4}\)")
     re_transcript = re.compile("transcript")
