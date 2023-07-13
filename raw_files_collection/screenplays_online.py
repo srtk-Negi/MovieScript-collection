@@ -1,3 +1,5 @@
+"""Script to collect the rawfiles (html of the movie pages) from the 'Screenplays Online' endpoint"""
+
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -5,6 +7,14 @@ import re
 re_year = re.compile("\(\d{4}\)")
 
 def get_raw_screenplays_online(URL: str) -> None:
+    """Function to get the name of the movie, year of release, link to the movie page and rawfile (html of the movie page)
+    
+    Args: 
+        URL (str): URL of the home page of 'Screenplays Online' website
+
+    Returns:
+        None
+    """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     home_page_html = requests.get(URL, headers=headers)
     home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
@@ -35,6 +45,14 @@ def get_raw_screenplays_online(URL: str) -> None:
 
 
 def get_movie_names_and_years(row: BeautifulSoup) -> tuple:
+    """Gets the movie names and years of release from the table row
+    
+    Args:
+        row (BeautifulSoup): A beautifulsoup object that is a table row
+        
+    Returns:
+        tuple: movie_1, year_1, movie_2, year_2
+    """
     movies_in_row = row.find_all("td")
 
     movie_1 = movies_in_row[1].find("a").string
@@ -55,6 +73,15 @@ def get_movie_names_and_years(row: BeautifulSoup) -> tuple:
 
 
 def get_links_to_movie_pages(row: BeautifulSoup, URL: str) -> tuple:
+    """Gets the links to the movie pages
+
+    Args:
+        row (BeautifulSoup): A beautifulsoup object that is a table row
+        URL (str): URL of the home page of 'Screenplays Online' website
+    
+    Returns:
+        tuple: link_1, link_2
+    """
     movies_in_row = row.find_all("td")
 
     link_1 = URL + movies_in_row[1].find("a").get("href")
@@ -64,6 +91,15 @@ def get_links_to_movie_pages(row: BeautifulSoup, URL: str) -> tuple:
 
 
 def get_year_of_release(movie_1: str, movie_2: str) -> tuple:
+    """Gets the year of release of the movies
+    
+    Args:
+        movie_1 (str): Name of the first movie
+        movie_2 (str): Name of the second movie
+        
+    Returns:
+        tuple: year_1, year_2
+    """
     try:
         year_1 = re.findall(re_year, movie_1)[0][1:-1]
     except IndexError:
@@ -78,6 +114,15 @@ def get_year_of_release(movie_1: str, movie_2: str) -> tuple:
 
 
 def switch_article(article: str, movie_name: str) -> str:
+    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning
+    
+    Args:
+        article (str): The article of the movie name
+        movie_name (str): The movie name
+        
+    Returns:
+        str: The movie name with the article at the beginning
+    """
     new_name = movie_name.replace(f", {article}", "")
     movie_name = f"{article} " + new_name
 
@@ -85,6 +130,13 @@ def switch_article(article: str, movie_name: str) -> str:
 
 
 def get_filename(movie_name: str) -> str:
+    """Gets the filename for the rawfile
+    
+    Args:
+        movie_name (str): The movie name
+    
+    Returns:
+        str: The filename for the rawfile"""
     char_list = ""
     for ch in movie_name.lower():
         if ch.isalnum() or ch == " ":
