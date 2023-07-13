@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+re_year = re.compile("\(\d{4}\)")
 
 def get_raw_screenplays_online(URL: str) -> None:
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
@@ -15,26 +16,23 @@ def get_raw_screenplays_online(URL: str) -> None:
         if i == 20:
             break
         i += 1
-        movie_1, date_1, movie_2, date_2 = get_movie_names_and_dates(row)
-        print(f"{movie_1}|{movie_2}")
+        movie_1, year_1, movie_2, year_2 = get_movie_names_and_years(row)
+        link_1, link_2 = get_links_to_movie_pages(row, URL)
+
+        rawfile_1 = requests.get(link_1, headers=headers)
+        rawfile_html_1 = BeautifulSoup(rawfile_1.text, "html.parser")
+
+        rawfile_2 = requests.get(link_2, headers=headers)
+        rawfile_html_2 = BeautifulSoup(rawfile_2.text, "html.parser")
 
 
-def get_movie_names_and_dates(row: BeautifulSoup) -> tuple:
-    re_year = re.compile("\(\d{4}\)")
+def get_movie_names_and_years(row: BeautifulSoup) -> tuple:
     movies_in_row = row.find_all("td")
 
     movie_1 = movies_in_row[1].find("a").string
     movie_2 = movies_in_row[6].find("a").string
 
-    try:
-        date_1 = re.findall(re_year, movie_1)[0][1:-1]
-    except IndexError:
-        date_1 = None
-
-    try:
-        date_2 = re.findall(re_year, movie_2)[0][1:-1]
-    except IndexError:
-        date_2 = None
+    year_1, year_2 = get_year_of_release(movie_1, movie_2)
 
     movie_1 = re.sub(re_year, "", movie_1).strip()
     movie_2 = re.sub(re_year, "", movie_2).strip()
@@ -45,7 +43,30 @@ def get_movie_names_and_dates(row: BeautifulSoup) -> tuple:
     if movie_2.endswith(", The") or movie_2.endswith(", A") or movie_2.endswith(", An"):
         movie_2 = switch_article(movie_2.split(" ")[-1], movie_2)
 
-    return movie_1, date_1, movie_2, date_2
+    return movie_1, year_1, movie_2, year_2
+
+
+def get_links_to_movie_pages(row: BeautifulSoup, URL: str) -> tuple:
+    movies_in_row = row.find_all("td")
+
+    link_1 = URL + movies_in_row[1].find("a").get("href")
+    link_2 = URL + movies_in_row[6].find("a").get("href")
+
+    return link_1, link_2
+
+
+def get_year_of_release(movie_1: str, movie_2: str) -> tuple:
+    try:
+        year_1 = re.findall(re_year, movie_1)[0][1:-1]
+    except IndexError:
+        year_1 = None
+
+    try:
+        year_2 = re.findall(re_year, movie_2)[0][1:-1]
+    except IndexError:
+        year_2 = None
+
+    return year_1, year_2
 
 
 def switch_article(article: str, movie_name: str) -> str:
