@@ -21,12 +21,8 @@ def get_raw_screenplays_online(URL: str) -> None:
     table_rows = home_page_data.find("table", class_="screenplay-listing").find_all("tr")
     del table_rows[0]
 
-    i = 0
     for row in table_rows:
-        if i == 5:
-            break
-        i += 1
-        movie_1, year_1, movie_2, year_2 = get_movie_names_and_years(row)
+        movie_1, year_1, movie_2, year_2 = get_movie_titles_and_years(row)
         link_1, link_2 = get_links_to_movie_pages(row, URL)
 
         rawfile_1 = requests.get(link_1, headers=headers)
@@ -44,7 +40,7 @@ def get_raw_screenplays_online(URL: str) -> None:
             outfile.write(str(rawfile_html_2))
 
 
-def get_movie_names_and_years(row: BeautifulSoup) -> tuple:
+def get_movie_titles_and_years(row: BeautifulSoup) -> tuple:
     """Gets the movie names and years of release from the table row
     
     Args:
@@ -91,7 +87,7 @@ def get_links_to_movie_pages(row: BeautifulSoup, URL: str) -> tuple:
 
 
 def get_year_of_release(movie_1: str, movie_2: str) -> tuple:
-    """Gets the year of release of the movies
+    """Gets the year of release of the movies (used as a helper function in get_movie_titles_and_years()
     
     Args:
         movie_1 (str): Name of the first movie
@@ -114,8 +110,8 @@ def get_year_of_release(movie_1: str, movie_2: str) -> tuple:
 
 
 def switch_article(article: str, movie_name: str) -> str:
-    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning
-    
+    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_titles_and_years())
+
     Args:
         article (str): The article of the movie name
         movie_name (str): The movie name

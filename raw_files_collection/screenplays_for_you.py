@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import re
 
 
-def get_raw_screenplays_for_you(URL: str):
+def get_raw_screenplays_for_you(URL: str) -> None:
     """Function to get the name of the movie, year of release, link to the movie page and rawfile (html of the movie page)
 
     Args:
@@ -18,13 +18,9 @@ def get_raw_screenplays_for_you(URL: str):
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
 
-    # i = 0
     for element in movie_elements_p:
-        # if i == 10:
-        #     break
-        # i += 1
         a_tag = element.find("a")
-        movie_title, date = get_movie_title_and_date(a_tag)
+        movie_title, year = get_movie_title_and_year(a_tag)
         link_to_movie_page = get_link_to_movie_page(a_tag, URL)
 
         rawfile = requests.get(link_to_movie_page, headers=headers)
@@ -35,6 +31,7 @@ def get_raw_screenplays_for_you(URL: str):
             if ch.isalnum() or ch == " ":
                 filename += ch
         filename_2 = "_".join(filename.strip().split()) + ".html"
+
 
         with open(f"../rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
@@ -60,27 +57,45 @@ def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
     return link_to_movie_page
 
 
-def get_movie_title_and_date(a_tag: BeautifulSoup) -> tuple:
+def get_movie_title_and_year(a_tag: BeautifulSoup) -> tuple:
     """Gets the movie title and the year of release of the movie
 
     Args:
         a_tag (BeautifulSoup): A beautifulsoup object that is an anchor tag containg the movie name and the link
 
     Returns:
-        tuple: Movie title and year
+        tuple: movie_title, year
     """
     re_year = re.compile("\(\d{4}\)")
     re_transcript = re.compile("transcript")
 
     movie_title = a_tag.string
 
-    date = re.findall(re_year, movie_title)[0][1:-1]
+    try:
+        year = re.findall(re_year, movie_title)[0][1:-1]
+    except IndexError:
+        year = None
 
     movie_title = re.sub(re_year, "", movie_title).strip()
     movie_title = re.sub(re_transcript, "", movie_title).strip()
 
-    if movie_title.endswith(", The"):
-        new_name = movie_title.replace(", The", "")
-        movie_title = "The " + new_name
+    if movie_title.endswith(", The") or movie_title.endswith(", A") or movie_title.endswith(", An"):
+        movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
-    return movie_title, date
+    return movie_title, year
+
+
+def switch_article(article: str, movie_name: str) -> str:
+    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_title_and_year())
+    
+    Args:
+        article (str): The article of the movie name
+        movie_name (str): The movie name
+        
+    Returns:
+        str: The movie name with the article at the beginning
+    """
+    new_name = movie_name.replace(f", {article}", "")
+    movie_name = f"{article} " + new_name
+
+    return movie_name
