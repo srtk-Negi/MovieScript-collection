@@ -13,7 +13,7 @@ def get_raw_screenplays_online(URL: str) -> None:
 
     i = 0
     for row in table_rows:
-        if i == 20:
+        if i == 5:
             break
         i += 1
         movie_1, year_1, movie_2, year_2 = get_movie_names_and_years(row)
@@ -21,9 +21,17 @@ def get_raw_screenplays_online(URL: str) -> None:
 
         rawfile_1 = requests.get(link_1, headers=headers)
         rawfile_html_1 = BeautifulSoup(rawfile_1.text, "html.parser")
+        filename_1 = get_filename(movie_1)
 
         rawfile_2 = requests.get(link_2, headers=headers)
         rawfile_html_2 = BeautifulSoup(rawfile_2.text, "html.parser")
+        filename_2 = get_filename(movie_2)
+
+        with open(f"rawfiles/{filename_1}", "w", encoding="utf-8") as outfile:
+            outfile.write(str(rawfile_html_1))
+        
+        with open(f"rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
+            outfile.write(str(rawfile_html_2))
 
 
 def get_movie_names_and_years(row: BeautifulSoup) -> tuple:
@@ -74,3 +82,13 @@ def switch_article(article: str, movie_name: str) -> str:
     movie_name = f"{article} " + new_name
 
     return movie_name
+
+
+def get_filename(movie_name: str) -> str:
+    char_list = ""
+    for ch in movie_name.lower():
+        if ch.isalnum() or ch == " ":
+                char_list += ch
+        filename = "_".join(char_list.strip().split()) + ".html"
+
+    return filename
