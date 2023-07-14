@@ -40,8 +40,11 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
     return awesome_film_names_and_links
 
 
-def get_raw_files_awesome_film(awesome_film_names_and_links: dict) -> None:
+def get_raw_files_awesome_film(URL_AWESOME_FILM: str) -> None:
     """Retrieve html structure from script links and write raw html to files."""
+    awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
+        URL_AWESOME_FILM
+    )
     for movie_title in awesome_film_names_and_links:
         script_url = awesome_film_names_and_links[movie_title]
         soup = ""

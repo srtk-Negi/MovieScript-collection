@@ -2,10 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_movie_names_and_links_daily_script(BASE_URL: str) -> dict:
+def get_movie_names_and_links_daily_script(URL_DAILY_SCRIPT: str) -> dict:
     """Fetch movie titles and script links, curate unique IDs, and return movie info."""
     daily_script_names_and_links = {}
-    url_text = requests.get(BASE_URL).text
+    url_text = requests.get(URL_DAILY_SCRIPT).text
     soup = BeautifulSoup(url_text, "html.parser")
     previous_names = None
     script_list_info = soup.ul.find_all("p")
@@ -21,8 +21,11 @@ def get_movie_names_and_links_daily_script(BASE_URL: str) -> dict:
     return daily_script_names_and_links
 
 
-def get_raw_files_daily_script(daily_script_names_and_links: dict) -> None:
+def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
     """Retreive html structure from script links and write raw html to files."""
+    daily_script_names_and_links = get_movie_names_and_links_daily_script(
+        URL_DAILY_SCRIPT
+    )
     for movie_title in daily_script_names_and_links:
         script_url = daily_script_names_and_links[movie_title]
         soup = ""
@@ -32,7 +35,7 @@ def get_raw_files_daily_script(daily_script_names_and_links: dict) -> None:
             content = requests.get(script_url).text
             soup = BeautifulSoup(content, "html.parser")
         if "/" in movie_title:
-            movie_title = movie_title.replace("/"), "_"
+            movie_title = movie_title.replace("/", "_")
         file_name = "_".join(movie_title.strip().split())
         with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
             f.write(str(soup).strip())
