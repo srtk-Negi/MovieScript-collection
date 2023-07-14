@@ -1,5 +1,6 @@
 from screenplays_for_you import get_raw_screenplays_for_you
 from screenplays_online import get_raw_screenplays_online
+from script_slug import get_raw_script_slug
 
 URL_SCREENPLAYS_FOR_YOU = "https://sfy.ru/scripts"
 URL_SCREENPLAYS_ONLINE = "https://www.screenplays-online.de/"
@@ -12,10 +13,12 @@ URL_DAILYSCRIPT_NZ = "https://www.dailyscript.com/movie_n-z.html"
 
 def main():
     # SCREENPLAYS FOR YOU
-    get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
+    # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
 
     # SCREENPLAYS ONLINE
-    get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
+    # get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
+
+    get_raw_script_slug(URL_SCRIPT_SLUG)
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ def get_raw_screenplays_for_you(URL: str) -> None:
 
     Args:
         URL (str): URL of the scripts page (ALL) of 'Scripts For You' website
-    """ 
+    """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     page_data = requests.get(URL, headers=headers)
     home_page_html = BeautifulSoup(page_data.text, "html.parser")
@@ -32,7 +32,6 @@ def get_raw_screenplays_for_you(URL: str) -> None:
                 filename += ch
         filename_2 = "_".join(filename.strip().split()) + ".html"
 
-
         with open(f"../rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
 
@@ -46,7 +45,7 @@ def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
 
     Returns:
         str: link to the movie page
-    """  
+    """
     base_link = URL[:-8]
     link_to_movie_page = a_tag.get("href")
     if link_to_movie_page.startswith("http"):
@@ -79,7 +78,11 @@ def get_movie_title_and_year(a_tag: BeautifulSoup) -> tuple:
     movie_title = re.sub(re_year, "", movie_title).strip()
     movie_title = re.sub(re_transcript, "", movie_title).strip()
 
-    if movie_title.endswith(", The") or movie_title.endswith(", A") or movie_title.endswith(", An"):
+    if (
+        movie_title.endswith(", The")
+        or movie_title.endswith(", A")
+        or movie_title.endswith(", An")
+    ):
         movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
     return movie_title, year
@@ -87,11 +90,11 @@ def get_movie_title_and_year(a_tag: BeautifulSoup) -> tuple:
 
 def switch_article(article: str, movie_name: str) -> str:
     """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_title_and_year())
-    
+
     Args:
         article (str): The article of the movie name
         movie_name (str): The movie name
-        
+
     Returns:
         str: The movie name with the article at the beginning
     """
