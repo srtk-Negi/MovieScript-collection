@@ -1,3 +1,4 @@
+"""Script to collect the rawfiles (html of the movie pages) from the 'Script Slug' endpoint"""
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -6,6 +7,11 @@ re_year = re.compile("\d{4}")
 
 
 def get_raw_script_slug(URL: str) -> None:
+    """Function to get the movie name, year of release, link to rawfile and the rawfile.
+
+    Args:
+        URL (str): URL of the first page of the request endpoint of 'Script Slug' website
+    """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     for i in range(1):
         url = URL + str(i)
