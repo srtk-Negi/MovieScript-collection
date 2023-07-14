@@ -1,6 +1,6 @@
-from screenplays_for_you import get_raw_screenplays_for_you
-from screenplays_online import get_raw_screenplays_online
-from script_slug import get_raw_script_slug
+from raw_files_collection.screenplays_for_you import get_raw_screenplays_for_you
+from raw_files_collection.screenplays_online import get_raw_screenplays_online
+from raw_files_collection.script_slug import get_raw_script_slug
 
 URL_SCREENPLAYS_FOR_YOU = "https://sfy.ru/scripts"
 URL_SCREENPLAYS_ONLINE = "https://www.screenplays-online.de/"
