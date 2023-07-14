@@ -32,7 +32,7 @@ def get_raw_files_daily_script(daily_script_names_and_links: dict) -> None:
             content = requests.get(script_url).text
             soup = BeautifulSoup(content, "html.parser")
         if "/" in movie_title:
-            movie_title = movie_title.replace("/"), "_"
+            movie_title = movie_title.replace("/", "_")
         file_name = "_".join(movie_title.strip().split())
         with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
             f.write(str(soup).strip())

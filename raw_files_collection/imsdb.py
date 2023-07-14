@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_movie_names_and_urls_imsdb(URL_IMSDB: str) -> list:
+def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
     """Retreive, refine, and return a dictionary of mapped titles and urls for imsdb."""
     movie_names_imsdb = []
     script_urls_imsdb = []
@@ -13,42 +13,50 @@ def get_movie_names_and_urls_imsdb(URL_IMSDB: str) -> list:
     td = table.find_all("td", valign="top")[1]
     p_tags = td.find_all("p")
     for p_tag in p_tags:
-        script_title = p_tag.find("a").text
-        if script_title.endswith(", The"):
-            script_title = script_title.replace(", The", "")
-            script_title = "The " + script_title
-        if script_title.endswith(", A"):
-            script_title = script_title.replace(", A", "")
-            script_title = "A " + script_title
-        movie_names_imsdb.append(script_title)
-
-    for script_title in movie_names_imsdb:
-        if script_title == "The Rage: Carrie 2":
+        movie_title = p_tag.find("a").text
+        if movie_title.endswith(", The"):
+            movie_title = movie_title.replace(", The", "")
+            movie_title = "The " + movie_title
+        if movie_title.endswith(", A"):
+            movie_title = movie_title.replace(", A", "")
+            movie_title = "A " + movie_title
+        movie_names_imsdb.append(movie_title)
+    for movie_title in movie_names_imsdb:
+        if movie_title == "The Rage: Carrie 2":
             script_url = "https://imsdb.com/scripts/The-Rage-Carrie-2.html"
-        elif script_title == "The Avengers (2012)":
+        elif movie_title == "The Avengers (2012)":
             script_url = "https://imsdb.com/scripts/Avengers,-The-(2012).html"
         else:
             if (
-                "The" in script_title
-                and script_title[:4] != "The "
-                and ":" in script_title
+                "The" in movie_title
+                and movie_title[:4] != "The "
+                and ":" in movie_title
             ):
-                script_title = script_title.replace(":", "")
-                script_title = script_title.replace(" ", "-")
+                movie_title = movie_title.replace(":", "")
+                movie_title = movie_title.replace(" ", "-")
             else:
-                if script_title[:4] == "The ":
-                    script_title = script_title.replace("The ", "").strip()
-                    script_title = script_title + ", The"
-                if ":" in script_title:
-                    script_title = script_title.replace(":", "")
-                if "&" in script_title:
-                    script_title = script_title.replace("&", "%2526")
-                if "?" in script_title:
-                    script_title = script_title.replace("?", "")
-                script_title = script_title.replace(" ", "-")
-            script_url = f"https://imsdb.com/scripts/{script_title}.html"
+                if movie_title[:4] == "The ":
+                    movie_title = movie_title.replace("The ", "").strip()
+                    movie_title = movie_title + ", The"
+                if ":" in movie_title:
+                    movie_title = movie_title.replace(":", "")
+                if "&" in movie_title:
+                    movie_title = movie_title.replace("&", "%2526")
+                if "?" in movie_title:
+                    movie_title = movie_title.replace("?", "")
+                movie_title = movie_title.replace(" ", "-")
+            script_url = f"https://imsdb.com/scripts/{movie_title}.html"
         script_urls_imsdb.append(script_url)
+    movie_names_and_links_imsdb = dict(zip(movie_names_imsdb, script_urls_imsdb))
+    return movie_names_and_links_imsdb
 
-    movie_names_and_urls_imsdb = dict(zip(movie_names_imsdb, script_urls_imsdb))
 
-    return movie_names_and_urls_imsdb
+def get_raw_files_imsdb(movie_names_and_links_imsdb: dict) -> None:
+    """Retreive html structure from script links and write raw html to files."""
+    for movie_title in movie_names_and_links_imsdb:
+        script_url = movie_names_and_links_imsdb[movie_title]
+        content = requests.get(script_url).text
+        soup = BeautifulSoup(content, "html.parser")
+        file_name = "_".join(movie_title.strip().split())
+        with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
+            f.write(str(soup).strip())
