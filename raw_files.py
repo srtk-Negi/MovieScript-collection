@@ -16,9 +16,10 @@ def main():
     # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
 
     # SCREENPLAYS ONLINE
-    # get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
+    get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
 
-    get_raw_script_slug(URL_SCRIPT_SLUG)
+    # SCRIPT SLUG
+    # get_raw_script_slug(URL_SCRIPT_SLUG)
 
 
 if __name__ == "__main__":
