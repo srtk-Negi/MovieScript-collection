@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+PDF_DICTIONARY = {}
+
 
 def get_raw_screenplays_for_you(URL: str) -> None:
     """Function to get the name of the movie, year of release, link to the movie page and rawfile (html of the movie page)
@@ -18,13 +20,21 @@ def get_raw_screenplays_for_you(URL: str) -> None:
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
 
+    i = 0
     for element in movie_elements_p:
         a_tag = element.find("a")
         movie_title, year = get_movie_title_and_year(a_tag)
-        link_to_movie_page = get_link_to_movie_page(a_tag, URL)
+        link_to_movie_page = get_link_to_movie_page(movie_title, a_tag, URL)
 
-        rawfile = requests.get(link_to_movie_page, headers=headers)
-        rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
+        if link_to_movie_page == None:
+            continue
+
+        try:
+            rawfile = requests.get(link_to_movie_page, headers=headers)
+            rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
+        except:
+            print(f"{link_to_movie_page} did not work for {movie_title}")
+            continue
 
         filename = ""
         for ch in movie_title.lower():
@@ -32,11 +42,15 @@ def get_raw_screenplays_for_you(URL: str) -> None:
                 filename += ch
         filename_2 = "_".join(filename.strip().split()) + ".html"
 
-        with open(f"../rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
+        with open(f"rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
+            print(f"{i} - {movie_title}")
+            i += 1
+
+    print(PDF_DICTIONARY)
 
 
-def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
+def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> str:
     """Gets the link to the movie page
 
     Args:
@@ -48,6 +62,11 @@ def get_link_to_movie_page(a_tag: BeautifulSoup, URL: str) -> str:
     """
     base_link = URL[:-8]
     link_to_movie_page = a_tag.get("href")
+
+    if link_to_movie_page.lower().endswith(".pdf"):
+        PDF_DICTIONARY[movie_title] = link_to_movie_page
+        return None
+
     if link_to_movie_page.startswith("http"):
         link_to_movie_page = base_link + link_to_movie_page[14:]
     else:

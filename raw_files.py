@@ -13,10 +13,10 @@ URL_DAILYSCRIPT_NZ = "https://www.dailyscript.com/movie_n-z.html"
 
 def main():
     # SCREENPLAYS FOR YOU
-    # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
+    get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
 
     # SCREENPLAYS ONLINE
-    get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
+    # get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
 
     # SCRIPT SLUG
     # get_raw_script_slug(URL_SCRIPT_SLUG)
