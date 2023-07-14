@@ -8,7 +8,7 @@ EXTRA_SPACES_MATCH = re.compile(r"\s{2,}", re.DOTALL)
 
 
 def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
-    """Retreive script titles and links and append to a dictionary."""
+    """Fetch script titles and links and append to a dictionary."""
     awesome_film_names_and_links = {}
     content = requests.get(URL_AWESOME_FILM).text
     soup = BeautifulSoup(content, "html.parser")
@@ -35,12 +35,7 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
                 movie_title = re.sub(EXTRA_SPACES_MATCH, " ", movie_title)
             if movie_title.endswith("-"):
                 movie_title = movie_title[:-1].strip()
-            if (
-                "pdf" not in movie_title
-                and "doc" not in movie_title
-                and movie_title != "email"
-                and movie_title != ""
-            ):
+            if movie_title != "email" and movie_title != "":
                 awesome_film_names_and_links[movie_title] = movie_link
     return awesome_film_names_and_links
 
@@ -49,14 +44,12 @@ def get_raw_files_awesome_film(awesome_film_names_and_links: dict) -> None:
     """Retrieve html structure from script links and write raw html to files."""
     for movie_title in awesome_film_names_and_links:
         script_url = awesome_film_names_and_links[movie_title]
-        content = requests.get(script_url).text
-        soup = BeautifulSoup(content, "html.parser")
-        file_name = "_".join(movie_title.strip().split()) + ".html"
+        soup = ""
+        if ".pdf" in script_url or ".doc" in script_url:
+            soup = script_url
+        else:
+            content = requests.get(script_url)
+            soup = BeautifulSoup(content, "html.parser")
+        file_name = "_".join(movie_title.strip().split())
         with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
             f.write(str(soup).strip())
-
-
-awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
-    "http://www.awesomefilm.com/"
-)
-get_raw_files_awesome_film(awesome_film_names_and_links)
