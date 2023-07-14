@@ -51,8 +51,9 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
     return movie_names_and_links_imsdb
 
 
-def get_raw_files_imsdb(movie_names_and_links_imsdb: dict) -> None:
+def get_raw_files_imsdb(URL_IMSDB: str) -> None:
     """Retreive html structure from script links and write raw html to files."""
+    movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
     for movie_title in movie_names_and_links_imsdb:
         script_url = movie_names_and_links_imsdb[movie_title]
         content = requests.get(script_url).text
