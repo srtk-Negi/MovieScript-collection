@@ -25,14 +25,14 @@ def main():
     # get_raw_script_slug(URL_SCRIPT_SLUG)
 
     # AWESOME FILM
-    get_raw_files_awesome_film(URL_AWESOME_FILM)
+    # get_raw_files_awesome_film(URL_AWESOME_FILM)
 
     # DAILY SCRIPT
-    get_raw_files_daily_script(URL_DAILYSCRIPT_AM)
-    get_raw_files_daily_script(URL_DAILYSCRIPT_NZ)
+    # get_raw_files_daily_script(URL_DAILYSCRIPT_AM)
+    # get_raw_files_daily_script(URL_DAILYSCRIPT_NZ)
 
     # IMSDB
-    get_raw_files_imsdb(URL_IMSDB)
+    # get_raw_files_imsdb(URL_IMSDB)
 
 
 if __name__ == "__main__":
