@@ -12,19 +12,25 @@ def get_raw_screenplays_for_you(URL: str) -> None:
         URL (str): URL of the scripts page (ALL) of 'Scripts For You' website
     """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
-    page_data = requests.get(URL, headers=headers)
-    home_page_html = BeautifulSoup(page_data.text, "html.parser")
+    try:
+        page_data = requests.get(URL, headers=headers)
+        home_page_html = BeautifulSoup(page_data.text, "html.parser")
+    except:
+        print("The URL did not work for 'Scripts For You'")
+        return
 
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
 
-    i = 0
+    rawfile_count = 0
+    pdf_count = 0
     for element in movie_elements_p:
         a_tag = element.find("a")
         movie_title, year = get_movie_title_and_year(a_tag)
         link_to_movie_page = get_link_to_movie_page(movie_title, a_tag, URL)
 
         if link_to_movie_page == None:
+            pdf_count += 1
             continue
 
         try:
@@ -42,8 +48,10 @@ def get_raw_screenplays_for_you(URL: str) -> None:
 
         with open(f"rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
-            print(f"{i} - {movie_title}")
-            i += 1
+            rawfile_count += 1
+
+    print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
+    print(f"Total number of pdfs collected from 'Scripts For You': {pdf_count}")
 
 
 def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> str:
@@ -60,7 +68,7 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
     link_to_movie_page = a_tag.get("href")
 
     if link_to_movie_page.lower().endswith(".pdf"):
-        with open(f"rawfiles/all_pdfs.txt", "a") as outfile:
+        with open(f"rawfiles/screenplays_for_you_pdfs.txt", "a") as outfile:
             outfile.write(movie_title + " : " + link_to_movie_page + "\n")
         return None
 

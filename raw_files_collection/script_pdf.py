@@ -1,15 +1,27 @@
+"""Script to get the name of the movie and the link to the pdf of the script from the 'Script PDFs' endpoint
+and write it to a file"""
 import requests
 from bs4 import BeautifulSoup
 
 
 def get_raw_script_pdf(URL: str) -> None:
+    """Function to get the name of the movie and the link to the pdf of the script from the 'Script PDFs' endpoint
+
+    Args:
+        URL (str): URL of the 'Script PDFs' endpoint
+    """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-    home_page_html = requests.get(URL, headers=headers)
-    home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
+    try:
+        home_page_html = requests.get(URL, headers=headers)
+        home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
+    except:
+        print("The URL did not work for 'Script PDFs'")
+        return
 
     sections = home_page_data.find("div", class_="entry-content").find_all("ul")
     del sections[-1]
 
+    pdf_count = 0
     for section in sections:
         li_tags = section.find_all("li")
         for li_tag in li_tags:
@@ -25,6 +37,9 @@ def get_raw_script_pdf(URL: str) -> None:
 
             with open("rawfiles/scripts_pdf.txt", "a") as outfile:
                 outfile.write(f"{movie_title} - {link_to_pdf}\n")
+                pdf_count += 1
+
+    print(f"Total number of PDFs collected from 'Script PDFs': {pdf_count}")
 
 
 def switch_article(article: str, movie_name: str) -> str:

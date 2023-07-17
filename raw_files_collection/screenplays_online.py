@@ -17,8 +17,13 @@ def get_raw_screenplays_online(URL: str) -> None:
         None
     """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
-    home_page_html = requests.get(URL, headers=headers)
-    home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
+    try:
+        home_page_html = requests.get(URL, headers=headers)
+        home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
+    except:
+        print("The URL did not work for 'Screenplays Online'")
+        return
+
     table_rows = home_page_data.find("table", class_="screenplay-listing").find_all(
         "tr"
     )
@@ -34,6 +39,7 @@ def get_raw_screenplays_online(URL: str) -> None:
         if movie_2:
             title_link_map[movie_2] = link_2
 
+    rawfile_count = 0
     for movie_title, movie_page_link in title_link_map.items():
         movie_title = re.sub(re_year, "", movie_title).strip()
 
@@ -44,12 +50,22 @@ def get_raw_screenplays_online(URL: str) -> None:
         ):
             movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
-        rawfile = requests.get(movie_page_link, headers=headers)
-        rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
+        try:
+            rawfile = requests.get(movie_page_link, headers=headers)
+            rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
+        except:
+            print(
+                f"Could not get the rawfile for {movie_title} from Screenplays Online"
+            )
+            continue
+
         filename = get_filename(movie_title)
 
         with open(f"rawfiles/{filename}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
+            rawfile_count += 1
+
+    print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
 
 
 def get_movie_titles(row: BeautifulSoup) -> tuple:
