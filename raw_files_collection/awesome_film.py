@@ -40,10 +40,10 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
     return awesome_film_names_and_links
 
 
-def get_raw_files_awesome_film(URL_AWESOME_FILM: str) -> None:
+def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
     """Retrieve html structure from script links and write raw html to files."""
     awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
-        URL_AWESOME_FILM
+        AWESOME_FILM_URL
     )
     for movie_title in awesome_film_names_and_links:
         script_url = awesome_film_names_and_links[movie_title]
@@ -51,7 +51,7 @@ def get_raw_files_awesome_film(URL_AWESOME_FILM: str) -> None:
         if ".pdf" in script_url or ".doc" in script_url:
             soup = script_url
         else:
-            content = requests.get(script_url)
+            content = requests.get(script_url).content
             soup = BeautifulSoup(content, "html.parser")
         file_name = "_".join(movie_title.strip().split())
         with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
