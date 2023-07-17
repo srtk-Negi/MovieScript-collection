@@ -56,6 +56,6 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
         else:
             content = requests.get(script_url).content
             soup = BeautifulSoup(content, "html.parser")
-        file_name = "_".join(movie_title.strip().split())
-        with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
-            f.write(str(soup).strip())
+            file_name = "_".join(movie_title.strip().split())
+            with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
+                f.write(str(soup).strip())
