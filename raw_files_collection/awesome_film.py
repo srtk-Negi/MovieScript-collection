@@ -50,7 +50,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
         soup = ""
         if ".pdf" in script_url or ".doc" in script_url:
             soup = f"{movie_title}: {script_url}"
-            with open("rawfiles/00_other_file_types", "a", encoding="utf-8") as f:
+            with open("rawfiles/00_other_file_types.txt", "a", encoding="utf-8") as f:
                 soup = soup.strip()
                 f.write(f"{soup}\n")
         else:

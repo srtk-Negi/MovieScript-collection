@@ -32,7 +32,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
         if ".doc" in script_url or ".pdf" in script_url:
             soup = script_url
             soup = f"{movie_title}: {script_url}"
-            with open("rawfiles/00_other_file_types", "a", encoding="utf-8") as f:
+            with open("rawfiles/00_other_file_types.txt", "a", encoding="utf-8") as f:
                 soup = soup.strip()
                 f.write(f"{soup}\n")
         else:
