@@ -53,11 +53,30 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
 
 def get_raw_files_imsdb(URL_IMSDB: str) -> None:
     """Retreive html structure from script links and write raw html to files."""
-    movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
+    try:
+        movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
+    except:
+        print("URL did not work for IMSDB.")
+        return
+
+    rawfile_count = 0
     for movie_title in movie_names_and_links_imsdb:
         script_url = movie_names_and_links_imsdb[movie_title]
-        content = requests.get(script_url).text
-        soup = BeautifulSoup(content, "html.parser")
-        file_name = "_".join(movie_title.strip().split())
-        with open(f"rawfiles/{file_name}", "a", encoding="utf-8") as f:
+        try:
+            content = requests.get(script_url).text
+            soup = BeautifulSoup(content, "html.parser")
+        except:
+            print(f"Could not get content for {movie_title} from IMSDB")
+            continue
+
+        filename = ""
+        for ch in movie_title.lower():
+            if ch.isalnum() or ch == " ":
+                filename += ch
+        filename_2 = "_".join(filename.strip().split()) + ".html"
+
+        with open(f"rawfiles/{filename_2}", "a", encoding="utf-8") as f:
             f.write(str(soup).strip())
+            rawfile_count += 1
+
+    print(f"The number of raw files collected from IMSDB is {rawfile_count}")

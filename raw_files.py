@@ -33,13 +33,12 @@ def main():
 
     # DAILY SCRIPT
     get_raw_files_daily_script(URL_DAILYSCRIPT)
-    # get_raw_files_daily_script(URL_DAILYSCRIPT_NZ)
 
     # SCRIPT SAVANT
     get_raw_script_savant(URL_SCRIPT_SAVANT)
 
     # IMSDB
-    # get_raw_files_imsdb(URL_IMSDB)
+    get_raw_files_imsdb(URL_IMSDB)
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
     # get_raw_script_slug(URL_SCRIPT_SLUG)
