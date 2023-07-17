@@ -41,5 +41,5 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
             if "/" in movie_title:
                 movie_title = movie_title.replace("/", "_")
             file_name = "_".join(movie_title.strip().split())
-            with open(f"rawfiles/{file_name}", "w", encoding="utf-8") as f:
+            with open(f"rawfiles/{file_name}", "a", encoding="utf-8") as f:
                 f.write(str(soup).strip())
