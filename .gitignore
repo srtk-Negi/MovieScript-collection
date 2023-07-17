@@ -2,3 +2,4 @@
 __pycache__
 rawfiles
 .env
+raw_files.py
