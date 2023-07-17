@@ -12,6 +12,7 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
     awesome_film_names_and_links = {}
     content = requests.get(URL_AWESOME_FILM).text
     soup = BeautifulSoup(content, "html.parser")
+
     tables = soup.body.find_all("table")[15:18]
     for table in tables:
         tds = table.find_all("td", class_="tbl")
@@ -42,20 +43,48 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
 
 def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
     """Retrieve html structure from script links and write raw html to files."""
-    awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
-        AWESOME_FILM_URL
-    )
-    for movie_title in awesome_film_names_and_links:
-        script_url = awesome_film_names_and_links[movie_title]
-        soup = ""
-        if ".pdf" in script_url or ".doc" in script_url:
+    try:
+        awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
+            AWESOME_FILM_URL
+        )
+    except:
+        print("Provided URL did not work for awesome film")
+        return
+
+    pdf_count = 0
+    text_count = 0
+    rawfile_count = 0
+    for movie_title, script_url in awesome_film_names_and_links.items():
+        if script_url.lower().endswith(".pdf") or script_url.lower().endswith(".doc"):
             soup = f"{movie_title}: {script_url}"
-            with open("rawfiles/00_other_file_types.txt", "a", encoding="utf-8") as f:
+            with open("rawfiles/awesome_films.txt", "a", encoding="utf-8") as f:
                 soup = soup.strip()
                 f.write(f"{soup}\n")
+                pdf_count += 1
+
+        elif script_url.lower().endswith(".txt"):
+            with open(f"rawfiles/awesome_films_text.txt", "a", encoding="utf-8") as f:
+                f.write(f"{movie_title}: {script_url}\n")
+                text_count += 1
+
         else:
-            content = requests.get(script_url).content
-            soup = BeautifulSoup(content, "html.parser")
-            file_name = "_".join(movie_title.strip().split())
-            with open(f"rawfiles/{file_name}", "a", encoding="utf-8") as f:
-                f.write(str(soup).strip())
+            try:
+                content = requests.get(script_url)
+                soup = BeautifulSoup(content.text, "html.parser")
+            except:
+                print(f"Could not get {script_url} for {movie_title} from awesome film")
+                continue
+
+            filename = ""
+            for ch in movie_title.lower():
+                if ch.isalnum() or ch == " ":
+                    filename += ch
+            filename_2 = "_".join(filename.strip().split()) + ".html"
+
+            with open(f"rawfiles/{filename_2}", "a", encoding="utf-8") as f:
+                f.write(str(soup))
+                rawfile_count += 1
+
+    print(f"Total number of raw files collected from 'Awesome Film': {rawfile_count}")
+    print(f"Total number of PDFs collected from 'Awesome Film': {pdf_count}")
+    print(f"Total number of text files collected from 'Awesome Film': {text_count}")
