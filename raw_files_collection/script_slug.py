@@ -13,7 +13,7 @@ def get_raw_script_slug(URL: str) -> None:
         URL (str): URL of the first page of the request endpoint of 'Script Slug' website
     """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
-    for i in range(1):
+    for i in range(35):
         url = URL + str(i)
         home_page_html = requests.get(url, headers=headers)
         home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
