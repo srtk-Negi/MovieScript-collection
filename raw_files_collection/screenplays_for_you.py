@@ -4,8 +4,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-PDF_DICTIONARY = {}
-
 
 def get_raw_screenplays_for_you(URL: str) -> None:
     """Function to get the name of the movie, year of release, link to the movie page and rawfile (html of the movie page)
@@ -47,8 +45,6 @@ def get_raw_screenplays_for_you(URL: str) -> None:
             print(f"{i} - {movie_title}")
             i += 1
 
-    print(PDF_DICTIONARY)
-
 
 def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> str:
     """Gets the link to the movie page
@@ -64,7 +60,8 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
     link_to_movie_page = a_tag.get("href")
 
     if link_to_movie_page.lower().endswith(".pdf"):
-        PDF_DICTIONARY[movie_title] = link_to_movie_page
+        with open(f"rawfiles/all_pdfs.txt", "a") as outfile:
+            outfile.write(movie_title + " : " + link_to_movie_page + "\n")
         return None
 
     if link_to_movie_page.startswith("http"):
