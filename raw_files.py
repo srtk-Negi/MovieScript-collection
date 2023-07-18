@@ -21,22 +21,22 @@ URL_SCRIPT_SAVANT = "https://thescriptsavant.com/movies.html"
 def main():
     # SCREENPLAYS FOR YOU
     print("SCREENPLAYS FOR YOU - STARTED")
-    get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
+    # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
     print("SCREENPLAYS FOR YOU - FINISHED\n")
 
     # SCREENPLAYS ONLINE
     print("SCREENPLAYS ONLINE - STARTED")
-    get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
+    # get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
     print("SCREENPLAYS ONLINE - FINISHED\n")
 
     # SCRIPT PDF
     print("SCRIPT PDF - STARTED")
-    get_raw_script_pdf(URL_SCRIPT_PDF)
+    # get_raw_script_pdf(URL_SCRIPT_PDF)
     print("SCRIPT PDF - FINISHED\n")
 
     # AWESOME FILM
     print("AWESOME FILM - STARTED")
-    get_raw_files_awesome_film(URL_AWESOME_FILM)
+    # get_raw_files_awesome_film(URL_AWESOME_FILM)
     print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
@@ -46,12 +46,12 @@ def main():
 
     # SCRIPT SAVANT
     print("SCRIPT SAVANT - STARTED")
-    get_raw_script_savant(URL_SCRIPT_SAVANT)
+    # get_raw_script_savant(URL_SCRIPT_SAVANT)
     print("SCRIPT SAVANT - FINISHED\n")
 
     # IMSDB
     print("IMSDB - STARTED")
-    get_raw_files_imsdb(URL_IMSDB)
+    # get_raw_files_imsdb(URL_IMSDB)
     print("IMSDB - FINISHED\n")
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
