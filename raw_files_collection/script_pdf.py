@@ -35,7 +35,7 @@ def get_raw_script_pdf(URL: str) -> None:
             ):
                 movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
-            with open("rawfiles/scripts_pdf.txt", "a") as outfile:
+            with open("rawfiles/script_pdf_pdfs.txt", "a") as outfile:
                 outfile.write(f"{movie_title} - {link_to_pdf}\n")
                 pdf_count += 1
 

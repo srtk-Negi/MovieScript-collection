@@ -53,14 +53,20 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
 
     pdf_count = 0
     text_count = 0
+    doc_count = 0
     rawfile_count = 0
     for movie_title, script_url in awesome_film_names_and_links.items():
-        if script_url.lower().endswith(".pdf") or script_url.lower().endswith(".doc"):
+        if script_url.lower().endswith(".pdf"):
             soup = f"{movie_title}: {script_url}"
-            with open("rawfiles/awesome_films.txt", "a", encoding="utf-8") as f:
+            with open("rawfiles/awesome_films_pdfs.txt", "a", encoding="utf-8") as f:
                 soup = soup.strip()
                 f.write(f"{soup}\n")
                 pdf_count += 1
+
+        elif script_url.lower().endswith(".doc"):
+            with open(f"rawfiles/awesome_films_docs.txt", "a", encoding="utf-8") as f:
+                f.write(f"{movie_title}: {script_url}\n")
+                doc_count += 1
 
         elif script_url.lower().endswith(".txt"):
             with open(f"rawfiles/awesome_films_text.txt", "a", encoding="utf-8") as f:
@@ -88,3 +94,4 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
     print(f"Total number of raw files collected from 'Awesome Film': {rawfile_count}")
     print(f"Total number of PDFs collected from 'Awesome Film': {pdf_count}")
     print(f"Total number of text files collected from 'Awesome Film': {text_count}")
+    print(f"Total number of doc files collected from 'Awesome Film': {doc_count}")

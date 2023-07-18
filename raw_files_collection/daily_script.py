@@ -59,7 +59,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
                 doc_count += 1
 
         elif script_url.lower().endswith(".txt"):
-            with open("rawfiles/daily_script_txt.txt", "a", encoding="utf-8") as f:
+            with open("rawfiles/daily_script_text.txt", "a", encoding="utf-8") as f:
                 f.write(f"{movie_title} - {script_url}\n")
                 txt_count += 1
 

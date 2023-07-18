@@ -23,7 +23,7 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> None:
         if movie_title.endswith("Script"):
             movie_title = movie_title.replace(" Script", "")
 
-        with open("rawfiles/script_savant.txt", "a", encoding="utf-8") as f:
+        with open("rawfiles/script_savant_pdfs.txt", "a", encoding="utf-8") as f:
             f.write(f"{movie_title.strip()} - {movie_link}\n")
             pdf_count += 1
 
