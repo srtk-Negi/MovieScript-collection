@@ -21,7 +21,7 @@ URL_SCRIPT_SAVANT = "https://thescriptsavant.com/movies.html"
 def main():
     # SCREENPLAYS FOR YOU
     print("SCREENPLAYS FOR YOU - STARTED")
-    get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
+    # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
     print("SCREENPLAYS FOR YOU - FINISHED\n")
 
     # SCREENPLAYS ONLINE
@@ -36,7 +36,7 @@ def main():
 
     # AWESOME FILM
     print("AWESOME FILM - STARTED")
-    # get_raw_files_awesome_film(URL_AWESOME_FILM)
+    get_raw_files_awesome_film(URL_AWESOME_FILM)
     print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT

@@ -35,8 +35,20 @@ def get_raw_script_pdf(URL: str) -> None:
             ):
                 movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
-            with open("rawfiles/script_pdf_pdfs.txt", "a") as outfile:
-                outfile.write(f"{movie_title} - {link_to_pdf}\n")
+            try:
+                content = requests.get(link_to_pdf, headers=headers).content
+            except:
+                print(f"Could not get {link_to_pdf} for {movie_title} from Script PDF.")
+                continue
+
+            filename = ""
+            for ch in movie_title.lower():
+                if ch.isalnum() or ch == " ":
+                    filename += ch
+            filename_2 = "_".join(filename.strip().split()) + ".pdf"
+
+            with open(f"rawfiles/{filename_2}", "wb") as outfile:
+                outfile.write(content)
                 pdf_count += 1
 
     print(f"Total number of PDFs collected from 'Script PDFs': {pdf_count}")

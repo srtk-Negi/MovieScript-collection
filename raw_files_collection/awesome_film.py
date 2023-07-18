@@ -70,7 +70,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
                     filename += ch
             filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
-            with open(f"rawfiles/{filename_2}", "wb", encoding="utf-8") as f:
+            with open(f"rawfiles/{filename_2}", "wb") as f:
                 f.write(content)
                 pdf_count += 1
 
@@ -87,7 +87,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
                     filename += ch
             filename_2 = "_".join(filename.strip().split()) + ".doc"
 
-            with open(f"rawfiles/{filename_2}", "wb", encoding="utf-8") as f:
+            with open(f"rawfiles/{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
