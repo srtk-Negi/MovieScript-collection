@@ -29,12 +29,14 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
             movie_title = td.text.replace("\n", "").strip()
             if ":" in movie_title:
                 movie_title = movie_title.replace(":", ": ")
-            if movie_title.endswith(", The"):
-                movie_title = movie_title.replace(", The", "")
-                movie_title = "The " + movie_title
-            if movie_title.endswith(", A"):
-                movie_title = movie_title.replace(", A", "")
-                movie_title = "A " + movie_title
+
+            if (
+                movie_title.endswith(", The")
+                or movie_title.endswith(", A")
+                or movie_title.endswith(", An")
+            ):
+                movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
+
             if re.search(SCRIPT_TYPE_MATCH, movie_title):
                 movie_title = re.sub(SCRIPT_TYPE_MATCH, "", movie_title).strip()
             if re.search(EXTRA_SPACES_MATCH, movie_title):
@@ -63,6 +65,22 @@ def curate_filename(movie_title: str, file_type: str) -> str:
     filename_2 = "_".join(filename.strip().split()) + file_type
     print(filename_2)
     return filename_2
+
+
+def switch_article(article: str, movie_name: str) -> str:
+    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_titles_and_years())
+
+    Args:
+        article (str): The article of the movie name
+        movie_name (str): The movie name
+
+    Returns:
+        str: The movie name with the article at the beginning
+    """
+    new_name = movie_name.replace(f", {article}", "")
+    movie_name = f"{article} " + new_name
+
+    return movie_name
 
 
 def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
@@ -108,7 +126,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
                     filename += ch
             filename_2 = "_".join(filename.strip().split()) + ".doc"
 
-            with open(f"rawfiles/{filename_2}", "wb", encoding="utf-8") as f:
+            with open(f"rawfiles/{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
