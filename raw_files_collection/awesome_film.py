@@ -12,57 +12,6 @@ EXTRA_SPACES_MATCH = re.compile(r"\s{2,}", re.DOTALL)
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
 
-# def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
-#     """Fetch script titles and links and append to a dictionary."""
-#     awesome_film_names_and_links = {}
-
-#     content = requests.get(URL_AWESOME_FILM).text
-#     soup = BeautifulSoup(content, "html.parser")
-
-#     tables = soup.body.find_all("table")[15:18]
-#     for table in tables:
-#         tds = table.find_all("td", class_="tbl")
-
-#         for td in tds:
-#             try:
-#                 movie_link = "http://www.awesomefilm.com/" + td.a["href"]
-#             except:
-#                 print(f"Movie Link {movie_link} did not work.")
-#                 continue
-
-#             movie_title = td.text.replace("\n", "").strip()
-#             movie_title_2 = ""
-
-#             if ":" in movie_title:
-#                 movie_title_2 = movie_title.replace(":", ": ")
-
-#             if movie_title.endswith(", The"):
-#                 movie_title = movie_title.replace(", The", "")
-#                 movie_title_2 = "The " + movie_title
-
-#             if movie_title.endswith(", A"):
-#                 movie_title = movie_title.replace(", A", "")
-#                 movie_title_2 = "A " + movie_title
-
-#             if movie_title.endswith(", An"):
-#                 movie_title = movie_title.replace(", An", "")
-#                 movie_title_2 = "An " + movie_title
-
-#             if re.search(SCRIPT_TYPE_MATCH, movie_title):
-#                 movie_title_2 = re.sub(SCRIPT_TYPE_MATCH, "", movie_title)
-
-#             if re.search(EXTRA_SPACES_MATCH, movie_title):
-#                 movie_title_2 = re.sub(EXTRA_SPACES_MATCH, " ", movie_title)
-
-#             if movie_title.endswith("-"):
-#                 movie_title_2 = movie_title[:-1]
-
-
-#             if movie_title != "email" and movie_title != "":
-#                 awesome_film_names_and_links[movie_title_2] = movie_link
-#     return awesome_film_names_and_links
-
-
 def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
     """Fetch script titles and links and append to a dictionary."""
     awesome_film_names_and_links = {}
