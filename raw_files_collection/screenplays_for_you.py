@@ -48,7 +48,7 @@ def get_raw_screenplays_for_you(URL: str) -> None:
 
         with open(f"rawfiles/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
-            rawfile_count += 1
+        rawfile_count += 1
 
     print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
     print(f"Total number of pdfs collected from 'Scripts For You': {pdf_count}")
@@ -64,12 +64,27 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
     Returns:
         str: link to the movie page
     """
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     base_link = URL[:-8]
     link_to_movie_page = a_tag.get("href")
 
     if link_to_movie_page.lower().endswith(".pdf"):
-        with open(f"rawfiles/screenplays_for_you_pdfs.txt", "a") as outfile:
-            outfile.write(movie_title + " : " + link_to_movie_page + "\n")
+        try:
+            content = requests.get(link_to_movie_page, headers=headers).content
+        except:
+            print(
+                f"Could not get {link_to_movie_page} for {movie_title} from Screenplays For You"
+            )
+            return
+
+        filename = ""
+        for ch in movie_title.lower():
+            if ch.isalnum() or ch == " ":
+                filename += ch
+        filename_2 = "_".join(filename.strip().split()) + ".pdf"
+
+        with open(f"rawfiles/{filename_2}", "wb") as outfile:
+            outfile.write(content)
         return None
 
     if link_to_movie_page.startswith("http"):
