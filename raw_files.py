@@ -41,7 +41,7 @@ def main():
 
     # DAILY SCRIPT
     print("DAILY SCRIPT - STARTED")
-    get_raw_files_daily_script(URL_DAILYSCRIPT)
+    # get_raw_files_daily_script(URL_DAILYSCRIPT)
     print("DAILY SCRIPT - FINISHED\n")
 
     # SCRIPT SAVANT
@@ -51,7 +51,7 @@ def main():
 
     # IMSDB
     print("IMSDB - STARTED")
-    # get_raw_files_imsdb(URL_IMSDB)
+    get_raw_files_imsdb(URL_IMSDB)
     print("IMSDB - FINISHED\n")
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
