@@ -2,6 +2,7 @@
 and write it to a file"""
 import requests
 from bs4 import BeautifulSoup
+import re
 
 
 def get_raw_script_pdf(URL: str) -> None:
@@ -11,6 +12,8 @@ def get_raw_script_pdf(URL: str) -> None:
         URL (str): URL of the 'Script PDFs' endpoint
     """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+    re_year = re.compile("\(\d{4}\)")
+
     try:
         home_page_html = requests.get(URL, headers=headers)
         home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
@@ -27,6 +30,12 @@ def get_raw_script_pdf(URL: str) -> None:
         for li_tag in li_tags:
             movie_title = li_tag.find("a").text
             link_to_pdf = li_tag.find("a").get("href")
+
+            try:
+                year = re.findall(re_year, movie_title)[0][1:-1]
+                movie_title = re.sub(re_year, "", movie_title).strip()
+            except IndexError:
+                year = None
 
             if (
                 movie_title.endswith(", The")
