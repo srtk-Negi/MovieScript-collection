@@ -67,7 +67,6 @@ def curate_filename(movie_title: str, file_type: str) -> str:
         if ch.isalnum() or ch == " ":
             filename += ch
     filename_2 = "_".join(filename.strip().split()) + file_type
-    print(filename_2)
     return filename_2
 
 
@@ -113,7 +112,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
             file_type = ".pdf"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(f"rawfiles/{filename_2}", "wb") as f:
+            with open(f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "wb") as f:
                 f.write(content)
                 pdf_count += 1
 
@@ -127,7 +126,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
             file_type = ".doc"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(f"rawfiles/{filename_2}", "wb") as f:
+            with open(f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
@@ -145,7 +144,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
             file_type = ".html"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(f"rawfiles/{filename_2}", "w", encoding="utf-8") as f:
+            with open(f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "w", encoding="utf-8") as f:
                 f.write(final_content)
                 text_count += 1
 
@@ -160,7 +159,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
             file_type = ".html"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(f"rawfiles/{filename_2}", "w", encoding="utf-8") as f:
+            with open(f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "w", encoding="utf-8") as f:
                 f.write(str(soup))
                 rawfile_count += 1
 
