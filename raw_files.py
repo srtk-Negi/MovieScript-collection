@@ -36,7 +36,7 @@ def main():
 
     # AWESOME FILM
     print("AWESOME FILM - STARTED")
-    get_raw_files_awesome_film(URL_AWESOME_FILM)
+    # get_raw_files_awesome_film(URL_AWESOME_FILM)
     print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
