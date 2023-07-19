@@ -1,9 +1,12 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 
+DATE_PATTERN = r"\d{4}(?:-\d{2})?|undated draft"
+
 
 def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
-    """Retreive, refine, and return a dictionary of mapped titles and urls for imsdb."""
+    """Extracts movie date and returns a dictionary of mapped titles and urls for imsdb."""
     movie_names_imsdb = []
     script_urls_imsdb = []
 
@@ -16,9 +19,16 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
 
     movie_title = ""
     movie_title_2 = ""
+    date = ""
 
     for p_tag in p_tags:
         movie_title = p_tag.find("a").text
+        match = re.findall(DATE_PATTERN, p_tag.text)
+
+        if match:
+            date = match[0]
+        else:
+            date = None
 
         if (
             movie_title.endswith(", The")
@@ -27,6 +37,7 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
         ):
             movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
         movie_names_imsdb.append(movie_title)
+        print(f"Movie Name: {movie_title}\nMovie Date: {date}\n")
 
     for movie_title in movie_names_imsdb:
         if movie_title == "The Rage: Carrie 2":
