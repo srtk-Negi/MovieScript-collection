@@ -26,6 +26,7 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
                 movie_link = "http://www.awesomefilm.com/" + td.a["href"]
             except Exception:
                 movie_link = "Not Found"
+
             movie_title = td.text.replace("\n", "").strip()
             if ":" in movie_title:
                 movie_title = movie_title.replace(":", ": ")
@@ -39,10 +40,13 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
 
             if re.search(SCRIPT_TYPE_MATCH, movie_title):
                 movie_title = re.sub(SCRIPT_TYPE_MATCH, "", movie_title).strip()
+
             if re.search(EXTRA_SPACES_MATCH, movie_title):
                 movie_title = re.sub(EXTRA_SPACES_MATCH, " ", movie_title)
+
             if movie_title.endswith("-"):
                 movie_title = movie_title[:-1].strip()
+
             if movie_title != "email" and movie_title != "":
                 awesome_film_names_and_links[movie_title] = movie_link
     return awesome_film_names_and_links
@@ -120,11 +124,8 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
                 print(f"Could not get {script_url} for {movie_title} from awesome film")
                 continue
 
-            filename = ""
-            for ch in movie_title.lower():
-                if ch.isalnum() or ch == " ":
-                    filename += ch
-            filename_2 = "_".join(filename.strip().split()) + ".doc"
+            file_type = ".doc"
+            filename_2 = curate_filename(movie_title, file_type)
 
             with open(f"rawfiles/{filename_2}", "wb") as f:
                 f.write(content)

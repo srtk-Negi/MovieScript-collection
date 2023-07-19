@@ -36,12 +36,12 @@ def main():
 
     # AWESOME FILM
     print("AWESOME FILM - STARTED")
-    get_raw_files_awesome_film(URL_AWESOME_FILM)
+    # get_raw_files_awesome_film(URL_AWESOME_FILM)
     print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
     print("DAILY SCRIPT - STARTED")
-    # get_raw_files_daily_script(URL_DAILYSCRIPT)
+    get_raw_files_daily_script(URL_DAILYSCRIPT)
     print("DAILY SCRIPT - FINISHED\n")
 
     # SCRIPT SAVANT
