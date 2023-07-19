@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-DATE_PATTERN = r"\d{4}(?:-\d{2})?|undated draft"
+IMSDB_DATE_PATTERN = r"\d{4}(?:-\d{2})?|undated draft"
 
 
 def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
@@ -23,7 +23,7 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
 
     for p_tag in p_tags:
         movie_title = p_tag.find("a").text
-        match = re.findall(DATE_PATTERN, p_tag.text)
+        match = re.findall(IMSDB_DATE_PATTERN, p_tag.text)
 
         if match:
             date = match[0]

@@ -1,7 +1,14 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
+
+date_patterns = [
+    r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b",
+    r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}\b",
+    r"\b\d{4}\b",
+]
 
 
 def get_movie_names_and_links_daily_script(URL_DAILY_SCRIPT: str) -> dict:
@@ -18,6 +25,20 @@ def get_movie_names_and_links_daily_script(URL_DAILY_SCRIPT: str) -> dict:
         script_info_text = script_info.text
         by_index = script_info_text.lower().find("by")
         movie_title = script_info_text[:by_index].strip().replace("\xa0", "")
+
+        match = ""
+        date = ""
+
+        for date_pattern in date_patterns:
+            match = re.search(date_pattern, script_info_text, re.IGNORECASE)
+            if match:
+                date = match.group()
+                break
+
+        if match == "":
+            date = None
+
+        print(f"Movie Title: {movie_title}\nMovie Date: {date}\n")
 
         if movie_title != previous_names:
             movie_link_tag = script_info.find("a").get("href")
