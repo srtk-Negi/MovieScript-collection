@@ -23,8 +23,29 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> None:
         if movie_title.endswith("Script"):
             movie_title = movie_title.replace(" Script", "")
 
-        with open("rawfiles/script_savant_pdfs.txt", "a", encoding="utf-8") as f:
+        filename = get_filename(movie_title)
+
+        with open(
+            f"F:\Movie-Data-Collection\Rawfiles\{filename}", "a", encoding="utf-8"
+        ) as f:
             f.write(f"{movie_title.strip()} - {movie_link}\n")
             pdf_count += 1
 
     print(f"Total number of PDFs collected from 'Script Savant': {pdf_count}")
+
+
+def get_filename(movie_name: str) -> str:
+    """Gets the filename for the rawfile
+
+    Args:
+        movie_name (str): The movie name
+
+    Returns:
+        str: The filename for the rawfile"""
+    char_list = ""
+    for ch in movie_name.lower():
+        if ch.isalnum() or ch == " ":
+            char_list += ch
+        filename = "_".join(char_list.strip().split()) + ".html"
+
+    return filename

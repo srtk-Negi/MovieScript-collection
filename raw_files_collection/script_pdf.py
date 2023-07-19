@@ -47,7 +47,9 @@ def get_raw_script_pdf(URL: str) -> None:
                     filename += ch
             filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
-            with open(f"rawfiles/{filename_2}", "wb") as outfile:
+            with open(
+                f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb"
+            ) as outfile:
                 outfile.write(content)
                 pdf_count += 1
 

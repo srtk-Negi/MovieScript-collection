@@ -61,7 +61,9 @@ def get_raw_screenplays_online(URL: str) -> None:
 
         filename = get_filename(movie_title)
 
-        with open(f"rawfiles/{filename}", "w", encoding="utf-8") as outfile:
+        with open(
+            f"F:\Movie-Data-Collection\Rawfiles\{filename}", "w", encoding="utf-8"
+        ) as outfile:
             outfile.write(str(rawfile_html))
             rawfile_count += 1
 
