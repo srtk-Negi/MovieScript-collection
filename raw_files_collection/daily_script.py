@@ -86,7 +86,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
             file_type = ".pdf"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "wb") as f:
+            with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as f:
                 f.write(content)
                 pdf_count += 1
 
@@ -100,7 +100,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
             file_type = ".doc"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "wb") as f:
+            with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
@@ -119,7 +119,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
             filename_2 = curate_filename(movie_title, file_type)
 
             with open(
-                f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "w", encoding="utf-8"
+                f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
             ) as f:
                 f.write(final_content)
                 txt_count += 1
@@ -136,7 +136,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
             filename_2 = curate_filename(movie_title, file_type)
 
             with open(
-                f"F:\Movie-Data-Collection\Rawfiles{filename_2}", "w", encoding="utf-8"
+                f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
             ) as f:
                 f.write(str(soup))
                 rawfile_count += 1
