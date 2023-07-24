@@ -5,12 +5,13 @@ from bs4 import BeautifulSoup
 import re
 
 
-def get_raw_screenplays_for_you(URL: str) -> None:
+def get_raw_screenplays_for_you(URL: str) -> list[str]:
     """Function to get the name of the movie, year of release, link to the movie page and rawfile (html of the movie page)
 
     Args:
         URL (str): URL of the scripts page (ALL) of 'Scripts For You' website
     """
+    MOVIE_NAMES = []
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     try:
         page_data = requests.get(URL, headers=headers)
@@ -54,6 +55,8 @@ def get_raw_screenplays_for_you(URL: str) -> None:
 
     print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
     print(f"Total number of pdfs collected from 'Scripts For You': {pdf_count}")
+
+    return MOVIE_NAMES
 
 
 def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> str:

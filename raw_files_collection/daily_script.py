@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
+
 date_patterns = [
     r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b",
     r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}\b",
@@ -68,7 +69,7 @@ def curate_filename(movie_title: str, file_type: str) -> str:
     return filename_2
 
 
-def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
+def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
     """Retreive html structure from script links and write raw html to files."""
     final_dict = {}
     try:
@@ -79,6 +80,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
         print(f"The URL {URL_DAILY_SCRIPT} did not work for 'Daily Script'")
         return
 
+    MOVIE_NAMES = []
     url_nz = URL_DAILY_SCRIPT.replace(".html", "_n-z.html")
     try:
         daily_script_names_and_links_2 = get_movie_names_and_links_daily_script(url_nz)
@@ -96,6 +98,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
     rawfile_count = 0
 
     for movie_title, script_url in final_dict.items():
+        MOVIE_NAMES.append(movie_title)
         if script_url.lower().endswith(".pdf"):
             try:
                 content = requests.get(script_url, headers=headers).content
@@ -165,3 +168,5 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> None:
     print(f"Total number of DOCs collected from 'Daily Script': {doc_count}")
     print(f"Total number of TXTs collected from 'Daily Script': {txt_count}")
     print(f"Total number of raw files collected from 'Daily Script': {rawfile_count}")
+
+    return MOVIE_NAMES

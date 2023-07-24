@@ -2,8 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> None:
+def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
     """Rewrites movie names and links from script savant to a file."""
+    MOVIE_NAMES = []
     try:
         content = requests.get(URL_SCRIPT_SAVANT).text
         soup = BeautifulSoup(content, "html.parser")
@@ -32,6 +33,7 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> None:
             pdf_count += 1
 
     print(f"Total number of PDFs collected from 'Script Savant': {pdf_count}")
+    return MOVIE_NAMES
 
 
 def get_filename(movie_name: str) -> str:

@@ -5,12 +5,13 @@ from bs4 import BeautifulSoup
 import re
 
 
-def get_raw_script_pdf(URL: str) -> None:
+def get_raw_script_pdf(URL: str) -> list[str]:
     """Function to get the name of the movie and the link to the pdf of the script from the 'Script PDFs' endpoint
 
     Args:
         URL (str): URL of the 'Script PDFs' endpoint
     """
+    MOVIE_NAMES = []
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     re_year = re.compile("\(\d{4}\)")
 
@@ -63,6 +64,7 @@ def get_raw_script_pdf(URL: str) -> None:
                 pdf_count += 1
 
     print(f"Total number of PDFs collected from 'Script PDFs': {pdf_count}")
+    return MOVIE_NAMES
 
 
 def switch_article(article: str, movie_name: str) -> str:

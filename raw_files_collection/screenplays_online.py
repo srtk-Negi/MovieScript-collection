@@ -7,7 +7,7 @@ import re
 re_year = re.compile("\(\d{4}\)")
 
 
-def get_raw_screenplays_online(URL: str) -> None:
+def get_raw_screenplays_online(URL: str) -> list[str]:
     """Function to get the name of the movie, link to the movie page and rawfile (html of the movie page)
 
     Args:
@@ -16,6 +16,7 @@ def get_raw_screenplays_online(URL: str) -> None:
     Returns:
         None
     """
+    MOVIE_NAMES = []
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     try:
         home_page_html = requests.get(URL, headers=headers)
@@ -68,6 +69,7 @@ def get_raw_screenplays_online(URL: str) -> None:
             rawfile_count += 1
 
     print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
+    return MOVIE_NAMES
 
 
 def get_movie_titles(row: BeautifulSoup) -> tuple:

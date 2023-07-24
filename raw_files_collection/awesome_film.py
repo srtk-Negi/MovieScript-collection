@@ -86,7 +86,7 @@ def switch_article(article: str, movie_name: str) -> str:
     return movie_name
 
 
-def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
+def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
     """Retrieve html structure from script links and write raw html to files."""
     try:
         awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
@@ -95,6 +95,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
     except:
         print("Provided URL did not work for awesome film")
         return
+    MOVIE_NAMES = []
 
     pdf_count = 0
     text_count = 0
@@ -102,6 +103,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
     rawfile_count = 0
 
     for movie_title, script_url in awesome_film_names_and_links.items():
+        MOVIE_NAMES.append(movie_title)
         if script_url.lower().endswith(".pdf"):
             try:
                 content = requests.get(script_url, headers=headers).content
@@ -171,3 +173,5 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> None:
     print(f"Total number of PDFs collected from 'Awesome Film': {pdf_count}")
     print(f"Total number of text files collected from 'Awesome Film': {text_count}")
     print(f"Total number of doc files collected from 'Awesome Film': {doc_count}")
+
+    return MOVIE_NAMES

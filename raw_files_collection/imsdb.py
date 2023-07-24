@@ -113,7 +113,7 @@ def switch_article(article: str, movie_name: str) -> str:
     return movie_name
 
 
-def get_raw_files_imsdb(URL_IMSDB: str) -> None:
+def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
     """Retreive html structure from script links and write raw html to files."""
     try:
         movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
@@ -121,9 +121,12 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> None:
         print("URL did not work for IMSDB.")
         return
 
+    MOVIE_NAMES = []
     rawfile_count = 0
 
     for movie_title in movie_names_and_links_imsdb:
+        MOVIE_NAMES.append(movie_title)
+
         script_url = movie_names_and_links_imsdb[movie_title]
         try:
             content = requests.get(script_url).text
@@ -140,3 +143,5 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> None:
             rawfile_count += 1
 
     print(f"The number of raw files collected from IMSDB is {rawfile_count}")
+
+    return MOVIE_NAMES
