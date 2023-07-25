@@ -82,7 +82,7 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
         try:
             content = requests.get(link_to_movie_page, headers=headers).content
         except:
-            return
+            return link_to_movie_page
 
         filename = ""
         for ch in movie_title.lower():

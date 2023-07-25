@@ -37,7 +37,6 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
         ):
             movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
         movie_names_imsdb.append(movie_title)
-        print(f"Movie Name: {movie_title}\nMovie Date: {date}\n")
 
     for movie_title in movie_names_imsdb:
         if movie_title == "The Rage: Carrie 2":

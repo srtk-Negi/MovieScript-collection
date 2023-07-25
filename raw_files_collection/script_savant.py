@@ -31,6 +31,7 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
             print(f"Could not get {movie_link} for {movie_title} from Script Savant.")
             continue
 
+        movie_title = " ".join(movie_title.split("_"))
         MOVIE_NAMES.append(movie_title)
 
         if movie_title.endswith("Script"):
@@ -58,7 +59,6 @@ def get_filename(movie_name: str) -> str:
 
     Returns:
         str: The filename for the rawfile"""
-    print(f"From function  - {movie_name}")
     char_list = ""
     for ch in movie_name.lower():
         if ch.isalnum() or ch == " ":
