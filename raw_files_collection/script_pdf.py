@@ -51,6 +51,8 @@ def get_raw_script_pdf(URL: str) -> list[str]:
                 print(f"Could not get {link_to_pdf} for {movie_title} from Script PDF.")
                 continue
 
+            MOVIE_NAMES.append(movie_title)
+
             filename = ""
             for ch in movie_title.lower():
                 if ch.isalnum() or ch == " ":

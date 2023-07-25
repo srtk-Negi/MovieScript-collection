@@ -60,6 +60,8 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
             )
             continue
 
+        MOVIE_NAMES.append(movie_title)
+
         filename = get_filename(movie_title)
 
         with open(
