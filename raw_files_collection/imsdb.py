@@ -117,7 +117,8 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
     try:
         movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
     except:
-        print("URL did not work for IMSDB.")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write("URL did not work for IMSDB\n")
         return
 
     MOVIE_NAMES = []
@@ -129,14 +130,17 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
             content = requests.get(script_url).text
             soup = BeautifulSoup(content, "html.parser")
         except:
-            print(f"Could not get content for {movie_title} from IMSDB")
+            with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                outfile.write(
+                    f"Could not get {script_url} for {movie_title} from IMSDB\n"
+                )
             continue
 
         MOVIE_NAMES.append(movie_title)
         file_type = ".html"
         filename_2 = curate_filename(movie_title, file_type)
 
-        with open(f"Rawfiles/{filename_2}", "a", encoding="utf-8") as f:
+        with open(f"rawfiles/imsdb/{filename_2}", "w", encoding="utf-8") as f:
             f.write(str(soup).strip())
             rawfile_count += 1
 

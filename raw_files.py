@@ -58,7 +58,7 @@ def main():
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
     # get_raw_script_slug(URL_SCRIPT_SLUG)
 
-    with open("movie_names.txt", "w", encoding="utf-8") as outfile:
+    with open("movie_names.txt", "a", encoding="utf-8") as outfile:
         outfile.write("\n".join(movie_names))
 
 

@@ -17,7 +17,8 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
         page_data = requests.get(URL, headers=headers)
         home_page_html = BeautifulSoup(page_data.text, "html.parser")
     except:
-        print("The URL did not work for 'Scripts For You'")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write("The URL did not work for 'Scripts For You'\n")
         return
 
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
@@ -38,7 +39,10 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
             rawfile = requests.get(link_to_movie_page, headers=headers)
             rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
         except:
-            print(f"{link_to_movie_page} did not work for {movie_title}")
+            with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                outfile.write(
+                    f"Could not get {link_to_movie_page} for {movie_title} from Screenplays For You\n"
+                )
             continue
 
         MOVIE_NAMES.append(movie_title)
@@ -51,7 +55,7 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
 
         with open(
             # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-            f"Rawfiles\{filename_2}",
+            f"rawfiles/screenplays_for_you/{filename_2}",
             "w",
             encoding="utf-8",
         ) as outfile:
@@ -91,7 +95,7 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
         filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
         # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as outfile:
-        with open(f"Rawfiles\{filename_2}", "wb") as outfile:
+        with open(f"rawfiles/screenplays_for_you/{filename_2}", "wb") as outfile:
             outfile.write(content)
         return "pdf"
 

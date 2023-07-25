@@ -1,0 +1,34 @@
+SCREENPLAYS FOR YOU - STARTED
+Total number of rawfiles collected from 'Scripts For You': 592
+Total number of pdfs collected from 'Scripts For You': 363
+SCREENPLAYS FOR YOU - FINISHED
+
+SCREENPLAYS ONLINE - STARTED
+Total number of rawfiles collected from 'Scripts For You': 117
+SCREENPLAYS ONLINE - FINISHED
+
+SCRIPT PDF - STARTED
+Total number of PDFs collected from 'Script PDFs': 253
+SCRIPT PDF - FINISHED 
+
+AWESOME FILM - STARTED
+Total number of raw files collected from 'Awesome Film': 62
+Total number of PDFs collected from 'Awesome Film': 34      
+Total number of text files collected from 'Awesome Film': 95
+Total number of doc files collected from 'Awesome Film': 3  
+AWESOME FILM - FINISHED
+
+DAILY SCRIPT - STARTED
+Total number of PDFs collected from 'Daily Script': 459
+Total number of DOCs collected from 'Daily Script': 8       
+Total number of TXTs collected from 'Daily Script': 260     
+Total number of raw files collected from 'Daily Script': 359
+DAILY SCRIPT - FINISHED
+
+SCRIPT SAVANT - STARTED
+Total number of PDFs collected from 'Script Savant': 3219
+SCRIPT SAVANT - FINISHED
+
+IMSDB - STARTED
+The number of raw files collected from IMSDB is 1209
+IMSDB - FINISHED

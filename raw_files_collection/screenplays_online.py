@@ -22,7 +22,8 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
         home_page_html = requests.get(URL, headers=headers)
         home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
     except:
-        print("The URL did not work for 'Screenplays Online'")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write("The URL did not work for 'Screenplays Online'\n")
         return
 
     table_rows = home_page_data.find("table", class_="screenplay-listing").find_all(
@@ -55,9 +56,10 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
             rawfile = requests.get(movie_page_link, headers=headers)
             rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
         except:
-            print(
-                f"Could not get the rawfile for {movie_title} from Screenplays Online"
-            )
+            with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                outfile.write(
+                    f"Could not get {movie_page_link} for {movie_title} from Screenplays Online\n"
+                )
             continue
 
         MOVIE_NAMES.append(movie_title)
@@ -66,7 +68,7 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
 
         with open(
             # f"F:\Movie-Data-Collection\Rawfiles\{filename}", "w", encoding="utf-8"
-            f"Rawfiles\{filename}",
+            f"rawfiles/screenplays_online/{filename}",
             "w",
             encoding="utf-8",
         ) as outfile:

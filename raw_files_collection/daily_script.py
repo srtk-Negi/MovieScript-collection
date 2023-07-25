@@ -75,10 +75,12 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             URL_DAILY_SCRIPT
         )
     except:
-        print(f"The URL {URL_DAILY_SCRIPT} did not work for 'Daily Script'")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write(
+                f"The URL {URL_DAILY_SCRIPT} did not work for 'Daily Script'\n"
+            )
         return
 
-    MOVIE_NAMES = []
     url_nz = URL_DAILY_SCRIPT.replace(".html", "_n-z.html")
     try:
         daily_script_names_and_links_2 = get_movie_names_and_links_daily_script(url_nz)
@@ -87,20 +89,27 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             **daily_script_names_and_links_2,
         }
     except:
-        print(f"The URL {URL_DAILY_SCRIPT} did not work for 'Daily Script'")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write(
+                f"The URL {URL_DAILY_SCRIPT} did not work for 'Daily Script'\n"
+            )
         return
 
     pdf_count = 0
     doc_count = 0
     txt_count = 0
     rawfile_count = 0
+    MOVIE_NAMES = []
 
     for movie_title, script_url in final_dict.items():
         if script_url.lower().endswith(".pdf"):
             try:
                 content = requests.get(script_url, headers=headers).content
             except:
-                print(f"Could not get {script_url} for {movie_title} from daily script")
+                with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                    outfile.write(
+                        f"Could not get {script_url} for {movie_title} from daily script\n"
+                    )
                 continue
 
             MOVIE_NAMES.append(movie_title)
@@ -108,7 +117,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             filename_2 = curate_filename(movie_title, file_type)
 
             # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as f:
-            with open(f"Rawfiles\{filename_2}", "wb") as f:
+            with open(f"rawfiles/daily_script/{filename_2}", "wb") as f:
                 f.write(content)
                 pdf_count += 1
 
@@ -116,7 +125,10 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             try:
                 content = requests.get(script_url, headers=headers).content
             except:
-                print(f"Could not get {script_url} for {movie_title} from daily script")
+                with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                    outfile.write(
+                        f"Could not get {script_url} for {movie_title} from daily script\n"
+                    )
                 continue
 
             MOVIE_NAMES.append(movie_title)
@@ -124,7 +136,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             filename_2 = curate_filename(movie_title, file_type)
 
             # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as f:
-            with open(f"Rawfiles\{filename_2}", "wb") as f:
+            with open(f"rawfiles/daily_script/{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
@@ -133,7 +145,10 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 content = requests.get(script_url, headers=headers).content
                 soup = BeautifulSoup(content, "html.parser")
             except:
-                print(f"Could not get {script_url} for {movie_title} from daily script")
+                with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                    outfile.write(
+                        f"Could not get {script_url} for {movie_title} from daily script\n"
+                    )
                 continue
 
             soup_str = str(soup)
@@ -145,7 +160,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
 
             with open(
                 # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-                f"Rawfiles\{filename_2}",
+                f"rawfiles/daily_script/{filename_2}",
                 "w",
                 encoding="utf-8",
             ) as f:
@@ -157,7 +172,10 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 content = requests.get(script_url, headers=headers)
                 soup = BeautifulSoup(content.text, "html.parser")
             except:
-                print(f"Could not get {script_url} for {movie_title} from daily script")
+                with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                    outfile.write(
+                        f"Could not get {script_url} for {movie_title} from daily script\n"
+                    )
                 continue
 
             MOVIE_NAMES.append(movie_title)
@@ -166,7 +184,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
 
             with open(
                 # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-                f"Rawfiles\{filename_2}",
+                f"rawfiles/daily_script/{filename_2}",
                 "w",
                 encoding="utf-8",
             ) as f:

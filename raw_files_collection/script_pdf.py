@@ -19,7 +19,8 @@ def get_raw_script_pdf(URL: str) -> list[str]:
         home_page_html = requests.get(URL, headers=headers)
         home_page_data = BeautifulSoup(home_page_html.text, "html.parser")
     except:
-        print("The URL did not work for 'Script PDFs'")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write("The URL did not work for 'Script PDFs'\n")
         return
 
     sections = home_page_data.find("div", class_="entry-content").find_all("ul")
@@ -48,7 +49,10 @@ def get_raw_script_pdf(URL: str) -> list[str]:
             try:
                 content = requests.get(link_to_pdf, headers=headers).content
             except:
-                print(f"Could not get {link_to_pdf} for {movie_title} from Script PDF.")
+                with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                    outfile.write(
+                        f"Could not get {link_to_pdf} for {movie_title} from Script PDF\n"
+                    )
                 continue
 
             MOVIE_NAMES.append(movie_title)
@@ -61,7 +65,7 @@ def get_raw_script_pdf(URL: str) -> list[str]:
 
             with open(
                 # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb"
-                f"Rawfiles\{filename_2}",
+                f"rawfiles/script_pdf/{filename_2}",
                 "wb",
             ) as outfile:
                 outfile.write(content)

@@ -10,7 +10,8 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
         content = requests.get(URL_SCRIPT_SAVANT, headers=headers)
         soup = BeautifulSoup(content.text, "html.parser")
     except:
-        print(f"Provided URL did not work for script savant")
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write(f"Provided URL did not work for script savant\n")
         return
 
     script_block = soup.find_all("td", align="left")[2]
@@ -28,20 +29,23 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
         try:
             pdf_content = requests.get(movie_link, headers=headers).content
         except:
-            print(f"Could not get {movie_link} for {movie_title} from Script Savant.")
+            with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                outfile.write(
+                    f"Could not get {movie_link} for {movie_title} from Script Savant\n"
+                )
             continue
-
-        movie_title = " ".join(movie_title.split("_"))
-        MOVIE_NAMES.append(movie_title)
 
         if movie_title.endswith("Script"):
             movie_title = movie_title.replace(" Script", "")
+
+        movie_title = " ".join(movie_title.split("_"))
+        MOVIE_NAMES.append(movie_title)
 
         filename = get_filename(movie_title)
 
         with open(
             # f"F:\Movie-Data-Collection\Rawfiles\{filename}", "a", encoding="utf-8"
-            f"Rawfiles\{filename}",
+            f"rawfiles/script_savant/{filename}",
             "wb",
         ) as f:
             f.write(pdf_content)
