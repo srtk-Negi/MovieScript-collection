@@ -22,27 +22,27 @@ def main():
     movie_names = []
     # SCREENPLAYS FOR YOU
     print("SCREENPLAYS FOR YOU - STARTED")
-    # movie_names.extend(get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU))
+    movie_names.extend(get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU))
     print("SCREENPLAYS FOR YOU - FINISHED\n")
 
     # SCREENPLAYS ONLINE
     print("SCREENPLAYS ONLINE - STARTED")
-    # movie_names.extend(get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE))
+    movie_names.extend(get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE))
     print("SCREENPLAYS ONLINE - FINISHED\n")
 
     # SCRIPT PDF
     print("SCRIPT PDF - STARTED")
-    # movie_names.extend(get_raw_script_pdf(URL_SCRIPT_PDF))
+    movie_names.extend(get_raw_script_pdf(URL_SCRIPT_PDF))
     print("SCRIPT PDF - FINISHED\n")
 
     # AWESOME FILM
     print("AWESOME FILM - STARTED")
-    # movie_names.extend(get_raw_files_awesome_film(URL_AWESOME_FILM))
+    movie_names.extend(get_raw_files_awesome_film(URL_AWESOME_FILM))
     print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
     print("DAILY SCRIPT - STARTED")
-    # movie_names.extend(get_raw_files_daily_script(URL_DAILYSCRIPT))
+    movie_names.extend(get_raw_files_daily_script(URL_DAILYSCRIPT))
     print("DAILY SCRIPT - FINISHED\n")
 
     # SCRIPT SAVANT
@@ -52,7 +52,7 @@ def main():
 
     # IMSDB
     print("IMSDB - STARTED")
-    # movie_names.extend(get_raw_files_imsdb(URL_IMSDB))
+    movie_names.extend(get_raw_files_imsdb(URL_IMSDB))
     print("IMSDB - FINISHED\n")
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
