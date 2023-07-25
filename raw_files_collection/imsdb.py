@@ -125,8 +125,6 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
     rawfile_count = 0
 
     for movie_title in movie_names_and_links_imsdb:
-        MOVIE_NAMES.append(movie_title)
-
         script_url = movie_names_and_links_imsdb[movie_title]
         try:
             content = requests.get(script_url).text
@@ -135,6 +133,7 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
             print(f"Could not get content for {movie_title} from IMSDB")
             continue
 
+        MOVIE_NAMES.append(movie_title)
         file_type = ".html"
         filename_2 = curate_filename(movie_title, file_type)
 

@@ -96,7 +96,6 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
     rawfile_count = 0
 
     for movie_title, script_url in final_dict.items():
-        MOVIE_NAMES.append(movie_title)
         if script_url.lower().endswith(".pdf"):
             try:
                 content = requests.get(script_url, headers=headers).content
@@ -104,6 +103,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 print(f"Could not get {script_url} for {movie_title} from daily script")
                 continue
 
+            MOVIE_NAMES.append(movie_title)
             file_type = ".pdf"
             filename_2 = curate_filename(movie_title, file_type)
 
@@ -119,6 +119,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 print(f"Could not get {script_url} for {movie_title} from daily script")
                 continue
 
+            MOVIE_NAMES.append(movie_title)
             file_type = ".doc"
             filename_2 = curate_filename(movie_title, file_type)
 
@@ -138,6 +139,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             soup_str = str(soup)
             final_content = f"<html><body>{soup_str}</body></html>"
 
+            MOVIE_NAMES.append(movie_title)
             file_type = ".html"
             filename_2 = curate_filename(movie_title, file_type)
 
@@ -158,6 +160,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 print(f"Could not get {script_url} for {movie_title} from daily script")
                 continue
 
+            MOVIE_NAMES.append(movie_title)
             file_type = ".html"
             filename_2 = curate_filename(movie_title, file_type)
 
