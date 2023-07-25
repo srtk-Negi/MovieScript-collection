@@ -30,7 +30,7 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
         movie_title, year = get_movie_title_and_year(a_tag)
         link_to_movie_page = get_link_to_movie_page(movie_title, a_tag, URL)
 
-        if link_to_movie_page == None:
+        if link_to_movie_page == "pdf":
             pdf_count += 1
             continue
 
@@ -41,6 +41,8 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
             print(f"{link_to_movie_page} did not work for {movie_title}")
             continue
 
+        MOVIE_NAMES.append(movie_title)
+
         filename = ""
         for ch in movie_title.lower():
             if ch.isalnum() or ch == " ":
@@ -48,7 +50,10 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
         filename_2 = "_".join(filename.strip().split()) + ".html"
 
         with open(
-            f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
+            # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
+            f"Rawfiles\{filename_2}",
+            "w",
+            encoding="utf-8",
         ) as outfile:
             outfile.write(str(rawfile_html))
         rawfile_count += 1
@@ -77,9 +82,6 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
         try:
             content = requests.get(link_to_movie_page, headers=headers).content
         except:
-            print(
-                f"Could not get {link_to_movie_page} for {movie_title} from Screenplays For You"
-            )
             return
 
         filename = ""
@@ -88,9 +90,10 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
                 filename += ch
         filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
-        with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as outfile:
+        # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as outfile:
+        with open(f"Rawfiles\{filename_2}", "wb") as outfile:
             outfile.write(content)
-        return None
+        return "pdf"
 
     if link_to_movie_page.startswith("http"):
         link_to_movie_page = base_link + link_to_movie_page[14:]

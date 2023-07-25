@@ -5,11 +5,12 @@ from bs4 import BeautifulSoup
 def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
     """Rewrites movie names and links from script savant to a file."""
     MOVIE_NAMES = []
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     try:
-        content = requests.get(URL_SCRIPT_SAVANT).text
-        soup = BeautifulSoup(content, "html.parser")
+        content = requests.get(URL_SCRIPT_SAVANT, headers=headers)
+        soup = BeautifulSoup(content.text, "html.parser")
     except:
-        print("Provided URL did not work for script savant")
+        print(f"Provided URL did not work for script savant")
         return
 
     script_block = soup.find_all("td", align="left")[2]
@@ -21,15 +22,28 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
         movie_link = "https://thescriptsavant.com/" + grouping["href"]
         movie_title = grouping.text
 
+        if movie_link.endswith("#TOP-section"):
+            continue
+
+        try:
+            pdf_content = requests.get(movie_link, headers=headers).content
+        except:
+            print(f"Could not get {movie_link} for {movie_title} from Script Savant.")
+            continue
+
+        MOVIE_NAMES.append(movie_title)
+
         if movie_title.endswith("Script"):
             movie_title = movie_title.replace(" Script", "")
 
         filename = get_filename(movie_title)
 
         with open(
-            f"F:\Movie-Data-Collection\Rawfiles\{filename}", "a", encoding="utf-8"
+            # f"F:\Movie-Data-Collection\Rawfiles\{filename}", "a", encoding="utf-8"
+            f"Rawfiles\{filename}",
+            "wb",
         ) as f:
-            f.write(f"{movie_title.strip()} - {movie_link}\n")
+            f.write(pdf_content)
             pdf_count += 1
 
     print(f"Total number of PDFs collected from 'Script Savant': {pdf_count}")
@@ -44,10 +58,11 @@ def get_filename(movie_name: str) -> str:
 
     Returns:
         str: The filename for the rawfile"""
+    print(f"From function  - {movie_name}")
     char_list = ""
     for ch in movie_name.lower():
         if ch.isalnum() or ch == " ":
             char_list += ch
-        filename = "_".join(char_list.strip().split()) + ".html"
+        filename = "_".join(char_list.strip().split()) + ".pdf"
 
     return filename

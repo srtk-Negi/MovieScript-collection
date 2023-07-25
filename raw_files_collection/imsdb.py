@@ -138,7 +138,7 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
         file_type = ".html"
         filename_2 = curate_filename(movie_title, file_type)
 
-        with open(f"rawfiles/{filename_2}", "a", encoding="utf-8") as f:
+        with open(f"Rawfiles/{filename_2}", "a", encoding="utf-8") as f:
             f.write(str(soup).strip())
             rawfile_count += 1
 
