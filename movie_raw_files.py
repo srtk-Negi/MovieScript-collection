@@ -1,11 +1,11 @@
-from raw_files_collection.screenplays_for_you import get_raw_screenplays_for_you
-from raw_files_collection.screenplays_online import get_raw_screenplays_online
-from raw_files_collection.script_slug import get_raw_script_slug
-from raw_files_collection.awesome_film import get_raw_files_awesome_film
-from raw_files_collection.daily_script import get_raw_files_daily_script
-from raw_files_collection.imsdb import get_raw_files_imsdb
-from raw_files_collection.script_pdf import get_raw_script_pdf
-from raw_files_collection.script_savant import get_raw_script_savant
+from raw_files_collector.screenplays_for_you import get_raw_screenplays_for_you
+from raw_files_collector.screenplays_online import get_raw_screenplays_online
+from raw_files_collector.script_slug import get_raw_script_slug
+from raw_files_collector.awesome_film import get_raw_files_awesome_film
+from raw_files_collector.daily_script import get_raw_files_daily_script
+from raw_files_collector.imsdb import get_raw_files_imsdb
+from raw_files_collector.script_pdf import get_raw_script_pdf
+from raw_files_collector.script_savant import get_raw_script_savant
 
 
 URL_SCREENPLAYS_FOR_YOU = "https://sfy.ru/scripts/"
