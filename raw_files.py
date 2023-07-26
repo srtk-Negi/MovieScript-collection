@@ -7,6 +7,7 @@ from raw_files_collection.imsdb import get_raw_files_imsdb
 from raw_files_collection.script_pdf import get_raw_script_pdf
 from raw_files_collection.script_savant import get_raw_script_savant
 
+
 URL_SCREENPLAYS_FOR_YOU = "https://sfy.ru/scripts/"
 URL_SCREENPLAYS_ONLINE = "https://www.screenplays-online.de/"
 URL_SCRIPT_SLUG = "https://www.scriptslug.com/request/?pg="
