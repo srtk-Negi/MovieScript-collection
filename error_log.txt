@@ -13,4 +13,3 @@ Could not get http://shakti.trincoll.edu/~afine/screen2.pdf for Rent from Screen
 Could not get http://home.online.no/~bhundlan/scripts/TheRoyalTenenbaums.pdf for The Royal Tenenbaums from Screenplays For You
 Could not get http://home.online.no/~bhundlan/scripts/True_Romance.pdf for True Romance from Screenplays For You
 Could not get http://www.vagrantmovie.com/Vagrant.pdf for Vagrant from Screenplays For You
-Provided URL did not work for awesome film

@@ -12,17 +12,15 @@ Total number of PDFs collected from 'Script PDFs': 253
 SCRIPT PDF - FINISHED 
 
 AWESOME FILM - STARTED
-Total number of raw files collected from 'Awesome Film': 62
+Total number of html files collected from 'Awesome Film': 153
 Total number of PDFs collected from 'Awesome Film': 33      
-Total number of text files collected from 'Awesome Film': 91
 Total number of doc files collected from 'Awesome Film': 3 
 AWESOME FILM - FINISHED
 
 DAILY SCRIPT - STARTED
+Total number of html files collected from 'Daily Script': 617
 Total number of PDFs collected from 'Daily Script': 459
-Total number of DOCs collected from 'Daily Script': 8       
-Total number of TXTs collected from 'Daily Script': 260     
-Total number of raw files collected from 'Daily Script': 359
+Total number of DOCs collected from 'Daily Script': 8 
 DAILY SCRIPT - FINISHED
 
 SCRIPT SAVANT - STARTED

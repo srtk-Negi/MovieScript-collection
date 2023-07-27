@@ -97,8 +97,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
 
     pdf_count = 0
     doc_count = 0
-    txt_count = 0
-    rawfile_count = 0
+    html_count = 0
     MOVIE_NAMES = []
 
     for movie_title, script_url in final_dict.items():
@@ -152,7 +151,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 continue
 
             soup_str = str(soup)
-            final_content = f"<html><body>{soup_str}</body></html>"
+            final_content = f"<html><pre>{soup_str}</pre></html>"
 
             MOVIE_NAMES.append(movie_title)
             file_type = ".html"
@@ -165,9 +164,9 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 encoding="utf-8",
             ) as f:
                 f.write(final_content)
-                txt_count += 1
+                html_count += 1
 
-        else:
+        elif script_url.lower().endswith(".html") or script_url.lower().endswith("htm"):
             try:
                 content = requests.get(script_url, headers=headers)
                 soup = BeautifulSoup(content.text, "html.parser")
@@ -189,11 +188,12 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
                 encoding="utf-8",
             ) as f:
                 f.write(str(soup))
-                rawfile_count += 1
+                html_count += 1
+        else:
+            print(f"Could not get {script_url} for {movie_title} from daily script")
 
+    print(f"Total number of html files collected from 'Daily Script': {html_count}")
     print(f"Total number of PDFs collected from 'Daily Script': {pdf_count}")
     print(f"Total number of DOCs collected from 'Daily Script': {doc_count}")
-    print(f"Total number of TXTs collected from 'Daily Script': {txt_count}")
-    print(f"Total number of raw files collected from 'Daily Script': {rawfile_count}")
 
     return MOVIE_NAMES

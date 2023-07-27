@@ -208,7 +208,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
                 f.write(str(soup))
                 html_count += 1
 
-    print(f"Total number of html collected from 'Awesome Film': {html_count}")
+    print(f"Total number of html files collected from 'Awesome Film': {html_count}")
     print(f"Total number of PDFs collected from 'Awesome Film': {pdf_count}")
     print(f"Total number of doc files collected from 'Awesome Film': {doc_count}")
 
