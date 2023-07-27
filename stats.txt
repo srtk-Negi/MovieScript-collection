@@ -13,9 +13,9 @@ SCRIPT PDF - FINISHED
 
 AWESOME FILM - STARTED
 Total number of raw files collected from 'Awesome Film': 62
-Total number of PDFs collected from 'Awesome Film': 34      
-Total number of text files collected from 'Awesome Film': 95
-Total number of doc files collected from 'Awesome Film': 3  
+Total number of PDFs collected from 'Awesome Film': 33      
+Total number of text files collected from 'Awesome Film': 91
+Total number of doc files collected from 'Awesome Film': 3 
 AWESOME FILM - FINISHED
 
 DAILY SCRIPT - STARTED
