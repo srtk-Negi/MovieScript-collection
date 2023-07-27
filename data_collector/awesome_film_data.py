@@ -5,7 +5,7 @@ import re
 RE_HTML_TAG = re.compile(r"<[^>]*>")
 
 
-def get_awesome_film_script():
+def get_awesome_film_scripts():
     rawfiles = os.listdir("rawfiles/awesome_film")
     pdf_doc_counter = 0
     html_counter = 0

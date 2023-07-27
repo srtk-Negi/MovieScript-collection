@@ -39,12 +39,11 @@ def main():
     # AWESOME FILM
     # print("AWESOME FILM - STARTED")
     # movie_names.extend(get_raw_files_awesome_film(URL_AWESOME_FILM))
-    # get_raw_files_awesome_film(URL_AWESOME_FILM)
     # print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
     # print("DAILY SCRIPT - STARTED")
-    movie_names.extend(get_raw_files_daily_script(URL_DAILYSCRIPT))
+    # movie_names.extend(get_raw_files_daily_script(URL_DAILYSCRIPT))
     # print("DAILY SCRIPT - FINISHED\n")
 
     # SCRIPT SAVANT
@@ -54,7 +53,8 @@ def main():
 
     # IMSDB
     # print("IMSDB - STARTED")
-    # movie_names.extend(get_raw_files_imsdb(URL_IMSDB))
+    movie_names.extend(get_raw_files_imsdb(URL_IMSDB))
+    # get_raw_files_imsdb(URL_IMSDB)
     # print("IMSDB - FINISHED\n")
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)

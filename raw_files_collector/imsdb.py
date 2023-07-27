@@ -122,7 +122,7 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
         return
 
     MOVIE_NAMES = []
-    rawfile_count = 0
+    html_count = 0
 
     for movie_title in movie_names_and_links_imsdb:
         script_url = movie_names_and_links_imsdb[movie_title]
@@ -142,8 +142,8 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
 
         with open(f"rawfiles/imsdb/{filename_2}", "w", encoding="utf-8") as f:
             f.write(str(soup).strip())
-            rawfile_count += 1
+            html_count += 1
 
-    print(f"The number of raw files collected from IMSDB is {rawfile_count}")
+    print(f"Total number of html files collected from IMSDB {html_count}")
 
     return MOVIE_NAMES
