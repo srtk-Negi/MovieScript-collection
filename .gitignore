@@ -1,6 +1,8 @@
 .venv
 __pycache__
 rawfiles
-raw_files.py
 .env
-Rawfiles
+rawfiles
+rawfiles_copy
+data_files
+

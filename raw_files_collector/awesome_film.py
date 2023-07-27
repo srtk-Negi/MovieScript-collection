@@ -154,7 +154,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
                 continue
 
             soup_str = str(soup)
-            final_content = f"<html><body>{soup_str}</body></html>"
+            final_content = f"<html><pre>{soup_str}</pre></html>"
 
             MOVIE_NAMES.append(movie_title)
             file_type = ".html"
