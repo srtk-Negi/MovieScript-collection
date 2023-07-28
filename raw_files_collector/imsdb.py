@@ -52,7 +52,6 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
                 .get("href")
             )
         except:
-            print(f"Cant get {movie_title} script")
             continue
 
         name_link_dict[movie_title] = movie_script_link
@@ -95,38 +94,35 @@ def switch_article(article: str, movie_name: str) -> str:
 
 def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
     """Retreive html structure from script links and write raw html to files."""
-    # try:
-    movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
-    # except:
-    #     with open("error_log.txt", "a", encoding="utf-8") as outfile:
-    #         outfile.write("URL did not work for IMSDB\n")
-    #     return
+    try:
+        movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
+    except:
+        with open("error_log.txt", "a", encoding="utf-8") as outfile:
+            outfile.write("URL did not work for IMSDB\n")
+            return
 
     MOVIE_NAMES = []
-    # html_count = 0
 
-    for movie_title, movie_link in movie_names_and_links_imsdb.items():
-        with open("test.txt", "a", encoding="utf-8") as outfile:
-            outfile.write(f"{movie_title} - {movie_link}\n")
-    #     script_url = movie_names_and_links_imsdb[movie_title]
-    #     try:
-    #         content = requests.get(script_url).text
-    #         soup = BeautifulSoup(content, "html.parser")
-    #     except:
-    #         with open("error_log.txt", "a", encoding="utf-8") as outfile:
-    #             outfile.write(
-    #                 f"Could not get {script_url} for {movie_title} from IMSDB\n"
-    #             )
-    #         continue
+    html_count = 0
+    for movie_title, script_url in movie_names_and_links_imsdb.items():
+        try:
+            content = requests.get(script_url).text
+            soup = BeautifulSoup(content, "html.parser")
+        except:
+            with open("error_log.txt", "a", encoding="utf-8") as outfile:
+                outfile.write(
+                    f"Could not get {script_url} for {movie_title} from IMSDB\n"
+                )
+            continue
 
-    #     MOVIE_NAMES.append(movie_title)
-    #     file_type = ".html"
-    #     filename_2 = curate_filename(movie_title, file_type)
+        MOVIE_NAMES.append(movie_title)
+        file_type = ".html"
+        filename_2 = curate_filename(movie_title, file_type)
 
-    #     with open(f"rawfiles/imsdb/{filename_2}", "w", encoding="utf-8") as f:
-    #         f.write(str(soup).strip())
-    #         html_count += 1
+        with open(f"rawfiles/imsdb/{filename_2}", "w", encoding="utf-8") as f:
+            f.write(str(soup).strip())
+            html_count += 1
 
-    # print(f"Total number of html files collected from IMSDB {html_count}")
+    print(f"Total number of html files collected from IMSDB {html_count}")
 
     return MOVIE_NAMES
