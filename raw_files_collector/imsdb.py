@@ -3,6 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 
 IMSDB_DATE_PATTERN = r"\d{4}(?:-\d{2})?|undated draft"
+YEAR_PATTERN = r"\(\d{4}\)"
+
 MOVIE_PAGE_URL = "https://imsdb.com/Movie%20Scripts/"
 MOVIE_SCRIPT_URL = "https://imsdb.com/"
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
@@ -21,12 +23,11 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
     td = table.find_all("td", valign="top")[1]
     p_tags = td.find_all("p")
 
-    movie_title = ""
-
     for p_tag in p_tags:
         movie_title = p_tag.find("a").text
         movie_page = MOVIE_PAGE_URL + p_tag.find("a").get("href")
 
+        movie_title = re.sub(YEAR_PATTERN, "", movie_title).strip()
         match = re.findall(IMSDB_DATE_PATTERN, p_tag.text)
         date = match[0] if match else None
 
