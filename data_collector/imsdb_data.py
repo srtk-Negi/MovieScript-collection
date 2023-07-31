@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 import os
+import re
+
+RE_HTML_TAG = re.compile(r"<[^>]*>")
 
 
 def get_imsdb_scripts():
@@ -11,6 +14,7 @@ def get_imsdb_scripts():
             soup = BeautifulSoup(content, "html.parser")
 
             script = soup.find("pre")
+            script = RE_HTML_TAG.sub("", str(script))
 
         with open(
             f"data_files/imsdb/{rawfile[:-5]}" + ".txt", "w", encoding="utf-8"
