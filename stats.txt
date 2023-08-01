@@ -1,5 +1,5 @@
 SCREENPLAYS FOR YOU - STARTED
-Total number of rawfiles collected from 'Scripts For You': 592
+Total number of html files collected from 'Scripts For You': 592
 Total number of pdfs collected from 'Scripts For You': 363
 SCREENPLAYS FOR YOU - FINISHED
 

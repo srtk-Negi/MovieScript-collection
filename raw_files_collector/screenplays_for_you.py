@@ -24,7 +24,7 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
     movie_elements_p = home_page_html.find("div", class_="two-thirds").find_all("p")
     del movie_elements_p[0]
 
-    rawfile_count = 0
+    html_count = 0
     pdf_count = 0
     for element in movie_elements_p:
         a_tag = element.find("a")
@@ -35,35 +35,37 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
             pdf_count += 1
             continue
 
-        try:
-            rawfile = requests.get(link_to_movie_page, headers=headers)
-            rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
-        except:
-            with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                outfile.write(
-                    f"Could not get {link_to_movie_page} for {movie_title} from Screenplays For You\n"
-                )
-            continue
+        print(f"{movie_title} - {link_to_movie_page}")
 
-        MOVIE_NAMES.append(movie_title)
+    #     try:
+    #         rawfile = requests.get(link_to_movie_page, headers=headers)
+    #         rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
+    #     except:
+    #         with open("error_log.txt", "a", encoding="utf-8") as outfile:
+    #             outfile.write(
+    #                 f"Could not get {link_to_movie_page} for {movie_title} from Screenplays For You\n"
+    #             )
+    #         continue
 
-        filename = ""
-        for ch in movie_title.lower():
-            if ch.isalnum() or ch == " ":
-                filename += ch
-        filename_2 = "_".join(filename.strip().split()) + ".html"
+    #     MOVIE_NAMES.append(movie_title)
 
-        with open(
-            # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-            f"rawfiles/screenplays_for_you/{filename_2}",
-            "w",
-            encoding="utf-8",
-        ) as outfile:
-            outfile.write(str(rawfile_html))
-        rawfile_count += 1
+    #     filename = ""
+    #     for ch in movie_title.lower():
+    #         if ch.isalnum() or ch == " ":
+    #             filename += ch
+    #     filename_2 = "_".join(filename.strip().split()) + ".html"
 
-    print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
-    print(f"Total number of pdfs collected from 'Scripts For You': {pdf_count}")
+    #     with open(
+    #         # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
+    #         f"rawfiles/screenplays_for_you/{filename_2}",
+    #         "w",
+    #         encoding="utf-8",
+    #     ) as outfile:
+    #         outfile.write(str(rawfile_html))
+    #     html_count += 1
+
+    # print(f"Total number of html files collected from 'Scripts For You': {html_count}")
+    # print(f"Total number of pdfs collected from 'Scripts For You': {pdf_count}")
 
     return MOVIE_NAMES
 
@@ -95,9 +97,9 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
         filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
         # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as outfile:
-        with open(f"rawfiles/screenplays_for_you/{filename_2}", "wb") as outfile:
-            outfile.write(content)
-        return "pdf"
+        # with open(f"rawfiles/screenplays_for_you/{filename_2}", "wb") as outfile:
+        #     outfile.write(content)
+        # return "pdf"
 
     if link_to_movie_page.startswith("http"):
         link_to_movie_page = base_link + link_to_movie_page[14:]
