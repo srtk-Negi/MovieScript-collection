@@ -26,5 +26,3 @@ def get_screenplays_online_scripts():
                 except:
                     with open("test.txt", "a", encoding="utf-8") as f:
                         f.write(f"{rawfile}\n")
-
-    print(worked)
