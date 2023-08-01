@@ -3,6 +3,8 @@ from data_collector.daily_script_data import get_daily_script_scripts
 from data_collector.imsdb_data import get_imsdb_scripts
 from data_collector.screenplays_for_you_data import get_screenplays_for_you_scripts
 from data_collector.screenplays_online_data import get_screenplays_online_scripts
+from data_collector.script_pdf_data import get_script_pdf_scripts
+from data_collector.script_savant_data import get_script_savant_scripts
 
 
 def main():
@@ -10,7 +12,9 @@ def main():
     # get_daily_script_scripts()
     # get_imsdb_scripts()
     # get_screenplays_for_you_scripts()
-    get_screenplays_online_scripts()
+    # get_screenplays_online_scripts()
+    get_script_pdf_scripts()
+    # get_script_savant_scripts()
 
 
 if __name__ == "__main__":
