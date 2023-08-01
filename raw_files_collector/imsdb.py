@@ -7,6 +7,7 @@ YEAR_PATTERN = r"\(\d{4}\)"
 
 MOVIE_PAGE_URL = "https://imsdb.com/Movie%20Scripts/"
 MOVIE_SCRIPT_URL = "https://imsdb.com/"
+FILEPATH = "F:/Movie-Data-Collection/imsdb"
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
 
@@ -42,7 +43,6 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
             movie_page_html = requests.get(movie_page, headers=headers)
             movie_page_soup = BeautifulSoup(movie_page_html.text, "html.parser")
         except:
-            print(f"Cant get {movie_title} page")
             continue
 
         try:
@@ -119,7 +119,7 @@ def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
         file_type = ".html"
         filename_2 = curate_filename(movie_title, file_type)
 
-        with open(f"rawfiles/imsdb/{filename_2}", "w", encoding="utf-8") as f:
+        with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
             f.write(str(soup).strip())
             html_count += 1
 

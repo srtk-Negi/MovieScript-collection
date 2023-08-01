@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+FILEPATH = "F:/Movie-Data-Collection/screenplays_for_you"
+
 
 def get_raw_screenplays_for_you(URL: str) -> list[str]:
     """Function to get the name of the movie, year of release, link to the movie page and rawfile (html of the movie page)
@@ -54,11 +56,7 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
         filename_2 = "_".join(filename.strip().split()) + ".html"
 
         with open(
-            # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-            f"rawfiles/screenplays_for_you/{filename_2}",
-            "w",
-            encoding="utf-8",
-        ) as outfile:
+            f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
         html_count += 1
 
@@ -94,8 +92,7 @@ def get_link_to_movie_page(movie_title: str, a_tag: BeautifulSoup, URL: str) -> 
                 filename += ch
         filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
-        # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as outfile:
-        with open(f"rawfiles/screenplays_for_you/{filename_2}", "wb") as outfile:
+        with open(f"{FILEPATH}/{filename_2}", "wb") as outfile:
             outfile.write(content)
         return "pdf"
 

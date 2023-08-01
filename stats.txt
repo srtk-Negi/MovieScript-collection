@@ -9,18 +9,18 @@ SCREENPLAYS ONLINE - FINISHED
 
 SCRIPT PDF - STARTED
 Total number of PDFs collected from 'Script PDFs': 253
-SCRIPT PDF - FINISHED 
+SCRIPT PDF - FINISHED
 
 AWESOME FILM - STARTED
-Total number of html files collected from 'Awesome Film': 153
-Total number of PDFs collected from 'Awesome Film': 33      
-Total number of doc files collected from 'Awesome Film': 3 
+Total number of html files collected from 'Awesome Film': 148
+Total number of PDFs collected from 'Awesome Film': 33
+Total number of doc files collected from 'Awesome Film': 3
 AWESOME FILM - FINISHED
 
 DAILY SCRIPT - STARTED
 Total number of html files collected from 'Daily Script': 617
 Total number of PDFs collected from 'Daily Script': 459
-Total number of DOCs collected from 'Daily Script': 8 
+Total number of DOCs collected from 'Daily Script': 8
 DAILY SCRIPT - FINISHED
 
 SCRIPT SAVANT - STARTED
@@ -28,5 +28,5 @@ Total number of PDFs collected from 'Script Savant': 3219
 SCRIPT SAVANT - FINISHED
 
 IMSDB - STARTED
-The number of raw files collected from IMSDB is 1209
+Total number of html files collected from IMSDB 1200
 IMSDB - FINISHED

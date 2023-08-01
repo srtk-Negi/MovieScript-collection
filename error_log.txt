@@ -13,3 +13,11 @@ Could not get http://shakti.trincoll.edu/~afine/screen2.pdf for Rent from Screen
 Could not get http://home.online.no/~bhundlan/scripts/TheRoyalTenenbaums.pdf for The Royal Tenenbaums from Screenplays For You
 Could not get http://home.online.no/~bhundlan/scripts/True_Romance.pdf for True Romance from Screenplays For You
 Could not get http://www.vagrantmovie.com/Vagrant.pdf for Vagrant from Screenplays For You
+Could not get http://www.awesomefilm.com/script/AirForceOne_TXT.htm for AirForce One from Awesome Films.
+Could not get http://www.awesomefilm.com/script/LAWNDOGS.htm for Lawn Dogs from Awesome Films.
+Could not get http://www.awesomefilm.com/script/The%20Limey,%20production%20draft,%20by%20lem%20Dobbs.htm for The Limey from Awesome Films.
+Could not get http://www.awesomefilm.com/script/millers_crossing.htm for Miller's Crossing from Awesome Films.
+Could not get http://www.awesomefilm.com/script/aboutmary.htm for There's Something about Mary from Awesome Films.
+Could not get https://www.dailyscript.com/scripts/AVP-FinalProduction.RTF for Alien vs. Predator from daily scriptCould not get https://www.dailyscript.com/scripts/foxcatcher.jpg for Foxcatcher from daily scriptCould not get https://imsdb.com//scripts/8-Mile.pdf for 8 Mile from IMSDB
+Could not get https://imsdb.com//scripts/Awakenings.html for Awakenings from IMSDB
+Could not get https://imsdb.com//scripts/Valkyrie.html for Valkyrie from IMSDB

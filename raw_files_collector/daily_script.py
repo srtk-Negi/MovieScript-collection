@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
+FILEPATH = "F:/Movie-Data-Collection/daily_script"
 
 
 date_patterns = [
@@ -115,8 +116,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             file_type = ".pdf"
             filename_2 = curate_filename(movie_title, file_type)
 
-            # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as f:
-            with open(f"rawfiles/daily_script/{filename_2}", "wb") as f:
+            with open(f"{FILEPATH}/{filename_2}", "wb") as f:
                 f.write(content)
                 pdf_count += 1
 
@@ -134,8 +134,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             file_type = ".doc"
             filename_2 = curate_filename(movie_title, file_type)
 
-            # with open(f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "wb") as f:
-            with open(f"rawfiles/daily_script/{filename_2}", "wb") as f:
+            with open(f"{FILEPATH}/{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
@@ -158,11 +157,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             filename_2 = curate_filename(movie_title, file_type)
 
             with open(
-                # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-                f"rawfiles/daily_script/{filename_2}",
-                "w",
-                encoding="utf-8",
-            ) as f:
+                f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
                 f.write(final_content)
                 html_count += 1
 
@@ -182,15 +177,12 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             filename_2 = curate_filename(movie_title, file_type)
 
             with open(
-                # f"F:\Movie-Data-Collection\Rawfiles\{filename_2}", "w", encoding="utf-8"
-                f"rawfiles/daily_script/{filename_2}",
-                "w",
-                encoding="utf-8",
-            ) as f:
+                f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
                 f.write(str(soup))
                 html_count += 1
         else:
-            print(f"Could not get {script_url} for {movie_title} from daily script")
+            with open("error_log.txt", "a", encoding="utf-8") as f:
+                f.write(f"Could not get {script_url} for {movie_title} from daily script")
 
     print(f"Total number of html files collected from 'Daily Script': {html_count}")
     print(f"Total number of PDFs collected from 'Daily Script': {pdf_count}")

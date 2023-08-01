@@ -6,6 +6,8 @@ import re
 
 re_year = re.compile("\(\d{4}\)")
 
+FILEPATH = "F:/Movie-Data-Collection/screenplays_online"
+
 
 def get_raw_screenplays_online(URL: str) -> list[str]:
     """Function to get the name of the movie, link to the movie page and rawfile (html of the movie page)
@@ -41,7 +43,7 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
         if movie_2:
             title_link_map[movie_2] = link_2
 
-    rawfile_count = 0
+    html_count = 0
     for movie_title, movie_page_link in title_link_map.items():
         movie_title = re.sub(re_year, "", movie_title).strip()
 
@@ -67,15 +69,11 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
         filename = get_filename(movie_title)
 
         with open(
-            # f"F:\Movie-Data-Collection\Rawfiles\{filename}", "w", encoding="utf-8"
-            f"rawfiles/screenplays_online/{filename}",
-            "w",
-            encoding="utf-8",
-        ) as outfile:
+            f"{FILEPATH}/{filename}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
-            rawfile_count += 1
+            html_count += 1
 
-    print(f"Total number of rawfiles collected from 'Scripts For You': {rawfile_count}")
+    print(f"Total number of html files collected from 'Screenplays Online': {html_count}")
     return MOVIE_NAMES
 
 
