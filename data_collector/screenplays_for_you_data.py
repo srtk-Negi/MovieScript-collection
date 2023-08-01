@@ -29,3 +29,4 @@ def get_screenplays_for_you_scripts():
                 except:
                     with open("test.txt", "a", encoding="utf-8") as f:
                         f.write(f"{rawfile}\n")
+    print(f"Total number of scripts collected from 'Scripts For You': {worked}")
