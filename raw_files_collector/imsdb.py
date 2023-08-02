@@ -7,7 +7,8 @@ YEAR_PATTERN = r"\(\d{4}\)"
 
 MOVIE_PAGE_URL = "https://imsdb.com/Movie%20Scripts/"
 MOVIE_SCRIPT_URL = "https://imsdb.com/"
-FILEPATH = "F:/Movie-Data-Collection/imsdb"
+# FILEPATH = "F:/Movie-Data-Collection/imsdb"
+FILEPATH = "rawfiles"
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
 

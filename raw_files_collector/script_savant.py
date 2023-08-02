@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
-FILEPATH = "F:/Movie-Data-Collection/script_savant"
+# FILEPATH = "F:/Movie-Data-Collection/script_savant"
+FILEPATH = "rawfiles"
+
 
 def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
     """Rewrites movie names and links from script savant to a file."""
@@ -44,8 +46,7 @@ def get_raw_script_savant(URL_SCRIPT_SAVANT: str) -> list[str]:
 
         filename = get_filename(movie_title)
 
-        with open(
-            f"{FILEPATH}/{filename}", "wb") as f:
+        with open(f"{FILEPATH}/{filename}", "wb") as f:
             f.write(pdf_content)
             pdf_count += 1
 

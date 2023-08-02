@@ -4,7 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-FILEPATH = "F:/Movie-Data-Collection/script_pdf"
+# FILEPATH = "F:/Movie-Data-Collection/script_pdf"
+FILEPATH = "rawfiles"
 
 
 def get_raw_script_pdf(URL: str) -> list[str]:
@@ -65,8 +66,7 @@ def get_raw_script_pdf(URL: str) -> list[str]:
                     filename += ch
             filename_2 = "_".join(filename.strip().split()) + ".pdf"
 
-            with open(
-                f"{FILEPATH}/{filename_2}", "wb") as outfile:
+            with open(f"{FILEPATH}/{filename_2}", "wb") as outfile:
                 outfile.write(content)
                 pdf_count += 1
 

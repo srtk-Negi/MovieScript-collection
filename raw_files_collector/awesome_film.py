@@ -10,7 +10,8 @@ RE_SCRIPT = re.compile(r"script", re.IGNORECASE)
 
 # Match two or more consecutive white spaces
 EXTRA_SPACES_MATCH = re.compile(r"\s{2,}", re.DOTALL)
-FILEPATH = "F:/Movie-Data-Collection/awesome_film"
+# FILEPATH = "F:/Movie-Data-Collection/awesome_film"
+FILEPATH = "rawfiles"
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
@@ -135,7 +136,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
             filename_2 = curate_filename(movie_title, file_type)
 
             with open(f"{FILEPATH}/{filename_2}", "wb") as f:
-            # with open(f"rawfiles/awesome_film/{filename_2}", "wb") as f:
+                # with open(f"rawfiles/awesome_film/{filename_2}", "wb") as f:
                 f.write(content)
                 pdf_count += 1
 
@@ -154,7 +155,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
             filename_2 = curate_filename(movie_title, file_type)
 
             with open(f"{FILEPATH}/{filename_2}", "wb") as f:
-            # with open(f"rawfiles/awesome_film/{filename_2}", "wb") as f:
+                # with open(f"rawfiles/awesome_film/{filename_2}", "wb") as f:
                 f.write(content)
                 doc_count += 1
 
@@ -176,8 +177,7 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
             file_type = ".html"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(
-                f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
+            with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
                 f.write(final_content)
                 html_count += 1
 
@@ -196,14 +196,15 @@ def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
             file_type = ".html"
             filename_2 = curate_filename(movie_title, file_type)
 
-            with open(
-                f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
+            with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
                 f.write(str(soup))
                 html_count += 1
-        
+
         else:
             with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                outfile.write(f"Could not get {script_url} for {movie_title} from Awesome Films.\n")
+                outfile.write(
+                    f"Could not get {script_url} for {movie_title} from Awesome Films.\n"
+                )
 
     print(f"Total number of html files collected from 'Awesome Film': {html_count}")
     print(f"Total number of PDFs collected from 'Awesome Film': {pdf_count}")

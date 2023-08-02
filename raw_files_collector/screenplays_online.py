@@ -6,7 +6,8 @@ import re
 
 re_year = re.compile("\(\d{4}\)")
 
-FILEPATH = "F:/Movie-Data-Collection/screenplays_online"
+# FILEPATH = "F:/Movie-Data-Collection/screenplays_online"
+FILEPATH = "rawfiles"
 
 
 def get_raw_screenplays_online(URL: str) -> list[str]:
@@ -68,12 +69,13 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
 
         filename = get_filename(movie_title)
 
-        with open(
-            f"{FILEPATH}/{filename}", "w", encoding="utf-8") as outfile:
+        with open(f"{FILEPATH}/{filename}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
             html_count += 1
 
-    print(f"Total number of html files collected from 'Screenplays Online': {html_count}")
+    print(
+        f"Total number of html files collected from 'Screenplays Online': {html_count}"
+    )
     return MOVIE_NAMES
 
 

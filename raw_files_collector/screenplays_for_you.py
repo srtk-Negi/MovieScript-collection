@@ -4,7 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-FILEPATH = "F:/Movie-Data-Collection/screenplays_for_you"
+# FILEPATH = "F:/Movie-Data-Collection/screenplays_for_you"
+FILEPATH = "rawfiles"
 
 
 def get_raw_screenplays_for_you(URL: str) -> list[str]:
@@ -55,8 +56,7 @@ def get_raw_screenplays_for_you(URL: str) -> list[str]:
                 filename += ch
         filename_2 = "_".join(filename.strip().split()) + ".html"
 
-        with open(
-            f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as outfile:
+        with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as outfile:
             outfile.write(str(rawfile_html))
         html_count += 1
 
