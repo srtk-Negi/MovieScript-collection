@@ -1,5 +1,5 @@
-from awesome_film import get_names_and_links_awesome_film
-from daily_script import get_raw_files_daily_script
+from awesome_film import get_movies_awesome_film
+from daily_script import get_movies_daily_script
 from imsdb import get_raw_files_imsdb
 from screenplays_for_you import get_raw_screenplays_for_you
 from screenplays_online import get_raw_screenplays_online
@@ -23,14 +23,17 @@ def main():
     movie_title_list = []
     # AWESOME FILM
     # print("AWESOME FILM - STARTED")
-    awesome_list = get_names_and_links_awesome_film(URL_AWESOME_FILM)
-    for ob in awesome_list:
-        print(ob)
+    # awesome_list = get_movies_awesome_film(URL_AWESOME_FILM)
     # print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
     # print("DAILY SCRIPT - STARTED")
-    # get_raw_files_daily_script(URL_DAILYSCRIPT)
+    daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
+    with open("test.txt", "w", encoding="utf-8") as outfile:
+        for i in daily_script_list:
+            outfile.write(
+                f"{i.title}\n{i.script_url}\n{i.movie_year}\n{i.script_date}\n{i.writers}\n\n\n"
+            )
     # print("DAILY SCRIPT - FINISHED\n")
 
     # # IMSDB

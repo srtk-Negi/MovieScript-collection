@@ -2,23 +2,31 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from movie_obj import Movie
+from movie import Movie
 
 # Match any string enclosed within parentheses
 SCRIPT_TYPE_MATCH = re.compile(r"\([^)]*\)", re.DOTALL)
+# Match two or more consecutive white spaces
+EXTRA_SPACES_MATCH = re.compile(r"\s{2,}", re.DOTALL)
+
 RE_TRANSCRIPT = re.compile(r"transcript", re.IGNORECASE)
 RE_SCRIPT = re.compile(r"script", re.IGNORECASE)
 
-# Match two or more consecutive white spaces
-EXTRA_SPACES_MATCH = re.compile(r"\s{2,}", re.DOTALL)
 # FILEPATH = "F:/Movie-Data-Collection/awesome_film"
-FILEPATH = "rawfiles"
+# FILEPATH = "rawfiles"
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
 
-def get_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
-    """Fetch script titles and links and append to a dictionary."""
+def get_movies_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
+    """Gets the movie data and returns a list of Movie objects
+
+    Args:
+        URL_AWESOME_FILM (str): The URL of the website to scrape
+
+    Returns:
+        list[Movie]: A list of Movie objects
+    """
     movies = []
     try:
         content = requests.get(URL_AWESOME_FILM, headers=headers)

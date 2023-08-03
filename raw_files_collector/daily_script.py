@@ -1,58 +1,62 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+from movie import Movie
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
-# FILEPATH = "F:/Movie-Data-Collection/daily_script"
-FILEPATH = "rawfiles"
+
+re_writer = re.compile(r"(B|b)y (.+?)(\d+|\?\?)")
+re_year = re.compile(r"\b(\d{4})\b")
+re_script_date = [
+    re.compile(
+        r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b"
+    ),
+    re.compile(
+        r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}\b"
+    ),
+]
+
+movie_script_base_url = "https://www.dailyscript.com/"
 
 
-# date_patterns = [
-#     r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b",
-#     r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}\b",
-#     r"\b\d{4}\b",
-# ]
-
-re_year = r"\b\d{4}\b"
-
-
-def get_movie_names_and_links_daily_script(URL_DAILY_SCRIPT: str) -> dict:
+def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
     """Fetch movie titles and script links, curate unique IDs, and return movie info."""
-    daily_script_names_and_links = {}
+    movies = []
 
     url_text = requests.get(URL_DAILY_SCRIPT).text
     soup = BeautifulSoup(url_text, "html.parser")
 
-    previous_names = None
-    script_list_info = soup.ul.find_all("p")
+    page_items = soup.ul.find_all("p")
+    for page_item in page_items:
+        movie_title = page_item.find("a").string
 
-    for script_info in script_list_info:
-        script_info_text = script_info.text
-        by_index = script_info_text.lower().find("by")
-        movie_title = script_info_text[:by_index].strip().replace("\xa0", "")
+        writers_match = re_writer.search(page_item.text)
+        movie_year_match = re_year.search(page_item.text)
 
-        match = ""
-        date = ""
-
-        for date_pattern in date_patterns:
-            match = re.search(date_pattern, script_info_text, re.IGNORECASE)
-            if match:
-                date = match.group()
+        for script_date_pattern in re_script_date:
+            script_date_match = script_date_pattern.search(
+                page_item.text, re.IGNORECASE
+            )
+            if script_date_match:
+                script_date = script_date_match.group()
                 break
+            else:
+                script_date = None
 
-        if match == "":
-            date = None
+        writers = writers_match.group(2).strip() if writers_match else None
+        movie_year = movie_year_match.group(1).strip() if movie_year_match else None
+        script_url = f"{movie_script_base_url}{page_item.find_all('a')[0].get('href')}"
 
-        movie_title = f"{movie_title} [{date if date else movie_title}]"
-
-        if movie_title != previous_names:
-            movie_link_tag = script_info.find("a").get("href")
-            movie_link = f"https://www.dailyscript.com/{movie_link_tag}"
-            daily_script_names_and_links[movie_title] = movie_link
-
-        previous_names = movie_title
-
-    return daily_script_names_and_links
+        movies.append(
+            Movie(
+                title=movie_title,
+                script_url=script_url,
+                movie_year=movie_year,
+                script_date=script_date,
+                writers=writers,
+            )
+        )
+    return movies
 
 
 def curate_filename(movie_title: str, file_type: str) -> str:
@@ -73,13 +77,10 @@ def curate_filename(movie_title: str, file_type: str) -> str:
     return filename_2
 
 
-def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> dict:
+def get_movies_daily_script(URL_DAILY_SCRIPT: str) -> list[Movie]:
     """Retreive html structure from script links and write raw html to files."""
-    final_dict = {}
     try:
-        daily_script_names_and_links_1 = get_movie_names_and_links_daily_script(
-            URL_DAILY_SCRIPT
-        )
+        list_am = get_movie_list(URL_DAILY_SCRIPT)
     except:
         with open("error_log.txt", "a", encoding="utf-8") as outfile:
             outfile.write(
@@ -89,11 +90,7 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> dict:
 
     url_nz = URL_DAILY_SCRIPT.replace(".html", "_n-z.html")
     try:
-        daily_script_names_and_links_2 = get_movie_names_and_links_daily_script(url_nz)
-        final_dict = {
-            **daily_script_names_and_links_1,
-            **daily_script_names_and_links_2,
-        }
+        list_nz = get_movie_list(url_nz)
     except:
         with open("error_log.txt", "a", encoding="utf-8") as outfile:
             outfile.write(
@@ -101,11 +98,6 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> dict:
             )
         return
 
-    i = 0
-    for movie_title, movie_link in final_dict.items():
-        print(f"{movie_title} - {movie_link}")
-        if i == 10:
-            break
-        i += 1
+    list_am.extend(list_nz)
 
-    return final_dict
+    return list_am
