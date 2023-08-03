@@ -21,3 +21,4 @@ Could not get http://www.awesomefilm.com/script/aboutmary.htm for There's Someth
 Could not get https://www.dailyscript.com/scripts/AVP-FinalProduction.RTF for Alien vs. Predator from daily scriptCould not get https://www.dailyscript.com/scripts/foxcatcher.jpg for Foxcatcher from daily scriptCould not get https://imsdb.com//scripts/8-Mile.pdf for 8 Mile from IMSDB
 Could not get https://imsdb.com//scripts/Awakenings.html for Awakenings from IMSDB
 Could not get https://imsdb.com//scripts/Valkyrie.html for Valkyrie from IMSDB
+The URL https://www.dailyscript.com/movie.html did not work for 'Daily Script'

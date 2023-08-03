@@ -7,11 +7,13 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 FILEPATH = "rawfiles"
 
 
-date_patterns = [
-    r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b",
-    r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}\b",
-    r"\b\d{4}\b",
-]
+# date_patterns = [
+#     r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b",
+#     r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}\b",
+#     r"\b\d{4}\b",
+# ]
+
+re_year = r"\b\d{4}\b"
 
 
 def get_movie_names_and_links_daily_script(URL_DAILY_SCRIPT: str) -> dict:
@@ -41,6 +43,8 @@ def get_movie_names_and_links_daily_script(URL_DAILY_SCRIPT: str) -> dict:
         if match == "":
             date = None
 
+        movie_title = f"{movie_title} [{date if date else movie_title}]"
+
         if movie_title != previous_names:
             movie_link_tag = script_info.find("a").get("href")
             movie_link = f"https://www.dailyscript.com/{movie_link_tag}"
@@ -69,7 +73,7 @@ def curate_filename(movie_title: str, file_type: str) -> str:
     return filename_2
 
 
-def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
+def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> dict:
     """Retreive html structure from script links and write raw html to files."""
     final_dict = {}
     try:
@@ -97,96 +101,11 @@ def get_raw_files_daily_script(URL_DAILY_SCRIPT: str) -> list[str]:
             )
         return
 
-    pdf_count = 0
-    doc_count = 0
-    html_count = 0
-    MOVIE_NAMES = []
+    i = 0
+    for movie_title, movie_link in final_dict.items():
+        print(f"{movie_title} - {movie_link}")
+        if i == 10:
+            break
+        i += 1
 
-    for movie_title, script_url in final_dict.items():
-        if script_url.lower().endswith(".pdf"):
-            try:
-                content = requests.get(script_url, headers=headers).content
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                    outfile.write(
-                        f"Could not get {script_url} for {movie_title} from daily script\n"
-                    )
-                continue
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".pdf"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "wb") as f:
-                f.write(content)
-                pdf_count += 1
-
-        elif script_url.lower().endswith(".doc"):
-            try:
-                content = requests.get(script_url, headers=headers).content
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                    outfile.write(
-                        f"Could not get {script_url} for {movie_title} from daily script\n"
-                    )
-                continue
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".doc"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "wb") as f:
-                f.write(content)
-                doc_count += 1
-
-        elif script_url.lower().endswith(".txt"):
-            try:
-                content = requests.get(script_url, headers=headers).content
-                soup = BeautifulSoup(content, "html.parser")
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                    outfile.write(
-                        f"Could not get {script_url} for {movie_title} from daily script\n"
-                    )
-                continue
-
-            soup_str = str(soup)
-            final_content = f"<html><pre>{soup_str}</pre></html>"
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".html"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
-                f.write(final_content)
-                html_count += 1
-
-        elif script_url.lower().endswith(".html") or script_url.lower().endswith("htm"):
-            try:
-                content = requests.get(script_url, headers=headers)
-                soup = BeautifulSoup(content.text, "html.parser")
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                    outfile.write(
-                        f"Could not get {script_url} for {movie_title} from daily script\n"
-                    )
-                continue
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".html"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
-                f.write(str(soup))
-                html_count += 1
-        else:
-            with open("error_log.txt", "a", encoding="utf-8") as f:
-                f.write(
-                    f"Could not get {script_url} for {movie_title} from daily script"
-                )
-
-    print(f"Total number of html files collected from 'Daily Script': {html_count}")
-    print(f"Total number of PDFs collected from 'Daily Script': {pdf_count}")
-    print(f"Total number of DOCs collected from 'Daily Script': {doc_count}")
-
-    return MOVIE_NAMES
+    return final_dict

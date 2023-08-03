@@ -2,6 +2,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
+from movie_obj import Movie
 
 # Match any string enclosed within parentheses
 SCRIPT_TYPE_MATCH = re.compile(r"\([^)]*\)", re.DOTALL)
@@ -16,11 +17,14 @@ FILEPATH = "rawfiles"
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
 
-def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
+def get_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
     """Fetch script titles and links and append to a dictionary."""
-    awesome_film_names_and_links = {}
-    content = requests.get(URL_AWESOME_FILM, headers=headers)
-    soup = BeautifulSoup(content.text, "html.parser")
+    movies = []
+    try:
+        content = requests.get(URL_AWESOME_FILM, headers=headers)
+        soup = BeautifulSoup(content.text, "html.parser")
+    except Exception as e:
+        print(f"URL for Awesome Film did not work.\n{e}")
 
     columns = soup.find_all("td", valign="top", align="center")
     table_rows = []
@@ -65,8 +69,9 @@ def get_movie_names_and_links_awesome_film(URL_AWESOME_FILM: str) -> dict:
         movie_title = re.sub(RE_TRANSCRIPT, "", movie_title).strip()
         movie_title = re.sub(RE_SCRIPT, "", movie_title).strip()
 
-        awesome_film_names_and_links[movie_title] = movie_link
-    return awesome_film_names_and_links
+        movies.append(Movie(title=movie_title, script_url=movie_link))
+
+    return movies
 
 
 def curate_filename(movie_title: str, file_type: str) -> str:
@@ -101,113 +106,3 @@ def switch_article(article: str, movie_name: str) -> str:
     movie_name = f"{article} " + new_name
 
     return movie_name
-
-
-def get_raw_files_awesome_film(AWESOME_FILM_URL: str) -> list[str]:
-    """Retrieve html structure from script links and write raw html to files."""
-    try:
-        awesome_film_names_and_links = get_movie_names_and_links_awesome_film(
-            AWESOME_FILM_URL
-        )
-    except:
-        with open("error_log.txt", "a", encoding="utf-8") as f:
-            f.write("Provided URL did not work for awesome film\n")
-        return
-
-    MOVIE_NAMES = []
-
-    pdf_count = 0
-    doc_count = 0
-    html_count = 0
-
-    for movie_title, script_url in awesome_film_names_and_links.items():
-        if script_url.lower().endswith(".pdf"):
-            try:
-                content = requests.get(script_url, headers=headers).content
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as f:
-                    f.write(
-                        f"Could not get {script_url} for {movie_title} from awesome film\n"
-                    )
-                continue
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".pdf"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "wb") as f:
-                # with open(f"rawfiles/awesome_film/{filename_2}", "wb") as f:
-                f.write(content)
-                pdf_count += 1
-
-        elif script_url.lower().endswith(".doc"):
-            try:
-                content = requests.get(script_url, headers=headers).content
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as f:
-                    f.write(
-                        f"Could not get {script_url} for {movie_title} from awesome film\n"
-                    )
-                continue
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".doc"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "wb") as f:
-                # with open(f"rawfiles/awesome_film/{filename_2}", "wb") as f:
-                f.write(content)
-                doc_count += 1
-
-        elif script_url.lower().endswith(".txt"):
-            try:
-                content = requests.get(script_url, headers=headers).content
-                soup = BeautifulSoup(content, "html.parser")
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as f:
-                    f.write(
-                        f"Could not get {script_url} for {movie_title} from awesome film\n"
-                    )
-                continue
-
-            soup_str = str(soup)
-            final_content = f"<html><pre>{soup_str}</pre></html>"
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".html"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
-                f.write(final_content)
-                html_count += 1
-
-        elif script_url.lower().endswith(".html"):
-            try:
-                content = requests.get(script_url, headers=headers)
-                soup = BeautifulSoup(content.text, "html.parser")
-            except:
-                with open("error_log.txt", "a", encoding="utf-8") as f:
-                    f.write(
-                        f"Could not get {script_url} for {movie_title} from awesome film\n"
-                    )
-                continue
-
-            MOVIE_NAMES.append(movie_title)
-            file_type = ".html"
-            filename_2 = curate_filename(movie_title, file_type)
-
-            with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
-                f.write(str(soup))
-                html_count += 1
-
-        else:
-            with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                outfile.write(
-                    f"Could not get {script_url} for {movie_title} from Awesome Films.\n"
-                )
-
-    print(f"Total number of html files collected from 'Awesome Film': {html_count}")
-    print(f"Total number of PDFs collected from 'Awesome Film': {pdf_count}")
-    print(f"Total number of doc files collected from 'Awesome Film': {doc_count}")
-
-    return MOVIE_NAMES
