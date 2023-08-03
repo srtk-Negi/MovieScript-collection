@@ -6,7 +6,7 @@ from movie import Movie
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
 re_writer = re.compile(r"(B|b)y (.+?)(\d+|\?\?)")
-re_year = re.compile(r"\b(\d{4})\b")
+re_year = re.compile(r"\s{3}\b(\d{4})\b")
 re_script_date = [
     re.compile(
         r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2},\s+\d{4}\b"
@@ -38,7 +38,7 @@ def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
                 page_item.text, re.IGNORECASE
             )
             if script_date_match:
-                script_date = script_date_match.group()
+                script_date = script_date_match.group(0).strip()
                 break
             else:
                 script_date = None

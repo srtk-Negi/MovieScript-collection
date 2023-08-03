@@ -28,17 +28,17 @@ def main():
 
     # DAILY SCRIPT
     # print("DAILY SCRIPT - STARTED")
-    # daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
+    daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
+    with open("test.txt", "w", encoding="utf-8") as f:
+        for movie in daily_script_list:
+            f.write(
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
+            )
     # print("DAILY SCRIPT - FINISHED\n")
 
     # # IMSDB
     # print("IMSDB - STARTED")
-    imsdb_list = get_movies_imsdb(URL_IMSDB)
-    with open("test.txt", "w", encoding="utf-8") as f:
-        for movie in imsdb_list:
-            f.write(
-                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
-            )
+    # imsdb_list = get_movies_imsdb(URL_IMSDB)
     # print("IMSDB - FINISHED\n")
 
     # # SCREENPLAYS FOR YOU
