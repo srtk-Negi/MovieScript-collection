@@ -31,7 +31,14 @@ month_dict = {
 
 
 def get_movies_imsdb(URL_IMSDB: str) -> list[Movie]:
-    """Extracts movie date and returns a dictionary of mapped titles and urls for imsdb."""
+    """Get movies from IMSDB and return a list of Movie objects
+
+    Args:
+        URL_IMSDB (str): URL of IMSDB
+
+    Returns:
+        list[Movie]: List of Movie objects
+    """
     movies = []
     try:
         scripts_content = requests.get(URL_IMSDB, headers=headers)
