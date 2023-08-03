@@ -1,6 +1,6 @@
 from awesome_film import get_movies_awesome_film
 from daily_script import get_movies_daily_script
-from imsdb import get_raw_files_imsdb
+from imsdb import get_movies_imsdb
 from screenplays_for_you import get_raw_screenplays_for_you
 from screenplays_online import get_raw_screenplays_online
 from script_pdf import get_raw_script_pdf
@@ -28,17 +28,17 @@ def main():
 
     # DAILY SCRIPT
     # print("DAILY SCRIPT - STARTED")
-    daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
-    with open("test.txt", "w", encoding="utf-8") as outfile:
-        for i in daily_script_list:
-            outfile.write(
-                f"{i.title}\n{i.script_url}\n{i.movie_year}\n{i.script_date}\n{i.writers}\n\n\n"
-            )
+    # daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
     # print("DAILY SCRIPT - FINISHED\n")
 
     # # IMSDB
     # print("IMSDB - STARTED")
-    # get_raw_files_imsdb(URL_IMSDB)
+    imsdb_list = get_movies_imsdb(URL_IMSDB)
+    with open("test.txt", "w", encoding="utf-8") as f:
+        for movie in imsdb_list:
+            f.write(
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
+            )
     # print("IMSDB - FINISHED\n")
 
     # # SCREENPLAYS FOR YOU

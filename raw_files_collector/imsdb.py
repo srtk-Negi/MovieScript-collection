@@ -1,23 +1,44 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+from movie import Movie
 
-IMSDB_DATE_PATTERN = r"\d{4}(?:-\d{2})?|undated draft"
-YEAR_PATTERN = r"\(\d{4}\)"
+re_script_date = re.compile(r"\((\b\d{4}(?:-\d{2})?\b)")
+re_year = re.compile(r"\(\d{4}\)")
 
 MOVIE_PAGE_URL = "https://imsdb.com/Movie%20Scripts/"
 MOVIE_SCRIPT_URL = "https://imsdb.com/"
-# FILEPATH = "F:/Movie-Data-Collection/imsdb"
-FILEPATH = "rawfiles"
+
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
+month_dict = {
+    "00": "January",
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "Jule",
+    "08": "August",
+    "09": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December",
+    "13": "December",
+    "19": "December",
+}
 
-def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
+
+def get_movies_imsdb(URL_IMSDB: str) -> list[Movie]:
     """Extracts movie date and returns a dictionary of mapped titles and urls for imsdb."""
-    name_link_dict = {}
-
-    scripts_content = requests.get(URL_IMSDB, headers=headers)
-    soup = BeautifulSoup(scripts_content.text, "html.parser")
+    movies = []
+    try:
+        scripts_content = requests.get(URL_IMSDB, headers=headers)
+        soup = BeautifulSoup(scripts_content.text, "html.parser")
+    except:
+        with open("error_log.txt", "a", encoding="utf-8") as f:
+            f.write(f"URL did not work for IMSDB\n")
 
     body = soup.find("body")
 
@@ -28,10 +49,22 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
     for p_tag in p_tags:
         movie_title = p_tag.find("a").text
         movie_page = MOVIE_PAGE_URL + p_tag.find("a").get("href")
+        writers = p_tag.find("i").string.replace("Written by", "").strip()
 
-        movie_title = re.sub(YEAR_PATTERN, "", movie_title).strip()
-        match = re.findall(IMSDB_DATE_PATTERN, p_tag.text)
-        date = match[0] if match else None
+        movie_title = re.sub(re_year, "", movie_title).strip()
+        script_date_match = re_script_date.search(p_tag.text)
+
+        if script_date_match:
+            script_date = script_date_match.group(1)
+            try:
+                if "-" in script_date:
+                    script_date = script_date.split("-")
+                    script_date = f"{month_dict[script_date[1]]} {script_date[0]}"
+            except:
+                print(f"{movie_title} from IMSDB has a date format error")
+                continue
+        else:
+            script_date = None
 
         if (
             movie_title.endswith(", The")
@@ -55,8 +88,16 @@ def get_movie_names_and_links_imsdb(URL_IMSDB: str) -> dict:
         except:
             continue
 
-        name_link_dict[movie_title] = movie_script_link
-    return name_link_dict
+        movies.append(
+            Movie(
+                title=movie_title,
+                script_url=movie_script_link,
+                script_date=script_date,
+                writers=writers,
+            )
+        )
+
+    return movies
 
 
 def curate_filename(movie_title: str, file_type: str) -> str:
@@ -91,39 +132,3 @@ def switch_article(article: str, movie_name: str) -> str:
     movie_name = f"{article} " + new_name
 
     return movie_name
-
-
-def get_raw_files_imsdb(URL_IMSDB: str) -> list[str]:
-    """Retreive html structure from script links and write raw html to files."""
-    try:
-        movie_names_and_links_imsdb = get_movie_names_and_links_imsdb(URL_IMSDB)
-    except:
-        with open("error_log.txt", "a", encoding="utf-8") as outfile:
-            outfile.write("URL did not work for IMSDB\n")
-            return
-
-    MOVIE_NAMES = []
-
-    html_count = 0
-    for movie_title, script_url in movie_names_and_links_imsdb.items():
-        try:
-            content = requests.get(script_url).text
-            soup = BeautifulSoup(content, "html.parser")
-        except:
-            with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                outfile.write(
-                    f"Could not get {script_url} for {movie_title} from IMSDB\n"
-                )
-            continue
-
-        MOVIE_NAMES.append(movie_title)
-        file_type = ".html"
-        filename_2 = curate_filename(movie_title, file_type)
-
-        with open(f"{FILEPATH}/{filename_2}", "w", encoding="utf-8") as f:
-            f.write(str(soup).strip())
-            html_count += 1
-
-    print(f"Total number of html files collected from IMSDB {html_count}")
-
-    return MOVIE_NAMES
