@@ -1,8 +1,8 @@
 from awesome_film import get_movies_awesome_film
 from daily_script import get_movies_daily_script
 from imsdb import get_movies_imsdb
-from screenplays_for_you import get_raw_screenplays_for_you
-from screenplays_online import get_raw_screenplays_online
+from screenplays_for_you import get_movies_screenplays_for_you
+from screenplays_online import get_movies_screenplays_online
 from script_pdf import get_raw_script_pdf
 from script_savant import get_raw_script_savant
 
@@ -28,12 +28,7 @@ def main():
 
     # DAILY SCRIPT
     # print("DAILY SCRIPT - STARTED")
-    daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
-    with open("test.txt", "w", encoding="utf-8") as f:
-        for movie in daily_script_list:
-            f.write(
-                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
-            )
+    # daily_script_list = get_movies_daily_script(URL_DAILYSCRIPT)
     # print("DAILY SCRIPT - FINISHED\n")
 
     # # IMSDB
@@ -43,12 +38,17 @@ def main():
 
     # # SCREENPLAYS FOR YOU
     # print("SCREENPLAYS FOR YOU - STARTED")
-    # get_raw_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
+    # screenplays_for_you_list = get_movies_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU)
     # print("SCREENPLAYS FOR YOU - FINISHED\n")
 
     # # SCREENPLAYS ONLINE
     # print("SCREENPLAYS ONLINE - STARTED")
-    # get_raw_screenplays_online(URL_SCREENPLAYS_ONLINE)
+    screenplays_online_list = get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE)
+    with open("test.txt", "w", encoding="utf-8") as f:
+        for movie in screenplays_online_list:
+            f.write(
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
+            )
     # print("SCREENPLAYS ONLINE - FINISHED\n")
 
     # # SCRIPT PDF
