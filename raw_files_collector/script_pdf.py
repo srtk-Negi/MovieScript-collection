@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from movie import Movie
+from helper_functions import switch_article
 
 
 def get_movies_script_pdf(URL: str) -> list[Movie]:
@@ -51,19 +52,3 @@ def get_movies_script_pdf(URL: str) -> list[Movie]:
             )
 
     return movies
-
-
-def switch_article(article: str, movie_name: str) -> str:
-    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_title_and_year())
-
-    Args:
-        article (str): The article of the movie name
-        movie_name (str): The movie name
-
-    Returns:
-        str: The movie name with the article at the beginning
-    """
-    new_name = movie_name.replace(f", {article}", "")
-    movie_name = f"{article} " + new_name
-
-    return movie_name

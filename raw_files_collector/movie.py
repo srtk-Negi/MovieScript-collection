@@ -3,6 +3,7 @@ class Movie:
         self,
         title: str,
         script_url: str,
+        file_type: str,
         movie_year: str = None,
         script_date: str = None,
         writers: str = None,
@@ -15,3 +16,20 @@ class Movie:
 
     def __str__(self):
         return f"{self.title}\n{self.script_url}\n{self.movie_year}\n{self.script_date}\n{self.writers}\n"
+
+    def num_elements(self):
+        count = 0
+        for val in self.__dict__.values():
+            if val is not None:
+                count += 1
+        return count
+
+    def merge(self, movie):
+        if self.script_url is None:
+            self.script_url = movie.script_url
+        if self.movie_year is None:
+            self.movie_year = movie.movie_year
+        if self.script_date is None:
+            self.script_date = movie.script_date
+        if self.writers is None:
+            self.writers = movie.writers

@@ -3,6 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from helper_functions import switch_article
 
 from movie import Movie
 
@@ -91,36 +92,3 @@ def get_links_to_movie_pages(row: BeautifulSoup, URL: str) -> tuple:
     link_2 = URL + movies_in_row[6].find("a").get("href")
 
     return link_1, link_2
-
-
-def switch_article(article: str, movie_name: str) -> str:
-    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_titles_and_years())
-
-    Args:
-        article (str): The article of the movie name
-        movie_name (str): The movie name
-
-    Returns:
-        str: The movie name with the article at the beginning
-    """
-    new_name = movie_name.replace(f", {article}", "")
-    movie_name = f"{article} " + new_name
-
-    return movie_name
-
-
-def get_filename(movie_name: str) -> str:
-    """Gets the filename for the rawfile
-
-    Args:
-        movie_name (str): The movie name
-
-    Returns:
-        str: The filename for the rawfile"""
-    char_list = ""
-    for ch in movie_name.lower():
-        if ch.isalnum() or ch == " ":
-            char_list += ch
-        filename = "_".join(char_list.strip().split()) + ".html"
-
-    return filename

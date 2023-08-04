@@ -59,24 +59,6 @@ def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
     return movies
 
 
-def curate_filename(movie_title: str, file_type: str) -> str:
-    """Gets the filename for the rawfile
-
-    Args:
-        movie_name (str): The movie name
-        file_type (str): The file type
-
-    Returns:
-        str: The filename for the rawfile"""
-
-    filename = ""
-    for ch in movie_title.lower():
-        if ch.isalnum() or ch == " ":
-            filename += ch
-    filename_2 = "_".join(filename.strip().split()) + file_type
-    return filename_2
-
-
 def get_movies_daily_script(URL_DAILY_SCRIPT: str) -> list[Movie]:
     """Retreive html structure from script links and write raw html to files."""
     try:

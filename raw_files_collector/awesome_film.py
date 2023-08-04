@@ -3,6 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from movie import Movie
+from helper_functions import switch_article
 
 # Match any string enclosed within parentheses
 SCRIPT_TYPE_MATCH = re.compile(r"\([^)]*\)", re.DOTALL)
@@ -12,8 +13,6 @@ EXTRA_SPACES_MATCH = re.compile(r"\s{2,}", re.DOTALL)
 RE_TRANSCRIPT = re.compile(r"transcript", re.IGNORECASE)
 RE_SCRIPT = re.compile(r"script", re.IGNORECASE)
 
-# FILEPATH = "F:/Movie-Data-Collection/awesome_film"
-# FILEPATH = "rawfiles"
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
@@ -45,15 +44,6 @@ def get_movies_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
         movie_title = row.find("a").text
         movie_link = URL_AWESOME_FILM + row.find("a").get("href")
 
-        movie_page = requests.get(movie_link, headers=headers)
-        movie_soup = BeautifulSoup(movie_page.text, "html.parser")
-
-        try:
-            if "404" in movie_soup.find("title").string:
-                continue
-        except:
-            pass
-
         movie_title = movie_title.replace("\n", "").strip()
         if ":" in movie_title:
             movie_title = movie_title.replace(":", ": ")
@@ -76,41 +66,10 @@ def get_movies_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
 
         movie_title = re.sub(RE_TRANSCRIPT, "", movie_title).strip()
         movie_title = re.sub(RE_SCRIPT, "", movie_title).strip()
+        print(movie_link)
 
-        movies.append(Movie(title=movie_title, script_url=movie_link))
+        # if movie_link.endswith("pdf")
+
+        # movies.append(Movie(title=movie_title, script_url=movie_link))
 
     return movies
-
-
-def curate_filename(movie_title: str, file_type: str) -> str:
-    """Gets the filename for the rawfile
-
-    Args:
-        movie_name (str): The movie name
-        file_type (str): The file type
-
-    Returns:
-        str: The filename for the rawfile"""
-
-    filename = ""
-    for ch in movie_title.lower():
-        if ch.isalnum() or ch == " ":
-            filename += ch
-    filename_2 = "_".join(filename.strip().split()) + file_type
-    return filename_2
-
-
-def switch_article(article: str, movie_name: str) -> str:
-    """Switches the position of the article of the movie name (The, An, A) from the end to the beginning (used as a helper function in get_movie_titles_and_years())
-
-    Args:
-        article (str): The article of the movie name
-        movie_name (str): The movie name
-
-    Returns:
-        str: The movie name with the article at the beginning
-    """
-    new_name = movie_name.replace(f", {article}", "")
-    movie_name = f"{article} " + new_name
-
-    return movie_name

@@ -20,47 +20,54 @@ URL_SCRIPT_SAVANT = "https://thescriptsavant.com/movies.html"
 
 
 def main():
-    movie_list = []
+    init_movie_list = []
+    movie_map = {}
     # AWESOME FILM
     print("AWESOME FILM - STARTED")
-    movie_list.extend(get_movies_awesome_film(URL_AWESOME_FILM))
+    init_movie_list.extend(get_movies_awesome_film(URL_AWESOME_FILM))
     print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
-    print("DAILY SCRIPT - STARTED")
-    movie_list.extend(get_movies_daily_script(URL_DAILYSCRIPT))
-    print("DAILY SCRIPT - FINISHED\n")
+    # print("DAILY SCRIPT - STARTED")
+    # init_movie_list.extend(get_movies_daily_script(URL_DAILYSCRIPT))
+    # print("DAILY SCRIPT - FINISHED\n")
 
     # # IMSDB
-    print("IMSDB - STARTED")
-    movie_list.extend(get_movies_imsdb(URL_IMSDB))
-    print("IMSDB - FINISHED\n")
+    # print("IMSDB - STARTED")
+    # movie_list.extend(get_movies_imsdb(URL_IMSDB))
+    # print("IMSDB - FINISHED\n")
 
     # # SCREENPLAYS FOR YOU
-    print("SCREENPLAYS FOR YOU - STARTED")
-    movie_list.extend(get_movies_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU))
-    print("SCREENPLAYS FOR YOU - FINISHED\n")
+    # print("SCREENPLAYS FOR YOU - STARTED")
+    # movie_list.extend(get_movies_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU))
+    # print("SCREENPLAYS FOR YOU - FINISHED\n")
 
     # # SCREENPLAYS ONLINE
-    print("SCREENPLAYS ONLINE - STARTED")
-    movie_list.extend(get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE))
-    print("SCREENPLAYS ONLINE - FINISHED\n")
+    # print("SCREENPLAYS ONLINE - STARTED")
+    # movie_list.extend(get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE))
+    # print("SCREENPLAYS ONLINE - FINISHED\n")
 
     # # SCRIPT PDF
-    print("SCRIPT PDF - STARTED")
-    movie_list.extend(get_movies_script_pdf(URL_SCRIPT_PDF))
-    print("SCRIPT PDF - FINISHED\n")
+    # print("SCRIPT PDF - STARTED")
+    # movie_list.extend(get_movies_script_pdf(URL_SCRIPT_PDF))
+    # print("SCRIPT PDF - FINISHED\n")
 
     # # SCRIPT SAVANT
-    print("SCRIPT SAVANT - STARTED")
-    movie_list.extend(get_movies_script_savant(URL_SCRIPT_SAVANT))
-    print("SCRIPT SAVANT - FINISHED\n")
+    # print("SCRIPT SAVANT - STARTED")
+    # movie_list.extend(get_movies_script_savant(URL_SCRIPT_SAVANT))
+    # print("SCRIPT SAVANT - FINISHED\n")
 
-    with open("test.txt", "w", encoding="utf-8") as outfile:
-        for movie in movie_list:
-            outfile.write(
-                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
-            )
+    for movie in init_movie_list:
+        if movie.title not in movie_map:
+            movie_map[movie.title] = movie
+        else:
+            movie_map[movie.title].merge(movie)
+
+    # with open("test.txt", "w", encoding="utf-8") as outfile:
+    #     for movie in movie_list:
+    #         outfile.write(
+    #             f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n{movie.num_elements()}\n\n"
+    #         )
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
     # get_raw_script_slug(URL_SCRIPT_SLUG)
