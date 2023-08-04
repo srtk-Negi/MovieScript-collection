@@ -57,17 +57,17 @@ def main():
     # movie_list.extend(get_movies_script_savant(URL_SCRIPT_SAVANT))
     # print("SCRIPT SAVANT - FINISHED\n")
 
-    for movie in init_movie_list:
-        if movie.title not in movie_map:
-            movie_map[movie.title] = movie
-        else:
-            movie_map[movie.title].merge(movie)
+    # for movie in init_movie_list:
+    #     if movie.title not in movie_map:
+    #         movie_map[movie.title] = movie
+    #     else:
+    #         movie_map[movie.title].merge(movie)
 
-    # with open("test.txt", "w", encoding="utf-8") as outfile:
-    #     for movie in movie_list:
-    #         outfile.write(
-    #             f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n{movie.num_elements()}\n\n"
-    #         )
+    with open("test.txt", "w", encoding="utf-8") as outfile:
+        for movie in init_movie_list:
+            outfile.write(
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n{movie.file_type}\n{movie.num_elements()}\n\n"
+            )
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
     # get_raw_script_slug(URL_SCRIPT_SLUG)

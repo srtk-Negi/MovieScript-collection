@@ -1,4 +1,4 @@
-def last_index_of(char: str, string: str) -> int:
+def last_index_of(string: str, char: str) -> int:
     """Gets the last index of a character in a string
 
     Args:
@@ -11,6 +11,18 @@ def last_index_of(char: str, string: str) -> int:
     for i in range(len(string) - 1, -1, -1):
         if string[i] == char:
             return i
+
+
+def get_file_type(filename: str) -> str:
+    """Gets the file type of the filename
+
+    Args:
+        filename (str): The filename
+
+    Returns:
+        str: The file type
+    """
+    return filename[last_index_of(filename, ".") + 1 :].lower()
 
 
 def curate_filename(movie_title: str, file_type: str) -> str:

@@ -3,7 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from movie import Movie
-from helper_functions import switch_article
+from helper_functions import switch_article, get_file_type
 
 # Match any string enclosed within parentheses
 SCRIPT_TYPE_MATCH = re.compile(r"\([^)]*\)", re.DOTALL)
@@ -66,10 +66,11 @@ def get_movies_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
 
         movie_title = re.sub(RE_TRANSCRIPT, "", movie_title).strip()
         movie_title = re.sub(RE_SCRIPT, "", movie_title).strip()
-        print(movie_link)
 
-        # if movie_link.endswith("pdf")
+        file_type = get_file_type(movie_link)
 
-        # movies.append(Movie(title=movie_title, script_url=movie_link))
+        movies.append(
+            Movie(title=movie_title, script_url=movie_link, file_type=file_type)
+        )
 
     return movies

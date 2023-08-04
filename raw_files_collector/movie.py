@@ -10,6 +10,7 @@ class Movie:
     ):
         self.title = title
         self.script_url = script_url
+        self.file_type = file_type
         self.movie_year = movie_year
         self.script_date = script_date
         self.writers = writers
