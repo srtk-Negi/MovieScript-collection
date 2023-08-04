@@ -23,9 +23,9 @@ def main():
     init_movie_list = []
     movie_map = {}
     # AWESOME FILM
-    print("AWESOME FILM - STARTED")
-    init_movie_list.extend(get_movies_awesome_film(URL_AWESOME_FILM))
-    print("AWESOME FILM - FINISHED\n")
+    # print("AWESOME FILM - STARTED")
+    # init_movie_list.extend(get_movies_awesome_film(URL_AWESOME_FILM))
+    # print("AWESOME FILM - FINISHED\n")
 
     # DAILY SCRIPT
     # print("DAILY SCRIPT - STARTED")
@@ -34,28 +34,28 @@ def main():
 
     # # IMSDB
     # print("IMSDB - STARTED")
-    # movie_list.extend(get_movies_imsdb(URL_IMSDB))
+    # init_movie_list.extend(get_movies_imsdb(URL_IMSDB))
     # print("IMSDB - FINISHED\n")
 
     # # SCREENPLAYS FOR YOU
     # print("SCREENPLAYS FOR YOU - STARTED")
-    # movie_list.extend(get_movies_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU))
+    # init_movie_list.extend(get_movies_screenplays_for_you(URL_SCREENPLAYS_FOR_YOU))
     # print("SCREENPLAYS FOR YOU - FINISHED\n")
 
     # # SCREENPLAYS ONLINE
     # print("SCREENPLAYS ONLINE - STARTED")
-    # movie_list.extend(get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE))
+    # init_movie_list.extend(get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE))
     # print("SCREENPLAYS ONLINE - FINISHED\n")
 
     # # SCRIPT PDF
     # print("SCRIPT PDF - STARTED")
-    # movie_list.extend(get_movies_script_pdf(URL_SCRIPT_PDF))
+    # init_movie_list.extend(get_movies_script_pdf(URL_SCRIPT_PDF))
     # print("SCRIPT PDF - FINISHED\n")
 
     # # SCRIPT SAVANT
-    # print("SCRIPT SAVANT - STARTED")
-    # movie_list.extend(get_movies_script_savant(URL_SCRIPT_SAVANT))
-    # print("SCRIPT SAVANT - FINISHED\n")
+    print("SCRIPT SAVANT - STARTED")
+    init_movie_list.extend(get_movies_script_savant(URL_SCRIPT_SAVANT))
+    print("SCRIPT SAVANT - FINISHED\n")
 
     # for movie in init_movie_list:
     #     if movie.title not in movie_map:
@@ -66,7 +66,7 @@ def main():
     with open("test.txt", "w", encoding="utf-8") as outfile:
         for movie in init_movie_list:
             outfile.write(
-                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n{movie.file_type}\n{movie.num_elements()}\n\n"
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n{movie.file_type}\n\n"
             )
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)

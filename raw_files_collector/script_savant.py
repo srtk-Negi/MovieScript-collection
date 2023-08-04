@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from movie import Movie
+from helper_functions import get_file_type
 
 
 def get_movies_script_savant(URL_SCRIPT_SAVANT: str) -> list[Movie]:
@@ -31,6 +32,10 @@ def get_movies_script_savant(URL_SCRIPT_SAVANT: str) -> list[Movie]:
 
         movie_title = movie_title.replace("_", " ")
 
-        movies.append(Movie(title=movie_title, script_url=script_url))
+        filetype = get_file_type(script_url)
+
+        movies.append(
+            Movie(title=movie_title, script_url=script_url, file_type=filetype)
+        )
 
     return movies

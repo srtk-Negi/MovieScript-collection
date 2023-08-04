@@ -14,7 +14,7 @@ def last_index_of(string: str, char: str) -> int:
 
 
 def get_file_type(filename: str) -> str:
-    """Gets the file type of the filename
+    """Gets the file type of the filename. Only work for pdf, txt, doc, html, htm files
 
     Args:
         filename (str): The filename
@@ -22,7 +22,17 @@ def get_file_type(filename: str) -> str:
     Returns:
         str: The file type
     """
-    return filename[last_index_of(filename, ".") + 1 :].lower()
+    filetype = filename[last_index_of(filename, ".") + 1 :].lower()
+    if not (
+        filetype == "pdf"
+        or filetype == "txt"
+        or filetype == "doc"
+        or filetype == "html"
+        or filetype == "htm"
+    ):
+        filetype = "html"
+
+    return filetype
 
 
 def curate_filename(movie_title: str, file_type: str) -> str:

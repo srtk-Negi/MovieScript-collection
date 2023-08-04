@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from movie import Movie
-from helper_functions import switch_article
+from helper_functions import switch_article, get_file_type
 
 
 def get_movies_script_pdf(URL: str) -> list[Movie]:
@@ -47,8 +47,15 @@ def get_movies_script_pdf(URL: str) -> list[Movie]:
             ):
                 movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
+            filetype = get_file_type(script_url)
+
             movies.append(
-                Movie(title=movie_title, script_url=script_url, movie_year=movie_year)
+                Movie(
+                    title=movie_title,
+                    script_url=script_url,
+                    movie_year=movie_year,
+                    file_type=filetype,
+                )
             )
 
     return movies

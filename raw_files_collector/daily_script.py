@@ -2,6 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from movie import Movie
+from helper_functions import get_file_type
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
@@ -46,11 +47,13 @@ def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
         writers = writers_match.group(2).strip() if writers_match else None
         movie_year = movie_year_match.group(1).strip() if movie_year_match else None
         script_url = f"{movie_script_base_url}{page_item.find_all('a')[0].get('href')}"
+        filetype = get_file_type(script_url)
 
         movies.append(
             Movie(
                 title=movie_title,
                 script_url=script_url,
+                file_type=filetype,
                 movie_year=movie_year,
                 script_date=script_date,
                 writers=writers,

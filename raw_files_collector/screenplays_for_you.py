@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from movie import Movie
-from helper_functions import switch_article
+from helper_functions import switch_article, get_file_type
 
 re_year = re.compile(r"\(\d{4}\)")
 re_transcript = re.compile(r"transcript")
@@ -51,10 +51,13 @@ def get_movies_screenplays_for_you(URL: str) -> list[Movie]:
         writers_match = re_writers.search(element.text)
         writers = writers_match.group(2) if writers_match else None
 
+        filetype = get_file_type(script_url)
+
         movies.append(
             Movie(
                 title=movie_title,
                 script_url=script_url,
+                file_type=filetype,
                 movie_year=movie_year,
                 script_date=script_date,
                 writers=writers,

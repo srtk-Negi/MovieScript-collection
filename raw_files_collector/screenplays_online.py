@@ -3,7 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-from helper_functions import switch_article
+from helper_functions import switch_article, get_file_type
 
 from movie import Movie
 
@@ -54,7 +54,11 @@ def get_movies_screenplays_online(URL: str) -> list[Movie]:
         ):
             movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
-        movies.append(Movie(title=movie_title, script_url=movie_url))
+        filetype = get_file_type(movie_url)
+
+        movies.append(
+            Movie(title=movie_title, script_url=movie_url, file_type=filetype)
+        )
 
     return movies
 
