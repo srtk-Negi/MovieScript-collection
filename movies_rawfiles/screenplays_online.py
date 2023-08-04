@@ -3,9 +3,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-from helper_functions import switch_article, get_file_type
 
-from movie import Movie
+from .helper_functions import switch_article, get_file_type
+from .movie import Movie
 
 re_year = re.compile("\(\d{4}\)")
 

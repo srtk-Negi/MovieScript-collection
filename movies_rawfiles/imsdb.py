@@ -1,8 +1,8 @@
 import re
 import requests
 from bs4 import BeautifulSoup
-from movie import Movie
-from helper_functions import switch_article, get_file_type
+from .movie import Movie
+from .helper_functions import switch_article, get_file_type
 
 re_script_date = re.compile(r"\((\b\d{4}(?:-\d{2})?\b)")
 re_year = re.compile(r"\(\d{4}\)")

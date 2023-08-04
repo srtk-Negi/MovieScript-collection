@@ -3,8 +3,8 @@ and write it to a file"""
 import requests
 from bs4 import BeautifulSoup
 import re
-from movie import Movie
-from helper_functions import switch_article, get_file_type
+from .movie import Movie
+from .helper_functions import switch_article, get_file_type
 
 
 def get_movies_script_pdf(URL: str) -> list[Movie]:

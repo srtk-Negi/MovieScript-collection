@@ -3,8 +3,8 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-from movie import Movie
-from helper_functions import switch_article, get_file_type
+from .movie import Movie
+from .helper_functions import switch_article, get_file_type
 
 re_year = re.compile(r"\(\d{4}\)")
 re_transcript = re.compile(r"transcript")

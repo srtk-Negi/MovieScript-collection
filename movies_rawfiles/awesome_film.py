@@ -2,8 +2,8 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from movie import Movie
-from helper_functions import switch_article, get_file_type
+from .movie import Movie
+from .helper_functions import switch_article, get_file_type
 
 # Match any string enclosed within parentheses
 SCRIPT_TYPE_MATCH = re.compile(r"\([^)]*\)", re.DOTALL)

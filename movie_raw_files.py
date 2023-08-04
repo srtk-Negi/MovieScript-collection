@@ -1,14 +1,16 @@
 from bs4 import BeautifulSoup
 import requests
 
-from awesome_film import get_movies_awesome_film
-from daily_script import get_movies_daily_script
-from imsdb import get_movies_imsdb
-from screenplays_for_you import get_movies_screenplays_for_you
-from screenplays_online import get_movies_screenplays_online
-from script_pdf import get_movies_script_pdf
-from script_savant import get_movies_script_savant
-from helper_functions import curate_filename
+from movies_rawfiles import (
+    get_movies_awesome_film,
+    get_movies_daily_script,
+    get_movies_imsdb,
+    get_movies_screenplays_for_you,
+    get_movies_screenplays_online,
+    get_movies_script_pdf,
+    get_movies_script_savant,
+    curate_filename,
+)
 
 
 # from raw_files_collector.script_slug import get_raw_script_slug
@@ -24,7 +26,7 @@ URL_SCRIPT_SAVANT = "https://thescriptsavant.com/movies.html"
 # URL_SCRIPT_SLUG = "https://www.scriptslug.com/request/?pg="
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
-FILEPATH = "raw_files_collector/rawfiles/"
+FILEPATH = "rawfiles/"
 
 
 def main():
@@ -114,7 +116,7 @@ def main():
                     f.write(final_soup)
                     rawfiles_count += 1
         except Exception as e:
-            with open("raw_files_collector/error_log.txt", "a") as f:
+            with open("error_log.txt", "a") as f:
                 f.write(f"{movie.title} - {movie.script_url}\n{e}\n\n")
 
     print(f"Rawfile collection done.\nCollected {rawfiles_count} rawfiles.")

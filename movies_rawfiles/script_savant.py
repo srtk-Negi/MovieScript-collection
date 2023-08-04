@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from movie import Movie
-from helper_functions import get_file_type
+from .movie import Movie
+from .helper_functions import get_file_type
 
 
 def get_movies_script_savant(URL_SCRIPT_SAVANT: str) -> list[Movie]:
