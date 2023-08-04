@@ -4,13 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+from movie import Movie
+
 re_year = re.compile("\(\d{4}\)")
 
-# FILEPATH = "F:/Movie-Data-Collection/screenplays_online"
-FILEPATH = "rawfiles"
 
-
-def get_raw_screenplays_online(URL: str) -> list[str]:
+def get_movies_screenplays_online(URL: str) -> list[Movie]:
     """Function to get the name of the movie, link to the movie page and rawfile (html of the movie page)
 
     Args:
@@ -19,7 +18,7 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
     Returns:
         None
     """
-    MOVIE_NAMES = []
+    movies = []
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
     try:
         home_page_html = requests.get(URL, headers=headers)
@@ -37,15 +36,14 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
     title_link_map = {}
     for row in table_rows:
         movie_1, movie_2 = get_movie_titles(row)
-        link_1, link_2 = get_links_to_movie_pages(row, URL)
+        url_1, url_2 = get_links_to_movie_pages(row, URL)
 
         if movie_1:
-            title_link_map[movie_1] = link_1
+            title_link_map[movie_1] = url_1
         if movie_2:
-            title_link_map[movie_2] = link_2
+            title_link_map[movie_2] = url_2
 
-    html_count = 0
-    for movie_title, movie_page_link in title_link_map.items():
+    for movie_title, movie_url in title_link_map.items():
         movie_title = re.sub(re_year, "", movie_title).strip()
 
         if (
@@ -55,28 +53,9 @@ def get_raw_screenplays_online(URL: str) -> list[str]:
         ):
             movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
-        try:
-            rawfile = requests.get(movie_page_link, headers=headers)
-            rawfile_html = BeautifulSoup(rawfile.text, "html.parser")
-        except:
-            with open("error_log.txt", "a", encoding="utf-8") as outfile:
-                outfile.write(
-                    f"Could not get {movie_page_link} for {movie_title} from Screenplays Online\n"
-                )
-            continue
+        movies.append(Movie(title=movie_title, script_url=movie_url))
 
-        MOVIE_NAMES.append(movie_title)
-
-        filename = get_filename(movie_title)
-
-        with open(f"{FILEPATH}/{filename}", "w", encoding="utf-8") as outfile:
-            outfile.write(str(rawfile_html))
-            html_count += 1
-
-    print(
-        f"Total number of html files collected from 'Screenplays Online': {html_count}"
-    )
-    return MOVIE_NAMES
+    return movies
 
 
 def get_movie_titles(row: BeautifulSoup) -> tuple:

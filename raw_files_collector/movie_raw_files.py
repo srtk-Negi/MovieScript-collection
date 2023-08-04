@@ -3,7 +3,7 @@ from daily_script import get_movies_daily_script
 from imsdb import get_movies_imsdb
 from screenplays_for_you import get_movies_screenplays_for_you
 from screenplays_online import get_movies_screenplays_online
-from script_pdf import get_raw_script_pdf
+from script_pdf import get_movies_script_pdf
 from script_savant import get_raw_script_savant
 
 # from raw_files_collector.script_slug import get_raw_script_slug
@@ -43,17 +43,17 @@ def main():
 
     # # SCREENPLAYS ONLINE
     # print("SCREENPLAYS ONLINE - STARTED")
-    screenplays_online_list = get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE)
-    with open("test.txt", "w", encoding="utf-8") as f:
-        for movie in screenplays_online_list:
-            f.write(
-                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
-            )
+    # screenplays_online_list = get_movies_screenplays_online(URL_SCREENPLAYS_ONLINE)
     # print("SCREENPLAYS ONLINE - FINISHED\n")
 
     # # SCRIPT PDF
     # print("SCRIPT PDF - STARTED")
-    # get_raw_script_pdf(URL_SCRIPT_PDF)
+    script_pdf_list = get_movies_script_pdf(URL_SCRIPT_PDF)
+    with open("test.txt", "w", encoding="utf-8") as f:
+        for movie in script_pdf_list:
+            f.write(
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
+            )
     # print("SCRIPT PDF - FINISHED\n")
 
     # # SCRIPT SAVANT
