@@ -38,4 +38,5 @@ def get_movies_script_savant(URL_SCRIPT_SAVANT: str) -> list[Movie]:
             Movie(title=movie_title, script_url=script_url, file_type=filetype)
         )
 
+    print(f"Script Savant: {len(movies)} movies found")
     return movies

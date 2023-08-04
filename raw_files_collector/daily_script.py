@@ -59,6 +59,7 @@ def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
                 writers=writers,
             )
         )
+
     return movies
 
 
@@ -84,5 +85,7 @@ def get_movies_daily_script(URL_DAILY_SCRIPT: str) -> list[Movie]:
         return
 
     list_am.extend(list_nz)
+
+    print(f"Daily Script: {len(list_am)} movies found")
 
     return list_am

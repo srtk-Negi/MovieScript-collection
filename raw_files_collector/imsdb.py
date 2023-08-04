@@ -108,4 +108,5 @@ def get_movies_imsdb(URL_IMSDB: str) -> list[Movie]:
             )
         )
 
+    print(f"IMSDB: {len(movies)} movies found.")
     return movies

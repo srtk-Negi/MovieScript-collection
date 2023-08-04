@@ -73,4 +73,5 @@ def get_movies_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
             Movie(title=movie_title, script_url=movie_link, file_type=file_type)
         )
 
+    print(f"Awesome Film: {len(movies)} movies found")
     return movies

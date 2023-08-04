@@ -58,4 +58,6 @@ def get_movies_script_pdf(URL: str) -> list[Movie]:
                 )
             )
 
+    print(f"Script PDFs: {len(movies)} movies found")
+
     return movies

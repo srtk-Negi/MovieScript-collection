@@ -60,6 +60,7 @@ def get_movies_screenplays_online(URL: str) -> list[Movie]:
             Movie(title=movie_title, script_url=movie_url, file_type=filetype)
         )
 
+    print(f"Screenplays Online: {len(movies)} movies found.")
     return movies
 
 

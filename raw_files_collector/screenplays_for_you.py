@@ -64,6 +64,7 @@ def get_movies_screenplays_for_you(URL: str) -> list[Movie]:
             )
         )
 
+    print(f"Scripts For You: {len(movies)} movies found.")
     return movies
 
 

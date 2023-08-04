@@ -19,7 +19,7 @@ class Movie:
         return f"{self.title}\n{self.script_url}\n{self.movie_year}\n{self.script_date}\n{self.writers}\n"
 
     def merge(self, movie):
-        if self.script_url is None:
+        if self.file_type in ["pdf", "doc"]:
             self.script_url = movie.script_url
         if self.movie_year is None:
             self.movie_year = movie.movie_year

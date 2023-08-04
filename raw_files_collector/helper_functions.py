@@ -49,7 +49,7 @@ def curate_filename(movie_title: str, file_type: str) -> str:
     for ch in movie_title.lower():
         if ch.isalnum() or ch == " ":
             filename += ch
-    filename_2 = "_".join(filename.strip().split()) + file_type
+    filename_2 = f'{"_".join(filename.strip().split())}.{file_type}'
     return filename_2
 
 
