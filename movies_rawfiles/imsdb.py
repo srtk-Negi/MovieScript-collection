@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from .movie import Movie
-from .helper_functions import switch_article, get_file_type
+from .helper_functions import switch_article, get_file_type, get_name_to_compare
 
 re_script_date = re.compile(r"\((\b\d{4}(?:-\d{2})?\b)")
 re_year = re.compile(r"\(\d{4}\)")
@@ -97,6 +97,7 @@ def get_movies_imsdb(URL_IMSDB: str) -> list[Movie]:
             continue
 
         filetype = get_file_type(movie_script_link)
+        name_to_compare = get_name_to_compare(movie_title)
 
         movies.append(
             Movie(
@@ -105,6 +106,7 @@ def get_movies_imsdb(URL_IMSDB: str) -> list[Movie]:
                 file_type=filetype,
                 script_date=script_date,
                 writers=writers,
+                name_to_compare=name_to_compare,
             )
         )
 

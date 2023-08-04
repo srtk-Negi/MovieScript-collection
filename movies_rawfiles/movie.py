@@ -4,6 +4,7 @@ class Movie:
         title: str,
         script_url: str,
         file_type: str,
+        name_to_compare: str,
         movie_year: str = None,
         script_date: str = None,
         writers: str = None,
@@ -11,6 +12,7 @@ class Movie:
         self.title = title
         self.script_url = script_url
         self.file_type = file_type
+        self.name_to_compare = name_to_compare
         self.movie_year = movie_year
         self.script_date = script_date
         self.writers = writers

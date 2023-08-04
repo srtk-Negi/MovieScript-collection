@@ -4,10 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-from .helper_functions import switch_article, get_file_type
+from .helper_functions import switch_article, get_file_type, get_name_to_compare
 from .movie import Movie
 
-re_year = re.compile("\(\d{4}\)")
+re_year = re.compile(r"\(\d{4}\)")
 
 
 def get_movies_screenplays_online(URL: str) -> list[Movie]:
@@ -55,9 +55,15 @@ def get_movies_screenplays_online(URL: str) -> list[Movie]:
             movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
         filetype = get_file_type(movie_url)
+        name_to_compare = get_name_to_compare(movie_title)
 
         movies.append(
-            Movie(title=movie_title, script_url=movie_url, file_type=filetype)
+            Movie(
+                title=movie_title,
+                script_url=movie_url,
+                file_type=filetype,
+                name_to_compare=name_to_compare,
+            )
         )
 
     print(f"Screenplays Online: {len(movies)} movies found.")

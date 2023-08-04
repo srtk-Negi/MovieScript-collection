@@ -69,6 +69,24 @@ def switch_article(article: str, movie_name: str) -> str:
     return movie_name
 
 
+def get_name_to_compare(movie_name: str) -> str:
+    """Gets the name to compare for the movie
+
+    Args:
+        movie_name (str): The movie name
+
+    Returns:
+        str: The name to compare for the movie
+    """
+    name = movie_name.lower()
+    name_to_compare = ""
+    for ch in name:
+        if ch.isalnum():
+            name_to_compare += ch
+
+    return name_to_compare
+
+
 def main():
     last_index_of()
 

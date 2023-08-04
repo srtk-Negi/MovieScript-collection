@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from .movie import Movie
-from .helper_functions import get_file_type
+from .helper_functions import get_file_type, get_name_to_compare
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64"}
 
@@ -48,6 +48,7 @@ def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
         movie_year = movie_year_match.group(1).strip() if movie_year_match else None
         script_url = f"{movie_script_base_url}{page_item.find_all('a')[0].get('href')}"
         filetype = get_file_type(script_url)
+        name_to_compare = get_name_to_compare(movie_title)
 
         movies.append(
             Movie(
@@ -57,6 +58,7 @@ def get_movie_list(URL_DAILY_SCRIPT: str) -> list[Movie]:
                 movie_year=movie_year,
                 script_date=script_date,
                 writers=writers,
+                name_to_compare=name_to_compare,
             )
         )
 

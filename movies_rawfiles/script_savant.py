@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from .movie import Movie
-from .helper_functions import get_file_type
+from .helper_functions import get_file_type, get_name_to_compare
 
 
 def get_movies_script_savant(URL_SCRIPT_SAVANT: str) -> list[Movie]:
@@ -33,9 +33,15 @@ def get_movies_script_savant(URL_SCRIPT_SAVANT: str) -> list[Movie]:
         movie_title = movie_title.replace("_", " ")
 
         filetype = get_file_type(script_url)
+        name_to_compare = get_name_to_compare(movie_title)
 
         movies.append(
-            Movie(title=movie_title, script_url=script_url, file_type=filetype)
+            Movie(
+                title=movie_title,
+                script_url=script_url,
+                file_type=filetype,
+                name_to_compare=name_to_compare,
+            )
         )
 
     print(f"Script Savant: {len(movies)} movies found")

@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from .movie import Movie
-from .helper_functions import switch_article, get_file_type
+from .helper_functions import switch_article, get_file_type, get_name_to_compare
 
 
 def get_movies_script_pdf(URL: str) -> list[Movie]:
@@ -48,6 +48,7 @@ def get_movies_script_pdf(URL: str) -> list[Movie]:
                 movie_title = switch_article(movie_title.split(" ")[-1], movie_title)
 
             filetype = get_file_type(script_url)
+            name_to_compare = get_name_to_compare(movie_title)
 
             movies.append(
                 Movie(
@@ -55,6 +56,7 @@ def get_movies_script_pdf(URL: str) -> list[Movie]:
                     script_url=script_url,
                     movie_year=movie_year,
                     file_type=filetype,
+                    name_to_compare=name_to_compare,
                 )
             )
 

@@ -3,7 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from .movie import Movie
-from .helper_functions import switch_article, get_file_type
+from .helper_functions import switch_article, get_file_type, get_name_to_compare
 
 # Match any string enclosed within parentheses
 SCRIPT_TYPE_MATCH = re.compile(r"\([^)]*\)", re.DOTALL)
@@ -68,9 +68,15 @@ def get_movies_awesome_film(URL_AWESOME_FILM: str) -> list[Movie]:
         movie_title = re.sub(RE_SCRIPT, "", movie_title).strip()
 
         file_type = get_file_type(movie_link)
+        name_to_compare = get_name_to_compare(movie_title)
 
         movies.append(
-            Movie(title=movie_title, script_url=movie_link, file_type=file_type)
+            Movie(
+                title=movie_title,
+                script_url=movie_link,
+                file_type=file_type,
+                name_to_compare=name_to_compare,
+            )
         )
 
     print(f"Awesome Film: {len(movies)} movies found")

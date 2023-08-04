@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import datetime
 
 from movies_rawfiles import (
     get_movies_awesome_film,
@@ -12,9 +13,7 @@ from movies_rawfiles import (
     curate_filename,
 )
 
-
 # from raw_files_collector.script_slug import get_raw_script_slug
-
 
 URL_AWESOME_FILM = "http://www.awesomefilm.com/"
 URL_DAILYSCRIPT = "https://www.dailyscript.com/movie.html"
@@ -68,10 +67,10 @@ def main():
     print("SCRIPT SAVANT - FINISHED\n")
 
     for movie in init_movie_list:
-        if movie.title not in movie_map:
-            movie_map[movie.title] = movie
+        if movie.name_to_compare not in movie_map:
+            movie_map[movie.name_to_compare] = movie
         else:
-            movie_map[movie.title].merge(movie)
+            movie_map[movie.name_to_compare].merge(movie)
 
     pdf_count = 0
     html_count = 0
@@ -92,6 +91,7 @@ def main():
 
     rawfiles_count = 0
     for movie in movie_map.values():
+        current_date_time = datetime.datetime.now()
         try:
             if movie.file_type == "pdf" or movie.file_type == "doc":
                 content = requests.get(movie.script_url).content
