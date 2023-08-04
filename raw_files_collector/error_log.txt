@@ -1,0 +1,24 @@
+Apache Drums - http://www.whiskeyloosetongue.com/scripts/apachedrums.pdf
+('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+Fun With Dick and Jane Part 1 - http://home.online.no/~bhundlan/scripts/Fun-with-Dick-and-Jane_part1.pdf
+HTTPConnectionPool(host='home.online.no', port=80): Max retries exceeded with url: /~bhundlan/scripts/Fun-with-Dick-and-Jane_part1.pdf (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x0000024A95CAAF90>: Failed to resolve 'home.online.no' ([Errno 11001] getaddrinfo failed)"))
+
+Fun With Dick and Jane Part 2 - http://home.online.no/~bhundlan/scripts/Fun-with-Dick-and-Jane_part2.pdf
+HTTPConnectionPool(host='home.online.no', port=80): Max retries exceeded with url: /~bhundlan/scripts/Fun-with-Dick-and-Jane_part2.pdf (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x0000024A96755890>: Failed to resolve 'home.online.no' ([Errno 11001] getaddrinfo failed)"))
+
+Halloween: Resurrection - http://home.online.no/~bhundlan/scripts/Halloween8_shooting.pdf
+HTTPConnectionPool(host='home.online.no', port=80): Max retries exceeded with url: /~bhundlan/scripts/Halloween8_shooting.pdf (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x0000024A95D45550>: Failed to resolve 'home.online.no' ([Errno 11001] getaddrinfo failed)"))
+
+License to Drive - http://movie-page.com/scripts/license_to_drive.pdf
+HTTPConnectionPool(host='movie-page.com', port=80): Max retries exceeded with url: /scripts/license_to_drive.pdf (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000024A95798250>, 'Connection to movie-page.com timed out. (connect timeout=None)'))
+
+The Life of David Gale - http://www.movie-page.com/scripts/the_life_of_david_gale.pdf
+HTTPConnectionPool(host='www.movie-page.com', port=80): Max retries exceeded with url: /scripts/the_life_of_david_gale.pdf (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000024A957AAA90>, 'Connection to www.movie-page.com timed out. (connect timeout=None)'))
+
+Kids in the Hall: Brain Candy - http://www.kithfan.org/work/transcripts/braincandy.pdf
+HTTPConnectionPool(host='ww38.kithfan.org', port=80): Max retries exceeded with url: /work/transcripts/braincandy.pdf (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000024A963DA490>, 'Connection to ww38.kithfan.org timed out. (connect timeout=None)'))
+
+Vagrant - http://www.vagrantmovie.com/Vagrant.pdf
+HTTPConnectionPool(host='www.vagrantmovie.com', port=80): Max retries exceeded with url: /Vagrant.pdf (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x0000024A95F30090>: Failed to resolve 'www.vagrantmovie.com' ([Errno 11001] getaddrinfo failed)"))
+

@@ -86,7 +86,7 @@ def main():
     print(f"doc: {doc_count}")
     print(f"Total unique movies objects: {len(movie_map)}")
 
-    print("\nMovie object collection done.\nStarting Rawfile collection...")
+    print("\nMovie object collection done.\nRawfile collection started\n")
 
     rawfiles_count = 0
     for movie in movie_map.values():
@@ -109,7 +109,7 @@ def main():
                 soup = BeautifulSoup(content.text, "html.parser")
                 soup_str = str(soup)
                 final_soup = f"<html><pre>{soup_str}</pre></html>"
-                filename = curate_filename(movie.title, movie.file_type)
+                filename = curate_filename(movie.title, "html")
                 with open(f"{FILEPATH}{filename}", "w", encoding="utf-8") as f:
                     f.write(final_soup)
                     rawfiles_count += 1
