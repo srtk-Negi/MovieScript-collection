@@ -4,7 +4,7 @@ from imsdb import get_movies_imsdb
 from screenplays_for_you import get_movies_screenplays_for_you
 from screenplays_online import get_movies_screenplays_online
 from script_pdf import get_movies_script_pdf
-from script_savant import get_raw_script_savant
+from script_savant import get_movies_script_savant
 
 # from raw_files_collector.script_slug import get_raw_script_slug
 
@@ -48,17 +48,17 @@ def main():
 
     # # SCRIPT PDF
     # print("SCRIPT PDF - STARTED")
-    script_pdf_list = get_movies_script_pdf(URL_SCRIPT_PDF)
-    with open("test.txt", "w", encoding="utf-8") as f:
-        for movie in script_pdf_list:
-            f.write(
-                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
-            )
+    # script_pdf_list = get_movies_script_pdf(URL_SCRIPT_PDF)
     # print("SCRIPT PDF - FINISHED\n")
 
     # # SCRIPT SAVANT
     # print("SCRIPT SAVANT - STARTED")
-    # get_raw_script_savant(URL_SCRIPT_SAVANT)
+    script_savant_list = get_movies_script_savant(URL_SCRIPT_SAVANT)
+    with open("test.txt", "w", encoding="utf-8") as f:
+        for movie in script_savant_list:
+            f.write(
+                f"{movie.title}\n{movie.script_url}\n{movie.movie_year}\n{movie.script_date}\n{movie.writers}\n\n"
+            )
     # print("SCRIPT SAVANT - FINISHED\n")
 
     # SCRIPT SLUG (WORKING BUT NOT THE BEST SOLUTION)
