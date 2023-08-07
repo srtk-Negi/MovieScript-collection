@@ -1,6 +1,4 @@
-"""This module contains the functions to collect the raw files from the
-different websites.
-"""
+"""This module is used to import all the modules in the movie_rawfiles package."""
 
 from .awesome_film import get_movies_awesome_film
 from .daily_script import get_movies_daily_script
