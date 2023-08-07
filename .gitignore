@@ -3,8 +3,7 @@ __pycache__
 rawfiles
 .env
 rawfiles
-rawfiles_copy
-data_files
+datafiles
 test.txt
 error_log.txt
 
