@@ -1,16 +1,24 @@
 import pandas as pd
-from movie_data.movie_data import *
+from movie_data.movie_data import extract_script
+import os
 
 
 def main():
-    pass
-    # get_awesome_film_scripts()
-    # get_daily_script_scripts()
-    # get_imsdb_scripts()
-    # get_screenplays_for_you_scripts()
-    # get_screenplays_online_scripts()
-    # get_script_pdf_scripts()
-    # get_script_savant_scripts()
+    rawfiles = os.listdir("rawfiles")
+    print(len(rawfiles))
+    worked = 0
+    not_worked = 0
+    pdf = 0
+    for file in rawfiles:
+        if file.endswith(".html") or file.endswith(".htm") or file.endswith(".txt"):
+            flag = extract_script(f"rawfiles/{file}", f"{file[:-5]}.txt")
+            if flag:
+                worked += 1
+            else:
+                not_worked += 1
+        elif file.endswith(".pdf") or file.endswith(".doc"):
+            pdf += 1
+    print(f"Worked: {worked}\nNot Worked: {not_worked}\nPDF: {pdf}")
 
 
 if __name__ == "__main__":
