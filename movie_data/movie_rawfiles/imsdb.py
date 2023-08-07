@@ -88,11 +88,13 @@ def get_movies_imsdb(URL_IMSDB: str) -> list[Movie]:
             continue
 
         try:
-            movie_script_link = MOVIE_SCRIPT_URL + (
-                movie_page_soup.find("table", class_="script-details")
-                .find_all("a")[-1]
-                .get("href")
-            )
+            link_element = movie_page_soup.find(
+                "table", class_="script-details"
+            ).find_all("a")[-1]
+            if link_element.string.lower().startswith("Read"):
+                movie_script_link = MOVIE_SCRIPT_URL + link_element.get("href")
+            else:
+                continue
         except:
             continue
 

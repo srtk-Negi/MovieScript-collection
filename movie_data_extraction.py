@@ -5,20 +5,11 @@ import os
 
 def main():
     rawfiles = os.listdir("rawfiles")
-    print(len(rawfiles))
-    worked = 0
-    not_worked = 0
-    pdf = 0
     for file in rawfiles:
         if file.endswith(".html") or file.endswith(".htm") or file.endswith(".txt"):
-            flag = extract_script(f"rawfiles/{file}", f"{file[:-5]}.txt")
-            if flag:
-                worked += 1
-            else:
-                not_worked += 1
+            extract_script(f"rawfiles/{file}", f"{file[:-5]}.txt")
         elif file.endswith(".pdf") or file.endswith(".doc"):
-            pdf += 1
-    print(f"Worked: {worked}\nNot Worked: {not_worked}\nPDF: {pdf}")
+            pass
 
 
 if __name__ == "__main__":
