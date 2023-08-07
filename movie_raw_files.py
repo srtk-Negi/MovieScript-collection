@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 
-from movies_rawfiles import (
+from movie_data import (
     get_movies_awesome_film,
     get_movies_daily_script,
     get_movies_imsdb,
