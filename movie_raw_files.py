@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import os
 
 from movie_data import *
 
@@ -19,6 +20,9 @@ FILEPATH = "rawfiles/"
 
 
 def main():
+    if not os.path.exists(FILEPATH):
+        os.mkdir(FILEPATH)
+
     init_movie_list = []
     movie_map = {}
     # AWESOME FILM

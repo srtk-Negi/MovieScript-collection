@@ -3,6 +3,9 @@ import os
 
 
 def main():
+    if not os.path.exists("scripts"):
+        os.mkdir("scripts")
+
     rawfiles = os.listdir("rawfiles")
 
     html_count = 0
