@@ -9,3 +9,4 @@ from .script_pdf import get_movies_script_pdf
 from .script_savant import get_movies_script_savant
 from .helper_functions import get_file_type, curate_filename, switch_article
 from .movie import Movie
+from .extract_data import extract_script_html, extract_script_pdf
